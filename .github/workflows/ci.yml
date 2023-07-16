@@ -32,5 +32,5 @@ jobs:
         with:
           push: true
           build-args:
-            - HTML_DIR: dist
+            - HTML_DIR=dist
           tags: zcunsoft/clklog-frontend:latest
