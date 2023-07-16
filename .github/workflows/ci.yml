@@ -24,6 +24,7 @@ jobs:
           # TODO: Use Secrets when Public
           username: zcunsoft
           password: dckr_pat_2eAU1fw60YppPltWJ7-tVJXma9o
+      - run: ls -l
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
