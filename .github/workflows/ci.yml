@@ -31,6 +31,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          build-args:
-            - HTML_DIR=dist
+          build-args: |
+            HTML_DIR=dist
           tags: zcunsoft/clklog-frontend:latest
