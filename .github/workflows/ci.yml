@@ -1,9 +1,7 @@
 name: Node.js CI
 
 on:
-  push:
-    branches:
-      - 'main'
+  push: {}
   schedule:
     - cron: '*/5 * * * *'
 
