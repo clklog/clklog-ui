@@ -1,7 +1,15 @@
 name: Node.js CI
 
 on:
-  push: {}
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - 'main'
   schedule:
     - cron: '*/5 * * * *'
 
