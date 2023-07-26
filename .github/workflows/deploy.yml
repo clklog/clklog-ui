@@ -18,7 +18,7 @@ jobs:
         with:
           # TODO: Use Secrets when Public
           registry: registry.cn-shanghai.aliyuncs.com
-          username: clklog.githubci
+          username: clklog.githubci@zcunsoft
           password: R7w!9F6zlqt2
       - name: Push image to Aliyun Docker Registry
         run: |
