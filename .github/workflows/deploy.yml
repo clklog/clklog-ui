@@ -1,6 +1,7 @@
 name: Deploy
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: [Node.js CI]
     branches: [main]
@@ -12,3 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo to deploy...
+      - name: Login to Aliyun Docker Registry
+        uses: docker/login-action@v2
+        with:
+          # TODO: Use Secrets when Public
+          registry: registry.cn-shanghai.aliyuncs.com
+          username: clklog.githubci
+          password: R7w!9F6zlqt2
+      - name: Push image to Aliyun Docker Registry
+        run: |
+          docker buildx imagetools create \
+            --tag registry.cn-shanghai.aliyuncs.com/zcunsoft/clklog_frontend:latest \
+            zcunsoft/clklog-frontend:latest
