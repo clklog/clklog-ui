@@ -1,7 +1,6 @@
 name: Deploy
 
 on:
-  push:
   workflow_run:
     workflows: [Node.js CI]
     branches: [main]
