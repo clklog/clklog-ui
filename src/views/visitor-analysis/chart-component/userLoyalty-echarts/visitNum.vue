@@ -45,7 +45,7 @@ export default {
           axisLabel: {
             show: true,
             interval: 0,
-            // rotate:45,
+            rotate:35,
           },
         },
 
@@ -117,7 +117,7 @@ export default {
     color: #4d4d4d;
   }
   .bar_chart {
-    height: 337px;
+    min-height: 337px;
     background: #fff;
     span {
       font-size: 12px;
