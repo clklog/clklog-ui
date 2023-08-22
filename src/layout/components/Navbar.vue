@@ -109,7 +109,7 @@ export default {
     return {
       options: [
         {
-          value: "货清清",
+          value: "hqq",
           label: "货清清",
         },
         {

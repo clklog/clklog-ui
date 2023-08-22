@@ -358,6 +358,7 @@ export default {
       this.getVisitorDetailinfo();
       this.getVisitorSessionList();
       this.centerDialogVisible = true;
+      this.currentPage = 1;
     },
     // user baseInfo
     getVisitorDetailinfo() {
