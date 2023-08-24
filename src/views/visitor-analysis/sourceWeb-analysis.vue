@@ -1,12 +1,15 @@
 <template>
   <div>
     <FilterBar @setFilterBarParams="setFilterBarParams" ByArea></FilterBar>
-     <div class="Overview public-hoverItem">
-      <div class="public-firstHead" >来源网站分析</div>
+    <div class="Overview public-hoverItem">
+      <div class="public-firstHead">来源网站分析</div>
       <originView ref="originView" byAreaAnaly></originView>
     </div>
     <sourceWebChart ref="sourceWebChart"></sourceWebChart>
-    <sourceWebTable ref="sourceWebTable" @currentPage="currentPage"></sourceWebTable>
+    <sourceWebTable
+      ref="sourceWebTable"
+      @currentPage="currentPage"
+    ></sourceWebTable>
   </div>
 </template>
 
@@ -15,15 +18,21 @@ import originView from "@/components/origin-view";
 import { FilterBar } from "@/layout/components";
 import sourceWebChart from "./chart-component/sourceWeb-analysis-chart";
 import sourceWebTable from "./chart-component/sourceWeb-analysis-table";
-import { getSourceSiteDetailApi,getSourceWebSiteDetailTop10Api } from "@/api/trackingapi/sourcewebsite";
+import {
+  getSourceWebSiteTotalApi,
+  getSourceWebsiteApi,
+  getSourceSiteDetailApi,
+  getSourceWebSiteDetailTop10Api,
+} from "@/api/trackingapi/sourcewebsite";
 import { copyObj } from "@/utils/copy";
 export default {
   components: {
     FilterBar,
     sourceWebChart,
     sourceWebTable,
-    originView
+    originView,
   },
+  mounted() {},
   data() {
     return {
       filterBarParams: {},
@@ -43,8 +52,9 @@ export default {
   },
   watch: {
     commonParams(val) {
-      this.getSourceSiteDetail()
-      this.getSourceWebSiteTop10()
+      this.getSourceSiteDetail();
+      this.getSourceWebSiteTop10();
+      this.getSourceWebSiteTotal();
     },
   },
   methods: {
@@ -54,9 +64,17 @@ export default {
     setFilterBarParams(val) {
       this.filterBarParams = copyObj(val);
     },
+    getSourceWebSiteTotal() {
+      getSourceWebSiteTotalApi(this.commonParams).then((res) => {
+        if (res.code == 200) {
+          this.$refs.originView.originEvent(res.data);
+        }
+      });
+    },
     // table data
     getSourceSiteDetail(val) {
       let newvalue = copyObj(this.commonParams);
+      this.pageNum= 1;
       if (val) {
         newvalue.pageNum = val.page;
         newvalue.pageSize = val.size;
@@ -65,18 +83,21 @@ export default {
       } else {
         newvalue.pageNum = this.pageNum;
         newvalue.pageSize = this.pageSize;
+        this.$refs.sourceWebTable.initCurrentPage()
       }
       getSourceSiteDetailApi(newvalue).then((res) => {
         if (res.code == 200) {
-        this.$refs.originView.originEvent(res.data.summary)
-        this.$refs.sourceWebTable.getSourceSite(res.data);
+          // this.$refs.originView.originEvent(res.data.summary);
+          this.$refs.sourceWebTable.getSourceSite(res.data);
         }
       });
     },
+    // echarts
     getSourceWebSiteTop10() {
-      getSourceWebSiteDetailTop10Api(this.commonParams).then((res) => {
+      // getSourceWebSiteDetailTop10Api(this.commonParams).then((res) => {
+      getSourceWebsiteApi(this.commonParams).then((res) => {
         if (res.code == 200) {
-        this.$refs.sourceWebChart.getSourceChart(res.data);
+          this.$refs.sourceWebChart.getSourceChart(res.data);
         }
       });
     },

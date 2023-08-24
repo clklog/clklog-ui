@@ -50,6 +50,7 @@ export default {
   methods: {
     getVisitUriDetail(val) {
       let newvalue = copyObj(this.commonParams);
+      this.pageNum = 1;
       if (val) {
         newvalue.pageNum = val.page;
         newvalue.pageSize = val.size;
@@ -58,6 +59,7 @@ export default {
       } else {
         newvalue.pageNum = this.pageNum;
         newvalue.pageSize = this.pageSize;
+        this.$refs.visitedAnalysis.initCurrentPage()
       }
       getVisitUriDetailApi(newvalue).then((res) => {
         if (res.code == 200) {

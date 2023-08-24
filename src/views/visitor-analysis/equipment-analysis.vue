@@ -1,7 +1,10 @@
 <template>
   <div>
     <FilterBar @setFilterBarParams="setFilterBarParams"></FilterBar>
-    <equipmentTable ref="equipmentTable"></equipmentTable>
+    <equipmentTable
+      ref="equipmentTable"
+      @currentPage="currentPage"
+    ></equipmentTable>
   </div>
 </template>
 
@@ -20,6 +23,8 @@ export default {
     return {
       filterBarParams: {},
       originData: null,
+      pageNum: 1,
+      pageSize: 10,
     };
   },
   computed: {
@@ -40,12 +45,27 @@ export default {
     setFilterBarParams(val) {
       this.filterBarParams = copyObj(val);
     },
-    getDeviceDetail() {
-      getDeviceDetailApi(this.commonParams).then((res) => {
+    getDeviceDetail(val) {
+      this.pageNum = 1;
+      let newvalue = copyObj(this.commonParams);
+      if (val) {
+        newvalue.pageNum = val.page;
+        newvalue.pageSize = val.size;
+        this.pageNum = val.page;
+        this.pageSize = val.size;
+      } else {
+        newvalue.pageNum = this.pageNum;
+        newvalue.pageSize = this.pageSize;
+        this.$refs.equipmentTable.initCurrentPage()
+      }
+      getDeviceDetailApi(newvalue).then((res) => {
         if (res.code == 200) {
-          this.$refs.equipmentTable.equipmentTableEvent(res.data)
+          this.$refs.equipmentTable.equipmentTableEvent(res.data);
         }
       });
+    },
+    currentPage(val) {
+      this.getDeviceDetail(val);
     },
   },
 };

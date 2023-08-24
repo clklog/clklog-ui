@@ -76,6 +76,7 @@ export default {
     },
     getVisitorList(val) {
       let newvalue = copyObj(this.commonParams);
+      this.pageNum= 1;
       newvalue.pageNum = this.pageNum;
       newvalue.pageSize = this.pageSize;
       if (val) {
@@ -89,6 +90,7 @@ export default {
         // newvalue.sortName = "pv";
         // newvalue.country=["全球"]
         newvalue.sortOrder = "desc";
+        this.$refs.behaviorChart.initCurrentPage()
         // newvalue.timeType = "day";
         // newvalue["province"] = newvalue["area"];
         // delete newvalue["area"];

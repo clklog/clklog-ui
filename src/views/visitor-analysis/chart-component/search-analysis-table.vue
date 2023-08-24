@@ -2,76 +2,76 @@
   <div>
     <div class="search_wrappy public-table-block public-hoverItem">
       <!-- <div class="search_table"> -->
-        <span class="public-firstHead">搜索词分析</span>
-        <div class="public-Table-minHeight">
-          <el-table
-            :header-cell-style="{ textAlign: 'center' }"
-            :cell-style="{ textAlign: 'center' }"
-            :data="searchTableList"
-            border
-            style="width: 100%; margin-top: 12px"
-          >
-            <!-- <el-table-column prop="statTime" label="日期" sortable width="180">
+      <span class="public-firstHead">搜索词分析</span>
+      <div class="public-Table-minHeight">
+        <el-table
+          :header-cell-style="{ textAlign: 'center', background: '#F5F7FA' }"
+          :cell-style="{ textAlign: 'center' }"
+          :data="searchTableList"
+          border
+          style="width: 100%; margin-top: 12px"
+        >
+          <!-- <el-table-column prop="statTime" label="日期" sortable width="180">
             </el-table-column> -->
-            <el-table-column
-              prop="searchword"
-              :show-overflow-tooltip="true"
-              label="搜索词"
-              width="250"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="pv"
-              label="浏览量(PV)"
-              :sort-orders="['descending', 'ascending']"
-              :sortable="true"
-            >
-            </el-table-column>
-            <el-table-column
-              label="浏览量占比"
-              sortable
-              :sort-method="
-                (a, b) => {
-                  return a.pvRate - b.pvRate;
-                }
-              "
-            >
-              <template slot-scope="scope"> {{ scope.row.pvRate }}% </template>
-            </el-table-column>
-            <el-table-column prop="avgVisitTime" label="平均访问时长" sortable>
-            </el-table-column>
-            <el-table-column prop="avgPv" label="平均访问页数" sortable>
-            </el-table-column>
-            <el-table-column
-              label="跳出率"
-              sortable
-              :sort-method="
-                (a, b) => {
-                  return a.bounceRate - b.bounceRate;
-                }
-              "
-            >
-              <template slot-scope="scope">
-                {{ scope.row.bounceRate }}%
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-        <div class="block">
-          <el-pagination
-            :pager-count="5"
-            prev-text
-            next-text="下一页"
-            :current-page="currentPage"
-            :page-sizes="[10, 20, 30, 40]"
-            :page-size="pageSize"
-            layout=" sizes, prev, pager, next, jumper"
-            :total="total"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-          />
-        </div>
+          <el-table-column
+            prop="searchword"
+            :show-overflow-tooltip="true"
+            label="搜索词"
+            width="250"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="pv"
+            label="浏览量(PV)"
+            :sort-orders="['descending', 'ascending']"
+            :sortable="true"
+          >
+          </el-table-column>
+          <el-table-column
+            label="浏览量占比"
+            sortable
+            :sort-method="
+              (a, b) => {
+                return a.pvRate - b.pvRate;
+              }
+            "
+          >
+            <template slot-scope="scope"> {{ scope.row.pvRate }}% </template>
+          </el-table-column>
+          <el-table-column prop="avgVisitTime" label="平均访问时长" sortable>
+          </el-table-column>
+          <el-table-column prop="avgPv" label="平均访问页数" sortable>
+          </el-table-column>
+          <el-table-column
+            label="跳出率"
+            sortable
+            :sort-method="
+              (a, b) => {
+                return a.bounceRate - b.bounceRate;
+              }
+            "
+          >
+            <template slot-scope="scope">
+              {{ scope.row.bounceRate }}%
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
+      <div class="block">
+        <el-pagination
+          :pager-count="5"
+          prev-text
+          next-text="下一页"
+          :current-page="currentPage"
+          :page-sizes="[10, 20, 30, 40]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
+    </div>
     <!-- </div> -->
   </div>
 </template>
@@ -132,7 +132,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "~@/styles/components/el-pagination.scss";
+::v-deep{
+  @import "~@/styles/components/el-pagination.scss";
+}
 .search_wrappy {
   position: relative;
 }

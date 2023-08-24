@@ -50,7 +50,10 @@
           <el-table
             border
             :data="userListData"
-            :header-cell-style="{ textAlign: 'center' }"
+            :header-cell-style="{
+              textAlign: 'center',
+              background: '#F5F7FA',
+            }"
             :cell-style="{ textAlign: 'center' }"
             style="width: 100%; margin-top: 12px; height: 98%"
           >
@@ -92,10 +95,10 @@
       <div class="block">
         <el-pagination
           next-text="下一页"
-          :current-page="currentPage"
+          :current-page.sync="currentPage"
           :page-sizes="[10, 20, 30, 40]"
           :page-size="pageSize"
-          layout=" sizes, prev, pager, next, jumper"
+          layout=" total,sizes, prev, pager, next, jumper"
           :total="total"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -177,6 +180,9 @@ export default {
     this.chart = null;
   },
   methods: {
+    initCurrentPage(){
+      this.currentPage = 1;
+    },
     getChannelList(val) {
       this.pv = [];
       this.uv = [];
@@ -196,22 +202,22 @@ export default {
     },
     getUserListEvent(val) {
       this.userListData = val.rows;
-      val.rows.map(item=>{
+      val.rows.map((item) => {
         if (item.avgPv) {
-          item.avgPv = Math.floor(item.avgPv)
+          item.avgPv = Math.floor(item.avgPv);
         }
         if (item.visitTime) {
-          item.visitTime =  formatTime(Math.floor(item.visitTime))
+          item.visitTime = formatTime(Math.floor(item.visitTime));
         }
-         //   // item.avgVisitTime = formatTime(Math.floor(item.avgVisitTime));
-      })
+        //   // item.avgVisitTime = formatTime(Math.floor(item.avgVisitTime));
+      });
       this.total = val.total;
       // console.log(this.userListData, "用户列表数据");
     },
     handleCellClick(val) {
       this.$refs.child.callMethod(val);
     },
-    
+
     // 切换事件
     changeChartValue(e) {
       this.pv = [];
@@ -449,7 +455,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "~@/styles/components/custom-select.scss";
+::v-deep {
+  @import "~@/styles/components/el-pagination.scss";
+  @import "~@/styles/components/custom-select.scss";
+}
+
 // ::v-deep .setTable {
 //   .el-table--border {
 //     border: none;
@@ -531,20 +541,8 @@ img {
   //   color: #4d4d4d;
   // }
 }
-.block {
-  margin: 20px 12px;
-}
-::v-deep {
-  .el-pagination {
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 10px;
-  }
-  .el-pagination__jump {
-    position: absolute;
-    left: 0;
-  }
-}
+// .block {
+//   // margin: 20px 12px;
+//   width: 100%;
+// }
 </style>
