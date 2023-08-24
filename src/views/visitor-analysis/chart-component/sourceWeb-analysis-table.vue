@@ -10,6 +10,7 @@
           :cell-style="{ textAlign: 'center' }"
           :data="getSourceSiteList"
           border
+          @sort-change="sortChange($event)"
           style="width: 100%"
         >
           <el-table-column type="index" label="序号" width="150" />
@@ -102,6 +103,8 @@ export default {
       current: {
         size: 10,
         page: 1,
+        sortName:null,
+        sortOrder:null,
       },
       channelList: ["pv", "visitCount", "newUvRate", "pvRate"],
       flowQuality: ["avgPv"],
@@ -122,6 +125,23 @@ export default {
     };
   },
   methods: {
+    sortChange(e) {
+      if (e.order && e.order == "ascending") {
+        // 降序
+        this.current.sortName = e.prop;
+        this.current.sortOrder = 'asc';
+        this.$emit("currentPage", this.current);
+      } else if (e.order && e.order == "descending") {
+        // 升序
+        this.current.sortName = e.prop;
+        this.current.sortOrder = 'desc';
+        this.$emit("currentPage", this.current);
+      }else{
+        this.current.sortName = null;
+        this.current.sortOrder = null;
+        this.$emit("currentPage", this.current);
+      }
+    },  
     getSourceSite(val) {
       val.rows.map((item) => {
         if (item.bounceRate) {

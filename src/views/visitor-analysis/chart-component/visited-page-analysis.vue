@@ -38,6 +38,7 @@
           style="width: 100%"
           :header-cell-style="{ textAlign: 'center' }"
           :cell-style="{ textAlign: 'center' }"
+          @sort-change="sortChange($event)"
         >
           <el-table-column type="index" label="序号" width="150" />
           <!-- :show-overflow-tooltip="true"  prop="uri" -->
@@ -135,6 +136,8 @@ export default {
       current: {
         size: 10,
         page: 1,
+        sortName:null,
+        sortOrder:null,
       },
       mergedArr: [],
       uri: false,
@@ -158,6 +161,23 @@ export default {
     });
   },
   methods: {
+    sortChange(e) {
+      if (e.order && e.order == "ascending") {
+        // 降序
+        this.current.sortName = e.prop;
+        this.current.sortOrder = 'asc';
+        this.$emit("currentPage", this.current);
+      } else if (e.order && e.order == "descending") {
+        // 升序
+        this.current.sortName = e.prop;
+        this.current.sortOrder = 'desc';
+        this.$emit("currentPage", this.current);
+      }else{
+        this.current.sortName = null;
+        this.current.sortOrder = null;
+        this.$emit("currentPage", this.current);
+      }
+    },
     publicEventDown(val) {
       let params = val;
       params.project = this.$store.getters.project;

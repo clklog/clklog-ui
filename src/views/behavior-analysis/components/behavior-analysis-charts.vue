@@ -56,6 +56,7 @@
             }"
             :cell-style="{ textAlign: 'center' }"
             style="width: 100%; margin-top: 12px; height: 98%"
+            @sort-change="sortChange($event)"
           >
             <el-table-column
               :show-overflow-tooltip="true"
@@ -162,6 +163,8 @@ export default {
       current: {
         size: 10,
         page: 1,
+        sortName:null,
+        sortOrder:null,
       },
       total: 0,
       pageSize: 10,
@@ -180,6 +183,23 @@ export default {
     this.chart = null;
   },
   methods: {
+    sortChange(e) {
+      if (e.order && e.order == "ascending") {
+        // 降序
+        this.current.sortName = e.prop;
+        this.current.sortOrder = 'asc';
+        this.$emit("currentPage", this.current);
+      } else if (e.order && e.order == "descending") {
+        // 升序
+        this.current.sortName = e.prop;
+        this.current.sortOrder = 'desc';
+        this.$emit("currentPage", this.current);
+      }else{
+        this.current.sortName = null;
+        this.current.sortOrder = null;
+        this.$emit("currentPage", this.current);
+      }
+    }, 
     initCurrentPage(){
       this.currentPage = 1;
     },

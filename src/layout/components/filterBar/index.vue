@@ -261,6 +261,8 @@ export default {
       this.commonData.project = this.$store.getters.project;
       switch (path) {
         case "/visitorAnalysis/searchAnalysis": {
+          let cols = ["searchword","pv","pvRate","visitCount","visitCountRate","uv","newUv","ipCount","ipCountRate","avgVisitTime","avgPv","bounceRate"]
+          this.commonData.cols = cols;
           exportSearchWordDetailApi(this.commonData).then((res) => {
             let name = this.sliceTypeFile(res);
             blobDownloads(res.data, name);
@@ -275,6 +277,8 @@ export default {
           break;
         }
         case "/behaviorAnalysis/user-behavior-analysis": {
+          let cols =[ "distinctId","visitorType","visitCount","pv","visitTime","avgPv","latestTime"]
+          this.commonData.cols = cols;
           exportVisitorListApi(this.commonData).then((res) => {
             let name = this.sliceTypeFile(res);
             blobDownloads(res.data, name);

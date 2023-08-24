@@ -25,6 +25,8 @@ export default {
       originData: null,
       pageNum: 1,
       pageSize: 10,
+      sortName: null,
+      sortOrder: null,
     };
   },
   computed: {
@@ -53,7 +55,13 @@ export default {
         newvalue.pageSize = val.size;
         this.pageNum = val.page;
         this.pageSize = val.size;
+        newvalue.sortName = val.sortName;
+        newvalue.sortOrder = val.sortOrder;
+        this.sortName = val.sortName;
+        this.sortOrder = val.sortOrder;
       } else {
+        newvalue.sortName = this.sortName;
+        newvalue.sortOrder = this.sortOrder;
         newvalue.pageNum = this.pageNum;
         newvalue.pageSize = this.pageSize;
         this.$refs.equipmentTable.initCurrentPage()
