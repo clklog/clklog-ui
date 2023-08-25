@@ -72,18 +72,19 @@ export default {
           this.$refs.originView.originEvent(res.data);
         }
       });
-      getFlowTrendApi(this.commonParams).then((res) => {
-        if (res.code == 200) {
-          // console.log(this.commonParams,"commonParams---");
-          this.$refs.indicatorChart.apiDetailList(res.data,);
-        }
-      });
+      // getFlowTrendApi(this.commonParams).then((res) => {
+      //   if (res.code == 200) {
+      //     // console.log(this.commonParams,"commonParams---");
+      //     this.$refs.indicatorChart.apiDetailList(res.data,);
+      //   }
+      // });
     },
     getFlowTrendDetail() {
       // getFlowTrendDetailApi(this.commonParams).then((res) => {
       getFlowDetailApi(this.commonParams).then((res) => {
         if (res.code == 200) {
           this.$refs.trendTable.apiDetailList(res.data,this.commonParams.timeType);
+          this.$refs.indicatorChart.apiDetailList(res.data,)
         }
       });
     },

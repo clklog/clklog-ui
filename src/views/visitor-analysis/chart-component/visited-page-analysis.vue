@@ -22,7 +22,8 @@
           class="checkBoxStyle"
           @change="handelFlowQuality"
         >
-          <el-checkbox label="entryRate">入口页次数</el-checkbox>
+          <!-- <el-checkbox label="entryCount">入口页次数</el-checkbox> -->
+          <el-checkbox label="entryCount">入口页次数</el-checkbox>
           <el-checkbox label="downPvCount">贡献下游浏览量</el-checkbox>
           <el-checkbox label="exitCount">退出页次数</el-checkbox>
           <el-checkbox label="avgVisitTime">平均访问时长</el-checkbox>
@@ -40,13 +41,11 @@
           :cell-style="{ textAlign: 'center' }"
           @sort-change="sortChange($event)"
         >
-          <!-- <el-table-column type="index" label="序号" width="150" /> -->
           <el-table-column label="序号" type="index" width="150" align="center">
             <template slot-scope="scope">
               <span v-text="getIndex(scope.$index)"> </span>
             </template>
           </el-table-column>
-          <!-- :show-overflow-tooltip="true"  prop="uri" -->
           <el-table-column label="页面URL" width="350">
             <template slot-scope="scope">
               <el-popover trigger="hover" placement="top">
@@ -75,16 +74,17 @@
             />
           </el-table-column>
           <el-table-column prop="date" label="流量质量指标">
+           
+            <el-table-column
+              v-if="entryCount"
+              prop="entryCount"
+              label="入口页次数"
+              sortable
+            />
             <el-table-column
               v-if="downPvCount"
               prop="downPvCount"
               label="贡献下游浏览量"
-              sortable
-            />
-            <el-table-column
-              v-if="entryRate"
-              prop="entryRate"
-              label="入口页次数"
               sortable
             />
             <el-table-column
@@ -94,17 +94,18 @@
               sortable
             />
             <el-table-column
-              v-if="exitRate"
-              prop="exitRate"
-              label="退出率"
-              sortable
-            />
-            <el-table-column
               v-if="avgVisitTime"
               prop="avgVisitTime"
               label="平均访问时长"
               sortable
             />
+            <el-table-column
+              v-if="exitRate"
+              prop="exitRate"
+              label="退出率"
+              sortable
+            />
+            
           </el-table-column>
         </el-table>
       </div>
@@ -137,7 +138,7 @@ export default {
   data() {
     return {
       channelList: ["uv", "ipCount", "pv"],
-      flowQuality: ["entryRate", "avgVisitTime"],
+      flowQuality: ["entryCount", "avgVisitTime"],
       current: {
         size: 10,
         page: 1,
@@ -152,7 +153,7 @@ export default {
       exitCount: false,
       avgVisitTime: false,
       exitRate: false,
-      entryRate: false,
+      entryCount: false,
       downPvCount: false,
       currentPage: 1,
       vistedTableData: [],
@@ -293,6 +294,11 @@ export default {
           this.downPvCount = true;
         } else {
           this.downPvCount = false;
+        }
+        if (val.includes("entryCount")) {
+          this.entryCount = true;
+        } else {
+          this.entryCount = false;
         }
       }
     },

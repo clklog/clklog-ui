@@ -78,7 +78,7 @@
                       >{{ item.provinceName }}</el-radio
                     >
                   </el-radio-group>
-                  <div class="popCancle">X</div>
+                  <div class="popCancle" @click="canclePopEvent">X</div>
                 </div>
                 <div class="areaBox" slot="reference">
                   {{ areaValue }}
@@ -264,6 +264,9 @@ export default {
     },
   },
   methods: {
+    canclePopEvent(){
+      this.popflag = false;
+    },
     download() {
       this.$bus.$emit("publicEventDown", this.commonData);
       let path = this.$route.path;

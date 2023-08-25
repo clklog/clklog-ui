@@ -14,10 +14,11 @@
         <el-checkbox v-if="byChannel" label="visitCountRate"
           >访问次数占比</el-checkbox
         >
-        <el-checkbox label="uv">访客数</el-checkbox>
+        <el-checkbox label="uv">访客数(UV)</el-checkbox>
         <el-checkbox v-if="byChannel" label="uvRate">访客数占比</el-checkbox>
-        <el-checkbox label="newUv">新访客数</el-checkbox>
-        <el-checkbox label="newUvRate">新访客数占比</el-checkbox>
+        <el-checkbox v-if="!byNewOldVisit" label="newUv">新访客数</el-checkbox>
+        <el-checkbox v-if="!byNewOldVisit" label="newUvRate">新访客数占比</el-checkbox>
+        <el-checkbox label="newUvRate" v-if="byNewOldVisit">访客数占比</el-checkbox>
         <el-checkbox label="ipCount" style="margin-right: 0">IP数</el-checkbox>
         <el-checkbox
           v-if="byChannel"
@@ -65,6 +66,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    byNewOldVisit:{
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {

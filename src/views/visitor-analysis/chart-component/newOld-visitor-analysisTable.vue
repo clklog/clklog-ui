@@ -1,6 +1,6 @@
 <template>
   <div class="chartsIcon public-hoverItem">
-    <flowPoint ref="flowPoint" @flowPoint="flowPoint"></flowPoint>
+    <flowPoint ref="flowPoint" @flowPoint="flowPoint" byNewOldVisit></flowPoint>
     <div class="table-content">
       <el-table
         :header-cell-style="{ textAlign: 'center' }"
@@ -24,17 +24,17 @@
             label="访问次数"
             sortable
           />
-          <el-table-column
+          <!-- <el-table-column
             v-if="newUv"
             prop="newUv"
             label="新访客数"
             sortable
-          />
+          /> -->
           <el-table-column v-if="uv" prop="uv" label="访客数(UV)" sortable />
           <el-table-column
             v-if="newUvRate"
             prop="newUvRate"
-            label="新访客数占比"
+            label="访客数占比"
             sortable
           />
           <el-table-column
