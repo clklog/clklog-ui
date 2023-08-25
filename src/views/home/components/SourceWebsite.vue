@@ -77,7 +77,6 @@ export default {
   watch: {},
   methods: {
     getSourceWebsite() {
-      console.log(this.params,"hqq");
       getSourceWebsiteApi(this.params).then((res) => {
         this.SourceWebsitelist = res.data;
       });

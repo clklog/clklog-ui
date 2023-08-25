@@ -13,7 +13,17 @@
           @sort-change="sortChange($event)"
           style="width: 100%"
         >
-          <el-table-column type="index" label="序号" width="150" />
+          <!-- <el-table-column type="index" label="序号" width="150" /> -->
+          <el-table-column
+              label="序号"
+              type="index"
+              width="150"
+              align="center"
+            >
+              <template slot-scope="scope">
+                <span v-text="getIndex(scope.$index)"> </span>
+              </template>
+            </el-table-column>
           <el-table-column
             prop="sourcesite"
             width="250"
@@ -125,6 +135,11 @@ export default {
     };
   },
   methods: {
+    getIndex($index) {
+      return (
+        (this.currentPage - 1) * this.pageSize + $index + 1
+      );
+    },
     sortChange(e) {
       if (e.order && e.order == "ascending") {
         // 降序

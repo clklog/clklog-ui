@@ -2,7 +2,7 @@
   <div>
     <div class="search_wrappy public-table-block public-hoverItem">
       <!-- <div class="search_table"> -->
-      <span class="public-firstHead">搜索词分析</span>
+      <span class="public-firstHead">站外搜索词分析</span>
       <div class="public-Table-minHeight">
         <el-table
           :header-cell-style="{ textAlign: 'center', background: '#F5F7FA' }"

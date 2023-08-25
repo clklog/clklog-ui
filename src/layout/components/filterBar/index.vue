@@ -67,7 +67,7 @@
                 trigger="click"
                 v-model="popflag"
               >
-                <div>
+                <div style="position: relative">
                   <el-radio-group size="mini" v-model="areaValue">
                     <el-radio
                       style="margin-top: 11px"
@@ -78,6 +78,7 @@
                       >{{ item.provinceName }}</el-radio
                     >
                   </el-radio-group>
+                  <div class="popCancle">X</div>
                 </div>
                 <div class="areaBox" slot="reference">
                   {{ areaValue }}
@@ -89,18 +90,8 @@
       </div>
 
       <div class="channel">
-        <!-- <div style="display: flex; margin-right: 16px;position: absolute;right: 220px;z-index: 10;">
-          <div class="btnEvent">
-            <i
-              class="el-icon-download"
-              style="padding-right: 3px; font-size: 14px"
-            ></i
-            >下载
-          </div>
-        </div> -->
-
         <div style="display: flex">
-          <div class="check_item">
+          <div class="check_item" v-if="!byChnnel">
             <span>渠道:</span>
             <el-radio-group v-model="channelValue" style="margin-right: 10px">
               <el-radio
@@ -146,10 +137,18 @@
 import { blobDownloads } from "@/utils/localDownloadUtil.js";
 import { string } from "clipboard";
 import { province } from "@/utils/province";
-import { exportSearchWordDetailApi,exportVisitorApi,exportVisitorListApi } from "@/api/trackingapi/download";
+import {
+  exportSearchWordDetailApi,
+  exportVisitorApi,
+  exportVisitorListApi,
+} from "@/api/trackingapi/download";
 export default {
   props: {
     bySub: {
+      type: Boolean,
+      default: false,
+    },
+    byChnnel: {
       type: Boolean,
       default: false,
     },
@@ -199,7 +198,7 @@ export default {
       timeFlag: "day",
       startTime: "",
       endTime: "",
-      areaValue: "北京市",
+      areaValue: "全部",
       channelValue: "", //渠道
       visitorType: "",
       popflag: false,
@@ -218,8 +217,15 @@ export default {
       }
       // return [this.channelValue];
     },
-    area() {
-      return [this.areaValue];
+    // area() {
+    //   return [this.areaValue];
+    // },
+    province() {
+      if (this.areaValue == "全部") {
+        return [];
+      } else {
+        return [this.areaValue];
+      }
     },
     provinceData() {
       return province;
@@ -237,9 +243,12 @@ export default {
     commonParams() {
       let obj = {};
       obj = Object.assign(obj, this.defaultParams);
-      const { area, timeType } = this;
+      // const { area, timeType } = this;
+      const { province, timeType } = this;
       if (this.ByArea) {
-        obj = Object.assign(obj, { area });
+        // obj = Object.assign(obj, { area });
+
+        obj = Object.assign(obj, { province });
       }
       if (this.ByData) {
         obj = Object.assign(obj, { timeType });
@@ -261,7 +270,20 @@ export default {
       this.commonData.project = this.$store.getters.project;
       switch (path) {
         case "/visitorAnalysis/searchAnalysis": {
-          let cols = ["searchword","pv","pvRate","visitCount","visitCountRate","uv","newUv","ipCount","ipCountRate","avgVisitTime","avgPv","bounceRate"]
+          let cols = [
+            "searchword",
+            "pv",
+            "pvRate",
+            "visitCount",
+            "visitCountRate",
+            "uv",
+            "newUv",
+            "ipCount",
+            "ipCountRate",
+            "avgVisitTime",
+            "avgPv",
+            "bounceRate",
+          ];
           this.commonData.cols = cols;
           exportSearchWordDetailApi(this.commonData).then((res) => {
             let name = this.sliceTypeFile(res);
@@ -277,7 +299,15 @@ export default {
           break;
         }
         case "/behaviorAnalysis/user-behavior-analysis": {
-          let cols =[ "distinctId","visitorType","visitCount","pv","visitTime","avgPv","latestTime"]
+          let cols = [
+            "distinctId",
+            "visitorType",
+            "visitCount",
+            "pv",
+            "visitTime",
+            "avgPv",
+            "latestTime",
+          ];
           this.commonData.cols = cols;
           exportVisitorListApi(this.commonData).then((res) => {
             let name = this.sliceTypeFile(res);
@@ -299,7 +329,19 @@ export default {
     },
     // 切换省份
     handleCheckProvince(e) {
+      console.log(e, "全部");
+      // if ((e.provinceName = "全部")) {
+      //   this.areaValue = [];
+      // }
       this.areaValue = e.provinceName;
+      // switch (e.provinceName) {
+      //   case "全部":
+      //     this.areaValue = "全部";
+      //     break;
+      //   default:
+      //     this.areaValue = e.provinceName;
+      //     break;
+      // }
     },
     checkDateEvnet(val) {
       this.timeFlag = "";
@@ -464,6 +506,22 @@ export default {
     line-height: 25px;
   }
 }
+.popCancle:hover{
+  border: 1px solid #727171;
+  border-radius: 4px;
+}
+.popCancle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px #efefef solid;
+  line-height: 20px;
+  text-align: center;
+}
 .documentation-container {
   box-sizing: border-box;
   min-height: 94px;
@@ -508,7 +566,7 @@ export default {
         }
 
         .areaBox {
-          min-width: 78px;
+          // min-width: 78px;
           height: 30px;
           line-height: 30px;
           font-size: 12px;
@@ -518,6 +576,8 @@ export default {
           border-top-right-radius: 5px;
           border-bottom-right-radius: 5px;
           padding: 0 8px;
+          padding-right: 20px;
+          box-sizing: border-box;
           cursor: pointer;
         }
       }

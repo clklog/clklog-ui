@@ -40,9 +40,9 @@
           >平均访问时长占比</el-checkbox
         >
         <el-checkbox label="avgPv">平均访问页数</el-checkbox>
-        <el-checkbox v-if="byChannel" label="avgPvRate"
+        <!-- <el-checkbox v-if="byChannel" label="avgPvRate"
           >平均访问页数占比</el-checkbox
-        >
+        > -->
       </el-checkbox-group>
     </div>
   </div>

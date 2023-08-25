@@ -3,7 +3,7 @@
     <div class="chartsIcon">
       <div class="chartLeft">
         <div class="trendHead">
-          <div class="public-firstHead">指标分析图</div>
+          <div class="public-firstHead" style="margin-top: 20px; margin-right: 13px;">指标分析图</div>
           <div class="block">
             <!-- <el-cascader
               v-model="emptyList"

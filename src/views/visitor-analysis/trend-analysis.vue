@@ -6,7 +6,6 @@
         ByData
         bySub
         @setFilterBarParams="setFilterBarParams"
-        @publicEventDown="publicEventDown"
       />
     </div>
     <div class="public-block">
@@ -75,7 +74,8 @@ export default {
       });
       getFlowTrendApi(this.commonParams).then((res) => {
         if (res.code == 200) {
-          this.$refs.indicatorChart.apiDetailList(res.data);
+          // console.log(this.commonParams,"commonParams---");
+          this.$refs.indicatorChart.apiDetailList(res.data,);
         }
       });
     },
@@ -83,22 +83,13 @@ export default {
       // getFlowTrendDetailApi(this.commonParams).then((res) => {
       getFlowDetailApi(this.commonParams).then((res) => {
         if (res.code == 200) {
-          this.$refs.trendTable.apiDetailList(res.data);
+          this.$refs.trendTable.apiDetailList(res.data,this.commonParams.timeType);
         }
       });
     },
     setFilterBarParams(val) {
       this.filterBarParams = copyObj(val);
     },
-    publicEventDown(val){
-      // 下载文档事件
-      console.log(this.filterBarParams,"----------");
-      // exportFlowTrendDetailApi(this.commonParams).then((res) => {
-      //   if (res.code == 200) {
-          
-      //   }
-      // });
-    }
   },
 };
 </script>
