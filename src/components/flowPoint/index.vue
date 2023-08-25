@@ -212,7 +212,7 @@ export default {
   border: 1px solid #f0f0f5;
   border-radius: 6px;
   box-sizing: border-box;
-  margin: 12px;
+  // margin: 12px;
   .setSpace {
     margin-bottom: 12px;
   }

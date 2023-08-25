@@ -2,13 +2,14 @@
   <div>
     <div class="chartsIcon">
       <flowPoint ref="flowPoint" @flowPoint="flowPoint"></flowPoint>
-      <div class="public-table-block">
+      <div>
         <div class="public-Table-minHeight public-hoverItem">
           <el-table
             :data="equipmentList"
             :header-cell-style="{ textAlign: 'center' }"
             :cell-style="{ textAlign: 'center' }"
             border
+            class="public-radius"
             @sort-change="sortChange($event)"
             style="width: 100%"
           >
@@ -264,6 +265,7 @@ export default {
   min-height: 461px;
   background: #fff;
   border-radius: 6px;
+  padding: 22px;
 
   .flow-indicator {
     min-height: 58px;

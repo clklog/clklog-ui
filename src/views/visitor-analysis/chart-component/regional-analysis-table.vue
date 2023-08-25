@@ -1,9 +1,10 @@
 <template>
   <div class="chartsIcon">
     <flowPoint ref="flowPoint" @flowPoint="flowPoint"></flowPoint>
-    <div class="public-table-block">
+    <div>
       <div class="public-Table-minHeight public-hoverItem">
         <el-table
+        class="public-radius"
           :data="tableDetailList"
           border
           :header-cell-style="{ textAlign: 'center' }"
@@ -141,7 +142,7 @@ export default {
         this.current.sortOrder = null;
         this.$emit("currentPage", this.current);
       }
-    },
+    },  
     initCurrentPage() {
       this.currentPage = 1;
     },
@@ -250,5 +251,6 @@ export default {
   min-height: 461px;
   background: #fff;
   border-radius: 6px;
+  padding: 22px;
 }
 </style>

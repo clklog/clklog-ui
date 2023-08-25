@@ -63,9 +63,10 @@
 
     <div class="chartsIcon">
       <flowPoint ref="flowPoint" @flowPoint="flowPoint" byChannel></flowPoint>
-      <div class="public-table-block">
+      <div>
         <div class="public-Table-minHeight">
           <el-table
+           class="public-radius"
             :data="
               channelTableData.slice(
                 (currentPage - 1) * pageSize,
@@ -166,12 +167,12 @@
                 label="平均访问页数"
                 sortable
               />
-              <el-table-column
+              <!-- <el-table-column
                 v-if="avgPvRate"
                 prop="avgPvRate"
                 label="平均访问页数占比"
                 sortable
-              />
+              /> -->
               <!-- <el-table-column prop="amount10" label="平均访问页数" sortable /> -->
             </el-table-column>
           </el-table>
@@ -458,12 +459,10 @@ img {
   position: relative;
   box-sizing: border-box;
   margin: 20px;
-  padding-top: 1px;
   min-height: 461px;
   background: #fff;
-  //   background: rgba(158, 158, 161, 0.39);
+  padding: 22px;
   border-radius: 6px;
-
   .flow-indicator {
     min-height: 58px;
     background: rgba(252, 252, 252, 0.39);

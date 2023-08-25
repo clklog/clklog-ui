@@ -19,6 +19,7 @@
         "
       >
         <el-table
+        class="public-radius"
           ref="singleTable"
           :data="apiProvinceList"
           highlight-current-row

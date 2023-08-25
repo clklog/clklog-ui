@@ -1,9 +1,11 @@
 <template>
   <div class="chartsIcon public-table-block public-hoverItem">
     <flowPoint ref="flowPoint" @flowPoint="flowPoint"></flowPoint>
-    <div class="public-table-block">
-      <div class="public-Table-minHeight">
+    <!-- class="public-table-block" -->
+    <div>
+      <div class="public-Table-minHeight" >
         <el-table
+        class="public-radius"
           :header-cell-style="{ textAlign: 'center' }"
           :cell-style="{ textAlign: 'center' }"
           :data="
@@ -16,11 +18,10 @@
           border
           style="width: 100%"
         >
-          <!-- <el-table-column sortable prop="statTime" label="日期" width="200" /> -->
           <el-table-column label="日期" prop="statTime" sortable>
             <template slot-scope="scope">
               {{ scope.row.statTime }}
-              <span v-if="timeType && timeType == 'hour'">时</span>
+              <!-- <span v-if="timeType && timeType == 'hour'">时</span> -->
             </template>
           </el-table-column>
           <el-table-column prop="date" label="流量基础指标" width="150">
@@ -134,8 +135,6 @@ export default {
   data() {
     return {
       flowTableList: [],
-      // channelList: ["pv", "visitCount", "newUvRate", "pvRate"],
-      // flowQuality: ["avgPv"],
       pv: false,
       visitCount: false,
       newUv: false,
@@ -154,7 +153,6 @@ export default {
     };
   },
   mounted() {
-    this.initShowTable();
   },
   methods: {
     avgTimeEvent(val) {
@@ -239,20 +237,12 @@ export default {
         }
       }
     },
-    handelChannelList() {
-      this.initShowTable();
-    },
-    handelFlowQuality() {
-      this.initShowTable();
-    },
     percentageFun(val) {
       return percent(val);
     },
     apiDetailList(val, time) {
-      // console.log(time,"time-------");
       this.timeType = time;
       this.currentPage = 1;
-      // this.flowTableList = val.detail;
       this.flowTableList = val;
       this.flowTableList.map((item) => {
         if (item.bounceRate) {
@@ -264,9 +254,6 @@ export default {
         if (item.pvRate) {
           item.pvRate = this.percentageFun(item.pvRate);
         }
-        // if (item.avgVisitTime) {
-        //   item.avgVisitTime = formatTime(Math.floor(item.avgVisitTime));
-        // }
         if (item.avgPv) {
           item.avgPv = Math.floor(item.avgPv);
         }
@@ -274,63 +261,6 @@ export default {
       // this.total = val.detail.length;
       this.total = val.length;
     },
-    initShowTable() {
-      this.mergedArr = [];
-      this.mergedArr = [...this.channelList, ...this.flowQuality];
-      if (this.mergedArr.length > 0) {
-        if (this.mergedArr.includes("pv")) {
-          this.pv = true;
-        } else {
-          this.pv = false;
-        }
-        if (this.mergedArr.includes("visitCount")) {
-          this.visitCount = true;
-        } else {
-          this.visitCount = false;
-        }
-        if (this.mergedArr.includes("newUv")) {
-          this.newUv = true;
-        } else {
-          this.newUv = false;
-        }
-        if (this.mergedArr.includes("uv")) {
-          this.uv = true;
-        } else {
-          this.uv = false;
-        }
-        if (this.mergedArr.includes("ipCount")) {
-          this.ipCount = true;
-        } else {
-          this.ipCount = false;
-        }
-        if (this.mergedArr.includes("avgPv")) {
-          this.avgPv = true;
-        } else {
-          this.avgPv = false;
-        }
-        if (this.mergedArr.includes("avgVisitTime")) {
-          this.avgVisitTime = true;
-        } else {
-          this.avgVisitTime = false;
-        }
-        if (this.mergedArr.includes("bounceRate")) {
-          this.bounceRate = true;
-        } else {
-          this.bounceRate = false;
-        }
-        if (this.mergedArr.includes("pvRate")) {
-          this.pvRate = true;
-        } else {
-          this.pvRate = false;
-        }
-        if (this.mergedArr.includes("newUvRate")) {
-          this.newUvRate = true;
-        } else {
-          this.newUvRate = false;
-        }
-      }
-    },
-
     handleSizeChange(val) {
       this.currentPage = 1;
       this.pageSize = val;
@@ -346,12 +276,4 @@ export default {
   @import "~@/styles/components/el-checkbox.scss";
   @import "~@/styles/components/el-pagination.scss";
 }
-// .chartsIcon {
-//   box-sizing: border-box;
-//   margin: 20px 0;
-//   padding-top: 1px;
-//   min-height: 461px;
-//   background: #fff;
-//   border-radius: 6px;
-// }
 </style>

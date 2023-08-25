@@ -22,7 +22,6 @@
           class="checkBoxStyle"
           @change="handelFlowQuality"
         >
-          <!-- <el-checkbox label="entryCount">入口页次数</el-checkbox> -->
           <el-checkbox label="entryCount">入口页次数</el-checkbox>
           <el-checkbox label="downPvCount">贡献下游浏览量</el-checkbox>
           <el-checkbox label="exitCount">退出页次数</el-checkbox>
@@ -31,14 +30,16 @@
         </el-checkbox-group>
       </div>
     </div>
-    <div class="public-table-block">
+    <!-- class="public-table-block" -->
+    <div>
       <div class="public-Table-minHeight public-hoverItem">
         <el-table
           :data="vistedTableData"
           border
+          class="public-radius"
           style="width: 100%"
           :header-cell-style="{ textAlign: 'center' }"
-          :cell-style="{ textAlign: 'center' }"
+          :cell-style="tableHeaderColor"
           @sort-change="sortChange($event)"
         >
           <el-table-column label="序号" type="index" width="150" align="center">
@@ -46,8 +47,8 @@
               <span v-text="getIndex(scope.$index)"> </span>
             </template>
           </el-table-column>
-          <el-table-column label="页面URL" width="350">
-            <template slot-scope="scope">
+          <el-table-column prop="uri" label="页面URL" width="400" :show-overflow-tooltip="true">
+            <!-- <template slot-scope="scope">
               <el-popover trigger="hover" placement="top">
                 <div>{{ scope.row.uri }}</div>
                 <div
@@ -61,7 +62,7 @@
                   {{ scope.row.uri }}
                 </div>
               </el-popover>
-            </template>
+            </template> -->
           </el-table-column>
           <el-table-column label="流量基础指标">
             <el-table-column v-if="pv" prop="pv" label="浏览量(PV)" sortable />
@@ -167,6 +168,13 @@ export default {
     });
   },
   methods: {
+    tableHeaderColor({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 1) {
+        return "text-align:left";
+      } else {
+        return "text-align:center";
+      }
+    },
     // 分页
     getIndex($index) {
       return (this.currentPage - 1) * this.pageSize + $index + 1;
@@ -323,14 +331,14 @@ export default {
   min-height: 461px;
   background: #fff;
   border-radius: 6px;
-
+  padding: 22px;
   .flow-indicator {
     min-height: 58px;
     background: rgba(252, 252, 252, 0.39);
     border: 1px solid #f0f0f5;
     border-radius: 6px;
     box-sizing: border-box;
-    margin: 12px;
+    // margin: 12px;
     .setSpace {
       margin-bottom: 12px;
     }

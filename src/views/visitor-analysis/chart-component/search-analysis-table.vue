@@ -5,15 +5,14 @@
       <span class="public-firstHead">站外搜索词分析</span>
       <div class="public-Table-minHeight">
         <el-table
+        class="public-radius"
           :header-cell-style="{ textAlign: 'center', background: '#F5F7FA' }"
-          :cell-style="{ textAlign: 'center' }"
+          :cell-style="tableHeaderColor"
           :data="searchTableList"
           border
           @sort-change="sortChange($event)"
           style="width: 100%; margin-top: 12px"
         >
-          <!-- <el-table-column prop="statTime" label="日期" sortable width="180">
-            </el-table-column> -->
           <el-table-column
             prop="searchword"
             :show-overflow-tooltip="true"
@@ -113,6 +112,13 @@ export default {
   },
   created() {},
   methods: {
+    tableHeaderColor({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 0) {
+        return "text-align:left";
+      } else {
+        return "text-align:center";
+      }
+    },
     percentageFun(val) {
       return percent(val);
     },

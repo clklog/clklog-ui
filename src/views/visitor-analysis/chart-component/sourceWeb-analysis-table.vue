@@ -3,17 +3,17 @@
     <div class="flow-indicator">
       <flowPoint ref="flowPoint" @flowPoint="flowPoint"></flowPoint>
     </div>
-    <div class="public-table-block">
+    <div>
       <div class="public-Table-minHeight">
         <el-table
+        class="public-radius"
           :header-cell-style="{ textAlign: 'center' }"
-          :cell-style="{ textAlign: 'center' }"
+          :cell-style="tableHeaderColor"
           :data="getSourceSiteList"
           border
           @sort-change="sortChange($event)"
           style="width: 100%"
         >
-          <!-- <el-table-column type="index" label="序号" width="150" /> -->
           <el-table-column
               label="序号"
               type="index"
@@ -135,6 +135,13 @@ export default {
     };
   },
   methods: {
+    tableHeaderColor({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 1) {
+        return "text-align:left";
+      } else {
+        return "text-align:center";
+      }
+    },
     getIndex($index) {
       return (
         (this.currentPage - 1) * this.pageSize + $index + 1
@@ -251,8 +258,8 @@ export default {
   @import "~@/styles/components/el-pagination.scss";
 }
 .chartsIcon {
-  // box-sizing: border-box;
-  // margin: 20px;
+  box-sizing: border-box;
+  margin: 20px;
   // padding-top: 1px;
   // min-height: 461px;
   // background: #fff;

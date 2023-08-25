@@ -80,15 +80,15 @@ export default {
         newvalue.pageSize = val.size;
         newvalue.sortName = val.sortName;
         newvalue.sortOrder = val.sortOrder;
-        this.pageNum = val.page;
-        this.pageSize = val.size;
         this.sortName = val.sortName;
         this.sortOrder = val.sortOrder;
+        this.pageNum = val.page;
+        this.pageSize = val.size;
       } else {
-        newvalue.pageNum = this.pageNum;
-        newvalue.pageSize = this.pageSize;
         newvalue.sortName = this.sortName;
         newvalue.sortOrder = this.sortOrder;
+        newvalue.pageNum = this.pageNum;
+        newvalue.pageSize = this.pageSize;
         this.$refs.regionalTable.initCurrentPage();
       }
       this.$refs.regionalTable.getDetailList(newvalue);

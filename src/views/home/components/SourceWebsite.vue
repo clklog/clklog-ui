@@ -1,57 +1,40 @@
 <template>
   <div class="SourceWebsite block-main public-hoverItem">
-    <div class="block-head">
+    <div class="block-head" @click="$router.push('/visitorAnalysis/sourceWebAnalysis')">
       <div class="block-title">Top10来源网站</div>
       <div
         class="block-head-icon"
-        @click="$router.push('/visitorAnalysis/sourceWebAnalysis')"
+        
       >
         <img src="@/assets/images/icon.png" alt="" width="10px" />
       </div>
     </div>
     <div class="block-index-form">
-      <div class="form-list-page">
-        <div class="form-list-header">
-          <div class="header-text w156">来源网站</div>
-          <div class="header-name w156">浏览量(PV)</div>
-          <div class="header-name w156">
-            占比
-          </div>
-        </div>
-        <div
-          class="form-list-record"
-          v-for="(item, index) in SourceWebsitelist"
-          :key="index"
+      <el-table
+        :data="SourceWebsitelist"
+        :header-cell-style="{ textAlign: 'center' }"
+        :cell-style="tableHeaderColor"
+        border
+        class="public-radius"
+        style="width: 100%;"
+      >
+        <el-table-column
+          align="right"
+          prop="sourcesite"
+          label="来源网站"
+          :show-overflow-tooltip="true"
         >
-          <div class="header-text w157">
-            <el-popover
-              placement="top-start"
-              trigger="hover"
-              v-if="item.website && item.website.length > 70"
-            >
-              <div style="font-size: 12px">
-                <!-- {{ item.website }} -->
-                {{ item.sourcesite }}
-              </div>
-              <div slot="reference" class="overItem" style="cursor: pointer">
-                <!-- {{ item.website || "--" }} -->
-                {{ item.sourcesite || "--" }}
-              </div>
-            </el-popover>
-            <div v-else class="overItem">
-              <!-- {{ item.website || "--" }} -->
-              {{ item.sourcesite || "--" }}
-            </div>
-          </div>
-          <div class="form-list-item w158">
-            <p>{{ item.pv }}</p>
-          </div>
-          <div class="form-list-item w158">
-            <!-- <p>{{ percentageFun(item.percent) }}</p> -->
-            <p>{{ percentageFun(item.pvRate) }}</p>
-          </div>
-        </div>
-      </div>
+          <template slot-scope="scope">
+            {{ scope.row.sourcesite }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="pv" label="浏览量" width="150" />
+        <el-table-column label="占比" width="150">
+          <template slot-scope="scope">
+            {{ percentageFun(scope.row.pvRate) }}
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
   </div>
 </template>
@@ -76,6 +59,13 @@ export default {
   },
   watch: {},
   methods: {
+    tableHeaderColor({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 0) {
+        return "text-align:left";
+      } else {
+        return "text-align:center";
+      }
+    },
     getSourceWebsite() {
       getSourceWebsiteApi(this.params).then((res) => {
         this.SourceWebsitelist = res.data;
@@ -87,4 +77,5 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
