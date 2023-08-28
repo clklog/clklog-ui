@@ -1,5 +1,6 @@
 <template>
   <div class="chartsIcon">
+    <div class="public-firstHead">受访页面分析</div>
     <div class="flow-indicator">
       <div class="flow-item">
         <div class="flow-title">流量基础指标</div>
@@ -128,7 +129,7 @@
 
 <script>
 import { blobDownloads } from "@/utils/localDownloadUtil.js";
-import { exportSourceWebsiteDetailApi } from "@/api/trackingapi/download";
+import { exportVisitUriDetailApi } from "@/api/trackingapi/download";
 import flowPoint from "@/components/flowPoint/index";
 import { percentage } from "@/utils/percent";
 import { formatTime } from "@/utils/format";
@@ -200,7 +201,7 @@ export default {
       let params = val;
       params.project = this.$store.getters.project;
       params.cols = [...this.channelList, ...this.flowQuality];
-      exportSourceWebsiteDetailApi(params).then((res) => {
+      exportVisitUriDetailApi(params).then((res) => {
         let name = this.sliceTypeFile(res);
         blobDownloads(res.data, name);
       });
@@ -338,20 +339,20 @@ export default {
     border: 1px solid #f0f0f5;
     border-radius: 6px;
     box-sizing: border-box;
-    // margin: 12px;
+    margin-top: 10px;
     .setSpace {
       margin-bottom: 12px;
     }
     .flow-item {
       display: flex;
-      align-items: center;
+      // align-items: center;
       margin-top: 12px;
       margin-left: 10px;
       .flow-title {
         margin-right: 21px;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 400;
-        line-height: 16px;
+        line-height: 32px;
         color: #4d4d4d;
       }
     }

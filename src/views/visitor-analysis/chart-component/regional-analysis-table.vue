@@ -1,5 +1,6 @@
 <template>
   <div class="chartsIcon">
+    <div class="public-firstHead">地域分析</div>
     <flowPoint ref="flowPoint" @flowPoint="flowPoint"></flowPoint>
     <div>
       <div class="public-Table-minHeight public-hoverItem">

@@ -10,7 +10,7 @@
     </div>
     <div class="public-block">
       <div class="Overview public-hoverItem">
-        <div class="trendAnalysis public-firstHead">趋势分析</div>
+        <div class="trendAnalysis public-firstHead">流量概览</div>
         <originView ref="originView" byAreaAnaly></originView>
       </div>
       <indicatorChart ref="indicatorChart" />

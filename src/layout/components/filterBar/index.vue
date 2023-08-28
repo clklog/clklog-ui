@@ -37,7 +37,7 @@
           <el-radio-group
             size="mini"
             v-model="timeType"
-            style="font-size: 12px; height: 30px"
+            style="font-size: 13px; height: 30px"
           >
             <el-radio-button label="hour" :disabled="dayFlag ? true : false"
               >按时</el-radio-button
@@ -59,8 +59,10 @@
             <div class="areaHead">地域</div>
             <!-- 气泡弹框 -->
             <div class="area_select">
-              <i v-if="popflag" class="el-icon-arrow-up iconArrow"></i>
-              <i v-else class="el-icon-arrow-down iconArrow"></i>
+              <!-- <i v-if="popflag" class="el-icon-arrow-up iconArrow" ></i>
+              <i v-else class="el-icon-arrow-down iconArrow" @click="btnShowEvent"></i> -->
+              <!-- <i v-if="popflag" class="el-icon-arrow-up iconArrow" ></i> -->
+
               <el-popover
                 placement="bottom"
                 width="510"
@@ -82,6 +84,11 @@
                 </div>
                 <div class="areaBox" slot="reference">
                   {{ areaValue }}
+                  <i v-if="popflag" class="el-icon-arrow-up iconArrow"></i>
+                  <i
+                    v-else
+                    class="el-icon-arrow-down iconArrow"
+                  ></i>
                 </div>
               </el-popover>
             </div>
@@ -264,7 +271,11 @@ export default {
     },
   },
   methods: {
-    canclePopEvent(){
+    btnShowEvent(val) {
+      // console.log(val,"点击事件");
+      this.popflag = true;
+    },
+    canclePopEvent() {
       this.popflag = false;
     },
     download() {
@@ -498,18 +509,18 @@ export default {
   @import "~@/styles/components/custom-radio.scss";
   // 日历样式start
   .el-range-editor--medium .el-range-input {
-    font-size: 12px;
+    font-size: 13px;
   }
   .el-date-editor .el-range__icon {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 25px;
   }
   .el-range-editor--medium .el-range-separator {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 25px;
   }
 }
-.popCancle:hover{
+.popCancle:hover {
   border: 1px solid #727171;
   border-radius: 4px;
 }
@@ -557,10 +568,10 @@ export default {
         align-items: center;
         .areaHead {
           width: 40px;
-          height: 30px;
+          height: 28px;
           line-height: 30px;
           text-align: center;
-          font-size: 12px;
+          font-size: 13px;
           font-weight: 400;
           color: #4d4d4d;
           border: 1px solid #eee;
@@ -570,7 +581,8 @@ export default {
 
         .areaBox {
           // min-width: 78px;
-          height: 30px;
+          position: relative;
+          height: 28px !important;
           line-height: 30px;
           font-size: 12px;
           font-weight: 400;
@@ -595,7 +607,7 @@ export default {
       align-items: center;
       // width: 30%;
       span {
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 400;
         line-height: 13px;
         color: #4d4d4d;

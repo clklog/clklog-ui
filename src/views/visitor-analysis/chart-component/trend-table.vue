@@ -1,5 +1,6 @@
 <template>
   <div class="chartsIcon public-table-block public-hoverItem">
+    <div class="public-firstHead">趋势分析</div>
     <flowPoint ref="flowPoint" @flowPoint="flowPoint"></flowPoint>
     <!-- class="public-table-block" -->
     <div>

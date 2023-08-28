@@ -1,5 +1,6 @@
 <template>
   <div class="chartsIcon public-hoverItem">
+    <div class="public-firstHead">新老访客分析</div>
     <flowPoint ref="flowPoint" @flowPoint="flowPoint" byNewOldVisit></flowPoint>
     <div class="public-Table-minHeight">
       <el-table
@@ -106,6 +107,9 @@ export default {
         }
         if (item.pvRate) {
           item.pvRate = percentage(item.pvRate);
+        }
+        if (item.newUvRate) {
+          item.newUvRate = percentage(item.newUvRate);
         }
         if (item.avgVisitTime) {
           item.avgVisitTime = formatTime(Math.floor(item.avgVisitTime));

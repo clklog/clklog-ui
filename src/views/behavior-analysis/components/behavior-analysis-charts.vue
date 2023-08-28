@@ -516,7 +516,7 @@ img {
   justify-content: space-between;
   .chartLeft {
     border-radius: 6px;
-    background-color: #fafafb;
+    background-color: #fff;
     padding: 15px;
     width: 100%;
     min-height: 400px;

@@ -13,13 +13,11 @@
       <el-table
        class="public-radius"
         :data="getVisitList"
-        :header-cell-style="{ textAlign: 'center' }"
         :cell-style="tableHeaderColor"
-        border
         style="width: 100%"
       >
         <el-table-column
-          align="right"
+          align="left"
           prop="uri"
           label="受访页面"
           :show-overflow-tooltip="true"
@@ -30,8 +28,8 @@
             {{ scope.row.uri }}
           </template>
         </el-table-column>
-        <el-table-column prop="pv" label="浏览量" width="150" />
-        <el-table-column  label="占比" width="150">
+        <el-table-column  align="center" prop="pv" label="浏览量" width="150" />
+        <el-table-column  align="center" label="占比" width="150">
           <template
             slot-scope="scope"
           >

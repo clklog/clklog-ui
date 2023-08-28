@@ -1,35 +1,37 @@
 <template>
   <div class="SearchWord block-main public-hoverItem">
-    <div class="block-head"  @click="$router.push('/visitorAnalysis/searchAnalysis')">
+    <div
+      class="block-head"
+      @click="$router.push('/visitorAnalysis/searchAnalysis')"
+    >
       <div class="block-title">Top10搜索词</div>
-      <div
-        class="block-head-icon"
-       
-      >
+      <div class="block-head-icon">
         <img src="@/assets/images/icon.png" alt="" width="10px" />
       </div>
     </div>
+    <!-- :header-cell-style="{ textAlign: 'center' }" -->
+    <!-- :header-cell-style="headerStyle" -->
+
     <div class="block-index-form">
       <el-table
         class="public-radius"
         :data="searchWordList"
-        :header-cell-style="{ textAlign: 'center' }"
         :cell-style="tableHeaderColor"
-        border
-        style="width: 100%;"
+        style="width: 100%"
       >
         <el-table-column
-          align="right"
           prop="word"
-          label="受访页面"
+          label="搜索词"
+          style="text-align: center;"
+          align="left"
           :show-overflow-tooltip="true"
         >
           <template slot-scope="scope">
             {{ scope.row.word }}
           </template>
         </el-table-column>
-        <el-table-column prop="pv" label="浏览量" width="150" />
-        <el-table-column label="占比" width="150">
+        <el-table-column prop="pv" label="浏览量" width="150"  align="center" />
+        <el-table-column label="占比" width="150" align="center">
           <template slot-scope="scope">
             {{ percentageFun(scope.row.percent) }}
           </template>
@@ -60,6 +62,13 @@ export default {
   watch: {},
   methods: {
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 0) {
+        return "text-align:left";
+      } else {
+        return "text-align:center";
+      }
+    },
+    headerStyle(row, column, rowIndex, columnIndex) {
       if (columnIndex === 0) {
         return "text-align:left";
       } else {

@@ -22,13 +22,13 @@
           </el-table-column>
           <el-table-column
             prop="pv"
-            label="浏览量(PV)"
+            label="搜索次数"
             :sort-orders="['descending', 'ascending']"
             :sortable="true"
           >
           </el-table-column>
           <el-table-column
-            label="浏览量占比"
+            label="搜索次数占比"
             sortable
             :sort-method="
               (a, b) => {

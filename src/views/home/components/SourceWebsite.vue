@@ -12,14 +12,12 @@
     <div class="block-index-form">
       <el-table
         :data="SourceWebsitelist"
-        :header-cell-style="{ textAlign: 'center' }"
         :cell-style="tableHeaderColor"
-        border
         class="public-radius"
         style="width: 100%;"
       >
         <el-table-column
-          align="right"
+          align="left"
           prop="sourcesite"
           label="来源网站"
           :show-overflow-tooltip="true"
@@ -28,8 +26,8 @@
             {{ scope.row.sourcesite }}
           </template>
         </el-table-column>
-        <el-table-column prop="pv" label="浏览量" width="150" />
-        <el-table-column label="占比" width="150">
+        <el-table-column align="center" prop="pv" label="浏览量" width="150" />
+        <el-table-column label="占比" align="center" width="150">
           <template slot-scope="scope">
             {{ percentageFun(scope.row.pvRate) }}
           </template>

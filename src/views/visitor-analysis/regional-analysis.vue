@@ -3,7 +3,7 @@
     <FilterBar @setFilterBarParams="setFilterBarParams" />
     <div class="public-block">
       <div class="Overview public-hoverItem">
-        <div class="public-firstHead" style="padding-left: 15px">地域分析</div>
+        <div class="public-firstHead" >流量概览</div>
         <originView ref="originView" byAreaAnaly></originView>
       </div>
       <regionalShow ref="regionalShow"></regionalShow>
