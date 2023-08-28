@@ -4,9 +4,10 @@
       <!-- <div class="search_table"> -->
       <span class="public-firstHead">站外搜索词分析</span>
       <div class="public-Table-minHeight">
+        <!-- textAlign: 'center', -->
         <el-table
-        class="public-radius"
-          :header-cell-style="{ textAlign: 'center', background: '#F5F7FA' }"
+          class="public-radius"
+          :header-cell-style="{ background: '#F5F7FA' }"
           :cell-style="tableHeaderColor"
           :data="searchTableList"
           border
@@ -15,6 +16,7 @@
         >
           <el-table-column
             prop="searchword"
+            align="left"
             :show-overflow-tooltip="true"
             label="搜索词"
             width="250"
@@ -22,12 +24,14 @@
           </el-table-column>
           <el-table-column
             prop="pv"
+            align="center"
             label="搜索次数"
             :sort-orders="['descending', 'ascending']"
             :sortable="true"
           >
           </el-table-column>
           <el-table-column
+          align="center"
             label="搜索次数占比"
             sortable
             :sort-method="
@@ -39,24 +43,24 @@
             <template slot-scope="scope"> {{ scope.row.pvRate }}% </template>
           </el-table-column>
           <!-- “访问次数”，“访问次数占比”，“访客数”，“新访客数”， “IP数”，“IP数占比” -->
-          <el-table-column prop="visitCount" label="访问次数" sortable>
+          <el-table-column  align="center" prop="visitCount" label="访问次数" sortable>
           </el-table-column>
-          <el-table-column prop="visitCountRate" label="访问次数占比" sortable>
+          <el-table-column  align="center" prop="visitCountRate" label="访问次数占比" sortable>
           </el-table-column>
-          <el-table-column prop="uv" label="访客数" sortable>
+          <el-table-column  align="center" prop="uv" label="访客数" sortable> </el-table-column>
+          <el-table-column  align="center" prop="newUv" label="新访客数" sortable>
           </el-table-column>
-          <el-table-column prop="newUv" label="新访客数" sortable>
+          <el-table-column  align="center" prop="ipCount" label="IP数" sortable>
           </el-table-column>
-          <el-table-column prop="ipCount" label="IP数" sortable>
-          </el-table-column>
-          <el-table-column prop="ipCountRate" label="IP数占比" sortable>
+          <el-table-column  align="center" prop="ipCountRate" label="IP数占比" sortable>
           </el-table-column>
 
-          <el-table-column prop="avgVisitTime" label="平均访问时长" sortable>
+          <el-table-column  align="center" prop="avgVisitTime" label="平均访问时长" sortable>
           </el-table-column>
-          <el-table-column prop="avgPv" label="平均访问页数" sortable>
+          <el-table-column  align="center" prop="avgPv" label="平均访问页数" sortable>
           </el-table-column>
           <el-table-column
+          align="center"
             label="跳出率"
             sortable
             :sort-method="
@@ -89,7 +93,6 @@
     <!-- </div> -->
   </div>
 </template>
-
 
 <script>
 import { percent } from "@/utils/percent";
