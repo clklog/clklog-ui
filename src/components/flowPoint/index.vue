@@ -116,7 +116,7 @@ export default {
         case "/visitorAnalysis/trendAnalysis": {
           let regular = ["statTime"]
           params.cols = [...params.cols, ...regular]; //增加固定列
-          console.log(params,"下载参数");
+          // console.log(params,"下载参数");
           exportFlowTrendDetailApi(params).then((res) => {
             let name = this.sliceTypeFile(res);
             blobDownloads(res.data, name);
