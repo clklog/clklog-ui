@@ -7,11 +7,62 @@
 @import "./btn.scss";
 @import "./components/element-unifystyle.scss";
 @import "./components/public-style.scss";
+@import "./components/custom-color.scss";
+// -------------------start----------------------filterbar 统一样式
 
-// table hover后的颜色
+// table 表格统一样式 hover后的颜色
 .el-table--enable-row-hover .el-table__body tr:hover > td {
-  background-color: #f7fafe !important;
+  background-color: #e4eefc !important;
 }
+.el-table--border {
+  // border: 1px solid #d8e2ef !important;
+  border-color: #d8e2ef !important;
+}
+.el-table::before,
+.el-table--group::after,
+.el-table--border::after {
+  content: "";
+  position: absolute;
+  background-color: #d8e2ef;
+  z-index: 1;
+}
+// el-radio 统一样式
+.el-radio {
+  color: #194580;
+}
+.el-radio__input.is-checked + .el-radio__label {
+  color: #194580 !important;
+}
+.el-radio-button__inner {
+  color: #194580;
+}
+
+//区域全部
+.public_font_color {
+  color: #194580 !important;
+}
+
+//table过滤器统一背景色
+.public_indicator {
+  background-color: #fbfcfe !important;
+  border: 1px solid #d8e2ef !important;
+}
+// el-popover 统一样式
+.el-popover {
+  background-color: #fbfcfe !important;
+  border: 1px solid #d8e2ef !important;
+}
+// 统一边框颜色
+.el-input__inner {
+  border: 1px solid #d8e2ef;
+}
+.public_border_color {
+  border: 1px solid #d8e2ef;
+}
+.el-radio-button__orig-radio:disabled + .el-radio-button__inner {
+  border-color: #d8e2ef;
+}
+// ----------------------- end --------------------
 
 body {
   height: 100%;
@@ -212,6 +263,7 @@ aside {
   white-space: nowrap;
 }
 .block-main {
+  overflow: hidden;
   box-sizing: border-box;
   padding: 25px 25px;
   background-color: #fff;
@@ -230,7 +282,7 @@ aside {
       color: #4d4d4d;
     }
     .block-head-icon {
-      box-sizing:content-box;
+      box-sizing: content-box;
       margin-left: auto;
       // width: 50%;
       text-align: right;
@@ -308,7 +360,8 @@ aside {
 .flow-indicator {
   min-height: 58px;
   // background: rgba(252, 252, 252, 0.39);
-  background: #fff;
+  // background: #fff;
+  // background: red;
   border: 1px solid #f0f0f5;
   border-radius: 6px;
   box-sizing: border-box;

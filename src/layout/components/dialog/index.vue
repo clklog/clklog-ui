@@ -11,7 +11,7 @@
         <div class="left-item">
           <div class="visitorInfo commonBackgrond">
             <div class="setImg">
-              <img src="@/assets/images/avator.jpg" alt="" />
+              <img src="@/assets/images/avator.png" alt="" />
             </div>
             <div class="visitDetail">
               <div class="title common-title">访客信息</div>
@@ -526,7 +526,7 @@ export default {
         // align-items: center;
         box-sizing: border-box;
         img {
-          width: 90px;
+          width: 89px;
           height: 90px;
           object-fit: cover;
           background: rgba(0, 0, 0, 0);
@@ -575,7 +575,7 @@ export default {
         font-weight: 500;
         line-height: 13px;
         line-height: 20px;
-        color: #3d64e6;
+        color: #2c7be5;
         .firstTime {
           width: 100%;
           text-align: left;
@@ -610,7 +610,7 @@ export default {
       color: #5a607f;
       .number {
         font-size: 18px;
-        color: #3d64e6;
+        color: #2c7be5;
         font-weight: 500;
       }
     }
@@ -651,7 +651,7 @@ export default {
         cursor: pointer;
         width: 54px;
         height: 21px;
-        border: 1px solid #3d64e6;
+        border: 1px solid #2c7be5;
         border-radius: 4px;
         font-size: 12px;
         font-weight: 400;
@@ -705,7 +705,7 @@ export default {
         .right_body_http {
           min-height: 50px;
           line-height: 13px;
-          color: #3d64e6;
+          color: #2c7be5;
           font-size: 13px;
           text-align: right;
           position: relative;
