@@ -608,8 +608,8 @@
 }
 
 .el-popover {
-  background-color: #fbfcfe !important;
-  border: 1px solid #d8e2ef !important;
+  background-color: #fbfcfe;
+  border: 1px solid #d8e2ef;
 }
 
 .el-input__inner {

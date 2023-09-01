@@ -57,11 +57,7 @@
           <div class="areaItem">
             <div class="areaHead public_border_color">地域</div>
             <!-- 气泡弹框 -->
-            <div class="area_select ">
-              <!-- <i v-if="popflag" class="el-icon-arrow-up iconArrow" ></i>
-              <i v-else class="el-icon-arrow-down iconArrow" @click="btnShowEvent"></i> -->
-              <!-- <i v-if="popflag" class="el-icon-arrow-up iconArrow" ></i> -->
-
+            <div class="area_select sing_special_popover">
               <el-popover
                 placement="bottom"
                 width="510"
@@ -548,12 +544,17 @@ export default {
   },
 };
 </script>
-<style>
-  
+<style lang="scss">
+// .sing_special_popover {
+//   .el-popover {
+//     background-color: red !important;
+//   }
+// }
 </style>
 <style lang="scss" scoped>
 ::v-deep {
   @import "~@/styles/components/custom-radio.scss";
+
   // 日历样式start
   .el-range-editor--medium .el-range-input {
     font-size: 13px;
@@ -579,24 +580,21 @@ export default {
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  border: 1px #efefef solid;
+  border: 1px #d8e2ef solid;
   line-height: 20px;
   text-align: center;
 }
 .documentation-container {
   box-sizing: border-box;
-  // min-height: 94px;
   min-height: 103px;
   padding-bottom: 20px;
   width: 100%;
   .checkContent {
     position: fixed;
     width: 100%;
-    // min-height: 94px;
     min-height: 103px;
     z-index: 500;
     background-color: #fff;
-    // width: calc(100% - 209px);
     border-bottom: 1px #eee solid;
     .areaContent {
       height: 30px;
@@ -606,7 +604,6 @@ export default {
         .iconArrow {
           position: absolute;
           font-size: 13px;
-          //  line-height: 30px;
           top: 3px;
           right: 5px;
           transform: translate(0, 50%);
@@ -623,7 +620,6 @@ export default {
           font-size: 13px;
           font-weight: 400;
           color: #4d4d4d;
-          // border: 1px solid #eee;
           border-top-left-radius: 5px;
           border-bottom-left-radius: 5px;
         }
@@ -634,7 +630,6 @@ export default {
           line-height: 30px;
           font-size: 12px;
           font-weight: 400;
-          // color: #4d4d4d;
           border: 1px solid #d8e2ef;
           border-left: 0px;
           border-top-right-radius: 5px;
@@ -666,14 +661,14 @@ export default {
     }
     .btnEvent {
       cursor: pointer;
-      width: 54px;
-      height: 21px;
-      color: #2c7be5;
+      width: 65px;
+      height: 28px;
+      color: #194580;
+      font-weight: 600px;
       border: 1px solid #d8e2ef;
       border-radius: 4px;
       font-size: 12px;
-      font-weight: 400;
-      line-height: 21px;
+      line-height: 28px;
       text-align: center;
     }
     .SetSpace {
@@ -682,9 +677,7 @@ export default {
     .channelSecond {
       width: 100%;
       display: flex;
-      // margin: 11px 0;
       padding: 12px 0 15px 0;
-      // justify-content: space-between;
       align-items: center;
       position: relative;
     }
