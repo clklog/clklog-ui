@@ -242,7 +242,7 @@
                           <div
                             style="
                               width: 1px;
-                              min-height: 40px;
+                              min-height: 30px;
                               border-left: 1px solid #b8b8b8;
                               margin: 5px 0 5px 6px;
                             "

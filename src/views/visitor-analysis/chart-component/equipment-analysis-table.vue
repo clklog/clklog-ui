@@ -165,7 +165,7 @@ export default {
         if (item.pvRate) {
           item.pvRate = percentage(item.pvRate);
         }
-        if (item.avgVisitTime) {
+        if (item.avgVisitTime || item.avgVisitTime == 0) {
           item.avgVisitTime = formatTime(Math.floor(item.avgVisitTime));
         }
       });

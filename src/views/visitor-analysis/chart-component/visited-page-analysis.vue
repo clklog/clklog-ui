@@ -219,7 +219,7 @@ export default {
         if (item.exitRate) {
           item.exitRate = percentage(item.exitRate);
         }
-        if (item.avgVisitTime) {
+        if (item.avgVisitTime || item.avgVisitTime == 0) {
           item.avgVisitTime = formatTime(Math.floor(item.avgVisitTime));
         }
         if (item.avgPv) {

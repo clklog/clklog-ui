@@ -70,6 +70,7 @@
                 currentPage * pageSize
               )
             "
+            @sort-change="sortChange($event)"
             :header-cell-style="{ textAlign: 'center', background: '#f7fafe ' }"
             :cell-style="{ textAlign: 'center' }"
             border
@@ -227,9 +228,38 @@ export default {
       currentPage: 1,
       total: 0,
       pageSize: 10,
+      current: {
+        sortName: "",
+        sortOrder: "",
+      },
     };
   },
   methods: {
+    sortChange(e) {
+      console.log(243, "43243");
+      if (e.order && e.order == "ascending") {
+        // 降序
+        this.current.sortName = e.prop;
+        this.current.sortOrder = "ascending";
+      } else if (e.order && e.order == "descending") {
+        // 升序
+        this.current.sortName = e.prop;
+        this.current.sortOrder = "descending";
+      }
+      this.ascDscEvent();
+    },
+    ascDscEvent() {
+      let nameAttr = this.current.sortName;
+      if (nameAttr && this.current.sortOrder === "ascending") {
+        this.channelTableData = this.channelTableData.sort(function (a, b) {
+          return a[nameAttr] - b[nameAttr];
+        });
+      } else if (nameAttr && this.current.sortOrder === "descending") {
+        this.channelTableData = this.channelTableData.sort(function (a, b) {
+          return b[nameAttr] - a[nameAttr];
+        });
+      }
+    },
     averageRulesEvent(num) {
       return averageRules(num);
     },
@@ -272,8 +302,7 @@ export default {
       this.filterChannelList = filteredArr;
     },
     formatTimeEvent(val) {
-      let num = Math.floor(val);
-      return formatTime(num);
+      return formatTime(Math.floor(val));
     },
     // 分页器
     handleSizeChange(val) {

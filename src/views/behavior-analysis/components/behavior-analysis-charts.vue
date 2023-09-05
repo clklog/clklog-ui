@@ -326,13 +326,11 @@ export default {
     getUserListEvent(val) {
       this.userListData = val.rows;
       val.rows.map((item) => {
-        if (item.visitTime) {
+        if (item.visitTime || item.visitTime == 0) {
           item.visitTime = formatTime(Math.floor(item.visitTime));
         }
-        //   // item.avgVisitTime = formatTime(Math.floor(item.avgVisitTime));
       });
       this.total = val.total;
-      // console.log(this.userListData, "用户列表数据");
     },
     handleCellClick(val) {
       this.$refs.child.callMethod(val);

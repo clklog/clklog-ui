@@ -201,7 +201,7 @@ export default {
             ) {
               item.province = item.country + "-" + item.province;
             }
-            if (item.avgVisitTime) {
+            if (item.avgVisitTime || item.avgVisitTime == 0) {
               item.avgVisitTime = formatTime(Math.floor(item.avgVisitTime));
             }
           });

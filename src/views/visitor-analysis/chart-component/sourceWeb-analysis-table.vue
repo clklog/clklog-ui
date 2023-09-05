@@ -179,13 +179,13 @@ export default {
         if (item.bounceRate) {
           item.bounceRate = percentage(item.bounceRate);
         }
-        // if (item.newUvRate) {
-        //   item.newUvRate = percentage(item.newUvRate);
-        // }
+        if (item.newUvRate) {
+          item.newUvRate = percentage(item.newUvRate);
+        }
         if (item.pvRate) {
           item.pvRate = percentage(item.pvRate);
         }
-        if (item.avgVisitTime) {
+        if (item.avgVisitTime || item.avgVisitTime == 0) {
           item.avgVisitTime = formatTime(Math.floor(item.avgVisitTime));
         }
       });

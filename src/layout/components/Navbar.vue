@@ -117,18 +117,18 @@ export default {
           value: "hqq",
           label: "货清清",
         },
-        {
-          value: "在线拍",
-          label: "在线拍",
-        },
-        {
-          value: "上海机动车",
-          label: "上海机动车",
-        },
-        {
-          value: "国拍租房",
-          label: "国拍租房",
-        },
+        // {
+        //   value: "在线拍",
+        //   label: "在线拍",
+        // },
+        // {
+        //   value: "上海机动车",
+        //   label: "上海机动车",
+        // },
+        // {
+        //   value: "国拍租房",
+        //   label: "国拍租房",
+        // },
       ],
       value: "",
       dateTime: "",

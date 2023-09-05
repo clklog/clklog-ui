@@ -327,7 +327,7 @@
           </div>
         </div>
       </div>
-      <div class="bid-list-record">
+      <div class="bid-list-record" v-if="originData">
         <div class="bid-list-item w158">
           <p>{{ (originData && originData.pv) || "--" }}</p>
         </div>
@@ -734,7 +734,6 @@ export default {
       return formatTime(val);
     },
     originEvent(val){
-        // console.log(val,4324);
         this.originData = val;
     },
     percentageFun(val) {

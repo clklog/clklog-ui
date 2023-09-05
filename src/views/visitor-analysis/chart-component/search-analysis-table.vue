@@ -89,7 +89,16 @@
               {{ scope.row.ipCountRate }}
             </template>
           </el-table-column>
-
+          <el-table-column
+            prop="bounceRate"
+            align="center"
+            label="跳出率"
+            sortable="custom"
+          >
+            <template slot-scope="scope">
+              {{ scope.row.bounceRate }}
+            </template>
+          </el-table-column>
           <el-table-column
             align="center"
             prop="avgVisitTime"
@@ -105,11 +114,6 @@
           >
             <template slot-scope="scope">
               {{ averageRulesEvent(scope.row.avgPv) }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="bounceRate" align="center" label="跳出率" sortable="custom">
-            <template slot-scope="scope">
-              {{ scope.row.bounceRate }}
             </template>
           </el-table-column>
         </el-table>
@@ -203,7 +207,7 @@ export default {
         if (item.ipCountRate) {
           item.ipCountRate = this.percentageFun(item.ipCountRate);
         }
-        if (item.avgVisitTime) {
+        if (item.avgVisitTime || item.avgVisitTime == 0) {
           item.avgVisitTime = formatTime(Math.floor(item.avgVisitTime));
         }
       });
