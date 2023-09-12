@@ -245,6 +245,10 @@ export default {
         // 升序
         this.current.sortName = e.prop;
         this.current.sortOrder = "descending";
+      }else {
+        this.current.sortName = null;
+        this.current.sortOrder = null;
+        this.$emit("currentPage");
       }
       this.ascDscEvent();
     },
