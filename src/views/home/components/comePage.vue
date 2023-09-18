@@ -6,7 +6,7 @@
           <div class="trafficHead">Top10受访页面</div>
           <div
             class="iconFlag"
-            @click="$router.push('/visitorAnalysis/visitedPage')"
+            @click="$router.push('/fontEnd/visitorAnalysis/visitedPage')"
           >
             >
           </div>
@@ -54,7 +54,7 @@
           <div class="trafficHead">Top10搜索词</div>
           <div
             class="iconFlag"
-            @click="$router.push('/visitorAnalysis/searchAnalysis')"
+            @click="$router.push('/fontEnd/visitorAnalysis/search')"
           >
             >
           </div>

@@ -38,9 +38,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/',
+    // path: '/',
+    // component: Layout,
+    // redirect: '/index',
+    path: '/fontEnd',
     component: Layout,
-    redirect: '/index',
+    redirect: '/fontEnd/index',
     children: [
       {
         path: 'index',
@@ -71,7 +74,8 @@ export const asyncRoutes = [
   visitorAnalysis,
   behaviorAnalysis,
   // userBehavior, //用户分析页面
-  { path: '*', redirect: '/index', hidden: true }
+  // { path: '*', redirect: '/index', hidden: true }
+  { path: '*', redirect: '/fontEnd/index', hidden: true }
 ]
 
 const createRouter = () => new Router({
