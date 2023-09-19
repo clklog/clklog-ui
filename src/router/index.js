@@ -38,12 +38,9 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    // path: '/',
-    // component: Layout,
-    // redirect: '/index',
-    path: '/fontEnd',
+    path: '/',
     component: Layout,
-    redirect: '/fontEnd/index',
+    redirect: '/index',
     children: [
       {
         path: 'index',
@@ -59,8 +56,7 @@ export const asyncRoutes = [
   visitorAnalysis,
   behaviorAnalysis,
   // userBehavior, //用户分析页面
-  // { path: '*', redirect: '/index', hidden: true }
-  { path: '*', redirect: '/fontEnd/index', hidden: true }
+  { path: '*', redirect: '/index', hidden: true }
 ]
 
 const createRouter = () => new Router({
@@ -70,8 +66,6 @@ const createRouter = () => new Router({
 })
 
 const router = createRouter()
-
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router

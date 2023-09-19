@@ -2,7 +2,7 @@ import Layout from '@/layout'
 const tableRouter = {
     path: '/rearEnd/logAnalysis',
     component:Layout,
-    // redirect: '/fontEnd/behaviorAnalysis/userBehavior',
+    // redirect: '/behaviorAnalysis/userBehavior',
     alwaysShow: true,
     meta: {
       title: '日志数据分析',

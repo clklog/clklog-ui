@@ -322,7 +322,7 @@ export default {
       let path = this.$route.path;
       this.commonData.project = this.$store.getters.project;
       switch (path) {
-        case "/fontEnd/visitorAnalysis/search": {
+        case "/visitorAnalysis/search": {
           let cols = [
             "index",
             "searchword",
@@ -345,7 +345,7 @@ export default {
           });
           break;
         }
-        case "/fontEnd/visitorAnalysis/userLoyalty": {
+        case "/visitorAnalysis/userLoyalty": {
           exportVisitorApi(this.commonData).then((res) => {
             let name = this.sliceTypeFile(res);
             blobDownloads(res.data, name);
@@ -353,7 +353,7 @@ export default {
           break;
         }
         // case "/behaviorAnalysis/user-behavior-analysis": {
-        case "/fontEnd/behaviorAnalysis/userBehavior": {
+        case "/behaviorAnalysis/userBehavior": {
           let cols = [
             "distinctId",
             "visitorType",
