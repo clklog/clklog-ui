@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 
 const componentsRouter = {
-  path: '/fontEnd/visitorAnalysis',
+  path: '/visitorAnalysis',
   component: Layout,
   redirect: 'noRedirect',
   name: 'visitorAnalysis',

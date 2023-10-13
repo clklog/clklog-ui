@@ -1,6 +1,6 @@
 <template>
   <div class="TrendChart block-main public-hoverItem">
-    <div class="block-head"  @click="$router.push('/fontEnd/visitorAnalysis/trend')">
+    <div class="block-head"  @click="$router.push('/visitorAnalysis/trend')">
       <div class="block-title">趋势图</div>
       <!-- collapse-tags -->
       <!-- <el-cascader
@@ -22,12 +22,12 @@
         style="margin-left: 20px; min-width: 280px"
         @change="handleCheckPointer"
       >
+      <!-- :disabled="disabledSelect.includes(item.value)" -->
         <el-option
           v-for="item in options"
           :key="item.value"
           :label="item.label"
           :value="item.value"
-          :disabled="disabledSelect.includes(item.value)"
         >
           <div style="display: flex; align-items: center">
             <span class="checkbox__inner"><div class="inner-box"></div></span>

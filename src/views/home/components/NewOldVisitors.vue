@@ -2,7 +2,7 @@
   <div class="NewOldVisitors block-main public-hoverItem">
     <div
       class="block-head"
-      @click="$router.push('/fontEnd/visitorAnalysis/newoldVisitor')"
+      @click="$router.push('/visitorAnalysis/newoldVisitor')"
     >
       <div class="block-title">新老访客</div>
       <div class="block-head-icon">
