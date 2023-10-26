@@ -15,9 +15,33 @@
           cursor: pointer;
         "
       >
+        <!-- <div
+          @click="handelTable(true)"
+          :style="showTreeFlag ? 'color:#2c7be5' : 'color:black'"
+        >
+          平行数据
+        </div>
+        <div
+          class="treeStyle"
+          @click="handelTable(false)"
+          :style="showTreeFlag ? 'color:black' : 'color:#2c7be5'"
+        >
+          树形数据
+        </div> -->
+        <!-- <div
+          @click="handelTable(true)"
+          :style="showTreeFlag ? 'color:#2c7be5' : 'color:black'"
+        >
+          平行数据
+        </div> -->
+        <!-- :src="
+              handleCompare(currentPrediction.pv, previous.pv)
+                ? require('@/assets/images/decline.png')
+                : require('@/assets/images/rise.png')
+            " -->
         <img
           @click="handelTable(true)"
-          style="width: 35px; margin-right: 15px"
+          style="width: 40px; margin-right: 15px"
           :src="
             showTreeFlag
               ? require('@/assets/images/flat_select.png')
@@ -26,7 +50,7 @@
         />
         <img
           @click="handelTable(false)"
-          style="width: 35px"
+          style="width: 40px"
           :src="
             showTreeFlag
               ? require('@/assets/images/tree.png')
@@ -80,23 +104,32 @@
           :expand-row-keys="tableExpands"
           @expand-change="expandChangeEvent"
         >
+          <!--           @row-click="expandChange"
+ -->
+          <!-- prop="detail.segment" -->
           <el-table-column
             label="页面地址"
             width="400px"
             :show-overflow-tooltip="true"
           >
-            <template slot-scope="scope" style="display: flex">
+            <template
+              slot-scope="scope"
+              style="position: relative; display: flex"
+            >
               <!-- 最后一级增加节点 -->
-              <div
+              <!-- @click="handleTree(scope.row, '')" -->
+              <!-- self.tableExpands = [row.detail.numRandom]; -->
+              <!-- @click="handleCreateSub(scope.row, '')" -->
+              <span
                 v-if="
                   scope.row.leafUri &&
                   scope.row.leafUri.length == 0 &&
                   !scope.row.firstFlag
                 "
-                class="tableName"
-                :style="{ 'padding-left': `${scope.row.level * 19}px` }"
                 @click="handleTree(scope.row, '')"
+                style="display: flex; width: 88%; overflow: hidden"
               >
+                <!-- find11 -->
                 <img
                   src="@/assets/images/add.png"
                   style="
@@ -105,27 +138,15 @@
                     object-fit: cover;
                     margin-right: 10px;
                     margin-top: 2px;
-                   
-                    box-sizing: border-box;
                     cursor: pointer;
                   "
                 />
-              </div>
-              <div v-if=" scope.row.secondFlag">
-                <div style=" margin-left:-12px;">{{ scope.row.title ? scope.row.title : "" }}</div>
-                <div style=" margin-left:-12px;" >{{ scope.row.segment ? scope.row.segment : "/" }}</div>
-              </div>
-              <div v-else>
-                <div style=" margin-left:5px;">{{ scope.row.title ? scope.row.title : "" }}</div>
-                <div>{{ scope.row.segment ? scope.row.segment : "/" }}</div>
-              </div>
-             
-              <!-- <div>
-                <div style=" margin-left:-12px;">{{ scope.row.title ? scope.row.title : "" }}</div>
-                <div>{{ scope.row.segment ? scope.row.segment : "/" }}</div>
-              </div> -->
+                {{ scope.row.segment ? scope.row.segment : "/" }}
+              </span>
 
-
+              <span v-else>{{
+                scope.row.segment ? scope.row.segment : "/"
+              }}</span>
               <img
                 v-if="scope.row.leafUri.length > 0 && !scope.row.firstFlag"
                 style="
@@ -133,7 +154,7 @@
                   right: 10px;
                   top: 8px;
                   cursor: pointer;
-                  width: 17px;
+                  width: 22px;
                 "
                 src="@/assets/images/showDialog.png"
                 @click="handleTree(scope.row, 'dialog')"
@@ -169,20 +190,12 @@
               v-if="avgVisitTime"
               prop="detail.avgVisitTime"
               label="平均访问时长"
-            >
-              <template slot-scope="scope">
-                {{ formatTimeEvent(scope.row.detail.avgVisitTime) }}
-              </template>
-            </el-table-column>
+            />
             <el-table-column
               v-if="exitRate"
               prop="detail.exitRate"
               label="退出率"
-            >
-              <template slot-scope="scope">
-                {{ percentageFun(scope.row.detail.exitRate) }}
-              </template>
-            </el-table-column>
+            />
           </el-table-column>
         </el-table>
       </div>
@@ -296,6 +309,7 @@ import { exportVisitUriDetailApi } from "@/api/trackingapi/download";
 import { getVisitUriListOfUriPathApi } from "@/api/trackingapi/visituri";
 import flowPoint from "@/components/flowPoint/index";
 import vistedDialog from "./visted-dialog.vue";
+
 import { percentage } from "@/utils/percent";
 import { formatTime } from "@/utils/format";
 export default {
@@ -432,45 +446,148 @@ export default {
       this.publicEventDown(val);
     });
   },
-  computed: {
-    multipleToPadding(multiple) {
-      // return `${multiple * 10}px`;
-    },
-  },
   methods: {
-    // 二级标题调用接口添加动态数据
-    expandChangeEvent(row, expandedRowKeys) {
-      this.tableExpands = [];
-      if (expandedRowKeys && row.level && !row.loadingApi) {
-        // console.log(row, expandedRowKeys, "234343");
-        let level = row.level;
-        this.scopeEventApi(row.uri, "", row.detail.numRandom,true,level);
-      }
+    //table - 点击每行触发事件
+    expandChange(row, index, e) {
+      console.log(row, "每行触发事件");
+      // this.list.map((item, i) => {
+      //   if (item.id == row.id) {
+      //     //判断是否是父节点才能调用子节点接口
+      //     this.getChildrenList(row);
+      //     this.$refs.multipleTable.toggleRowExpansion(row); //用于可展开表格与树形表格，切换某一行的展开状态，如果使用了第二个参数，则是设置这一行展开与否（expanded 为 true 则展开）
+      //   }
+      // });
     },
-    
-    percentageFun(val) {
-      return percentage(val);
+    //点击新增子任务
+    // handleCreateSub(row) {
+    //   let self = this;
+    //   console.log(row, "增加节点");
+    //   self.tableExpands = [row.detail.numRandom]; //可以通过该属性设置 Table 目前的展开行，需要设置 row-key 属性才能使用，该属性为展开行的 keys 数组。
+    //   self.$refs.multipleTable.doLayout(); //对 Table 进行重新布局。当 Table 或其祖先元素由隐藏切换为显示时，可能需要调用此方法
+    //   // const parentId = row.detail.numRandom;
+    //   const parentId = row;
+    //   const { tree, treeNode, resolve } = self.maps.get(parentId);
+    //   self.getChildrenList(tree, treeNode, resolve);
+
+    // },
+    // 获取子任务列表
+    getChildrenList(tree, treeNode, resolve) {
+      this.listLoading = true;
+      let parentId = tree.id;
+      this.maps.set(parentId, { tree, treeNode, resolve });
+      console.log(tree, treeNode, resolve, "展开节点");
+      // api.pagesub(tree.id).then((response) => {
+      //   this.list.map((item, i) => {
+      //     if (item.id == tree.id) {
+      //       item.children = response.items; //获取动态的子节点存放在children里
+      //     }
+      //   });
+      //   this.listLoading = false;
+      // });
     },
-    formatTimeEvent(val) {
-      return formatTime(Math.floor(val));
-    },
+
+    // load(tree, treeNode, resolve) {
+    //   console.log(tree, "treee=======");
+    //   setTimeout(() => {
+    //     console.log(this.treeList, "this.treeList");
+    //     console.log("执行了");
+    //     resolve(
+    //       [
+    //         {
+    //           avgVisitTime: 285.4,
+    //           detail: {
+    //             avgVisitTime: 285.4,
+    //             downPvCount: 8,
+    //             entryCount: 0,
+    //             exitCount: 0,
+    //             exitRate: 0,
+    //             ipCount: 6,
+    //             leafUri: [],
+    //             numRandom:
+    //               "https://app.huoqingqing.com/?time=&&event=bdstore#/authentication9484576872149496",
+    //             pv: 9,
+    //             segment: "?time=&&event=bdstore#/authentication",
+    //             title: "实名认证",
+    //             uri: "https://app.huoqingqing.com/?time=&&event=bdstore#/authentication01",
+    //             uriPath: null,
+    //             uv: 6,
+    //           },
+    //           downPvCount: 8,
+    //           entryCount: 0,
+    //           exitCount: 0,
+    //           exitRate: 0,
+    //           firstFlag: "istrue",
+    //           ipCount: 6,
+    //           leafUri: [],
+    //           numRandom:
+    //             "https://app.huoqingqing.com/?time=&&event=bdstore#/authentication9484576872149496",
+    //           pv: 9,
+    //           segment: "?time=&&event=bdstore#/authentication",
+    //           title: "实名认证",
+    //           uri: "https://app.huoqingqing.com/?time=&&event=bdstore#/authentication01",
+    //           uriPath: null,
+    //           uv: 6,
+    //         },
+    //         {
+    //           avgVisitTime: 3.75,
+    //           detail: {
+    //             avgVisitTime: 3.75,
+    //             downPvCount: 4,
+    //             entryCount: 0,
+    //             exitCount: 0,
+    //             exitRate: 0,
+    //             ipCount: 5,
+    //             leafUri: [],
+    //             numRandom:
+    //               "https://app.huoqingqing.com/#/authentication7879993150313040",
+    //             pv: 6,
+    //             segment: "/authentication",
+    //             title: "实名认证",
+    //             uri: "https://app.huoqingqing.com/#/authentication11",
+    //             uriPath: null,
+    //             uv: 4,
+    //           },
+    //           downPvCount: 4,
+    //           entryCount: 0,
+    //           exitCount: 0,
+    //           exitRate: 0,
+    //           firstFlag: "istrue",
+    //           ipCount: 5,
+    //           leafUri: [],
+    //           numRandom:
+    //             "https://app.huoqingqing.com/#/authentication7879993150313040",
+    //           pv: 6,
+    //           segment: "/authentication",
+    //           title: "实名认证",
+    //           uri: "https://app.huoqingqing.com/#/authentication11",
+    //           uriPath: null,
+    //           uv: 4,
+    //         },
+    //       ]
+    //       // 接口测试
+    //       // getVisitUriListOfUriPathApi
+    //     );
+    //   }, 3000);
+    // },
+
     getRowKeys(row) {
       let num = Math.random().toString();
       return row.detail.numRandom;
     },
     // 层级展开事件
+    // find11
     handleTree(scope, event) {
       if (event == "dialog") {
-        // console.log(scope, "判断一二级内容");
         this.scopeEventApi(scope.uri, event);
       } else {
         this.isExpand = false;
         // 动态添加节点
+        // this.scopeEventApi(scope.uri, "");
         this.scopeEventApi(scope.uri, "", scope.detail.numRandom);
+        console.log(scope, "scope-----");
       }
     },
-    scopeEventApi(uri, event, numRandom,showAdd,level) {
-      // console.log(showAdd);
+    scopeEventApi(uri, event, numRandom) {
       this.commonParams.uriPath = uri;
       getVisitUriListOfUriPathApi(this.commonParams).then((res) => {
         if (res.code == 200) {
@@ -490,24 +607,59 @@ export default {
               item.numRandom = item.uri + this.generateRandomNumber();
               item.uri = item.uri + index + 1;
               item.leafUri = [];
-              
               item.detail = JSON.parse(JSON.stringify(item));
-              // 展示img
-              if (showAdd) {
-                item.firstFlag = "istrue";
-                item.secondFlag = true;
-                item.level = level;
-              }else{
-                item.firstFlag = "istrue";
-              }
-              
-
+              item.firstFlag = "istrue";
             });
+
+            // console.log(res.data, "res.data");
+            let newChild =
+              // uri: "https://app.huoqingqing.com/#/detai新建01",
+              // path: "#/detail",
+              // segment: "detail新建",
+              [
+                {
+                  uri: "https://app.huoqingqing.com/#/detail/新建01",
+                  path: "#/detail/",
+                  segment: "/新的一级展开", //name
+                  // leafUri: [],
+                  detail: {
+                    host: "https://app.huoqingqing.com/",
+                    uri: "https://app.huoqingqing.com/#/detail/新建01",
+                    pv: "新的下一级",
+                    uv: 2697,
+                    ipCount: 5340,
+                    exitCount: 60,
+                    exitRate: 0.0119,
+                    entryCount: 16,
+                    avgVisitTime: 43.2004,
+                    downPvCount: 4413,
+                    path: "#/detail/",
+                  },
+                },
+                {
+                  uri: "https://app.huoqingqing.com/#/detail/新建02",
+                  path: "#/detail/",
+                  segment: "/新的一级展开2", //name
+                  leafUri: [],
+                  detail: {
+                    host: "https://app.huoqingqing.com/",
+                    uri: "https://app.huoqingqing.com/#/detail/新建02",
+                    pv: "新的下一级2",
+                    uv: 2697,
+                    ipCount: 5340,
+                    exitCount: 60,
+                    exitRate: 0.0119,
+                    entryCount: 16,
+                    avgVisitTime: 43.2004,
+                    downPvCount: 4413,
+                    path: "#/detail/",
+                  },
+                },
+              ];
             this.treeList.forEach((item) => {
               this.insertChild(item, numRandom, res.data);
             });
             this.treeList = this.treeList;
-            // console.log(this.treeList, "this.treeList-----");
           }
         }
       });
@@ -518,11 +670,13 @@ export default {
         // let flag = item.uri == id; //过滤非匹配idz
         let flag = item.detail.numRandom == id; //过滤非匹配idz
         if (flag) {
-          // item.leafUri = JSON.parse(JSON.stringify(newChild));
-          item.loadingApi = true;
-          let newArray = JSON.parse(JSON.stringify(newChild))
-          item.leafUri = [...new Set([...item.leafUri, ...newArray])]
+          item.leafUri = JSON.parse(JSON.stringify(newChild));
+          console.log(this.tableExpands, "this.tableExpands");
+          this.tableExpands = null;
           this.tableExpands = [item.detail.numRandom];
+         
+          // this.$refs.multipleTable.doLayout()
+          console.log(item.detail.numRandom, "item.detail.numRandom");
           if (this.uriListEnd.length == 0) {
             item.firstFlag = "istrue";
           }
@@ -536,7 +690,9 @@ export default {
 
       return;
     },
-
+    expandChangeEvent(row, expandedRowKeys) {
+      console.log(row, expandedRowKeys, "expandChange------");
+    },
     // 切换table
     handelTable(val) {
       this.showTreeFlag = val;
@@ -611,23 +767,21 @@ export default {
           item.firstFlag = "istrue";
         }
       });
-
       this.treeList = val;
       // 测试数据
       this.treeList.forEach((item) => {
         item.detail.numRandom = item.detail.uri + this.generateRandomNumber();
         this.insertRandom(item.leafUri);
       });
-      // console.log(this.treeList, "增加随机数");
+      console.log(this.treeList, "增加随机数");
     },
     // 动态添加节点
-    insertRandom(list, level = 1) {
+    insertRandom(list) {
       list.forEach((item) => {
-        item.level = level;
         if (item.detail) {
           item.detail.numRandom = item.detail.uri + this.generateRandomNumber();
           if (item.leafUri && item.leafUri.length > 0) {
-            this.insertRandom(item.leafUri, level + 1);
+            this.insertRandom(item.leafUri);
           }
         }
       });
@@ -743,7 +897,6 @@ export default {
     transform: rotate(0deg);
   }
   .el-icon-arrow-right:before {
-    position: relative !important;
     background: url("../../../assets/images/add.png") no-repeat 0 3px;
     content: "";
     display: block;
@@ -754,7 +907,6 @@ export default {
   }
   //有子节点 且已展开
   .el-table__expand-icon--expanded {
-    position: relative !important;
     .el-icon-arrow-right:before {
       background: url("../../../assets/images/reduce.png") no-repeat 0 3px;
       content: "";
@@ -792,11 +944,10 @@ export default {
     table-layout: fixed !important;
   }
 }
-.tableName {
-  position: absolute;
-}
 .treeStyle {
   margin-left: 15px;
+}
+.defalutStyle {
 }
 .chartsIcon {
   box-sizing: border-box;
@@ -817,6 +968,7 @@ export default {
     }
     .flow-item {
       display: flex;
+      // align-items: center;
       margin-top: 12px;
       margin-left: 10px;
       .flow-title {

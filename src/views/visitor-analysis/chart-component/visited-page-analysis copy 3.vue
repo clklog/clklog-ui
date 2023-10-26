@@ -105,26 +105,14 @@
                     object-fit: cover;
                     margin-right: 10px;
                     margin-top: 2px;
-                   
-                    box-sizing: border-box;
                     cursor: pointer;
                   "
                 />
               </div>
-              <div v-if=" scope.row.secondFlag">
-                <div style=" margin-left:-12px;">{{ scope.row.title ? scope.row.title : "" }}</div>
-                <div style=" margin-left:-12px;" >{{ scope.row.segment ? scope.row.segment : "/" }}</div>
-              </div>
-              <div v-else>
-                <div style=" margin-left:5px;">{{ scope.row.title ? scope.row.title : "" }}</div>
+              <div>
+                <div>{{ scope.row.title ? scope.row.title : "" }}</div>
                 <div>{{ scope.row.segment ? scope.row.segment : "/" }}</div>
               </div>
-             
-              <!-- <div>
-                <div style=" margin-left:-12px;">{{ scope.row.title ? scope.row.title : "" }}</div>
-                <div>{{ scope.row.segment ? scope.row.segment : "/" }}</div>
-              </div> -->
-
 
               <img
                 v-if="scope.row.leafUri.length > 0 && !scope.row.firstFlag"
@@ -442,12 +430,13 @@ export default {
     expandChangeEvent(row, expandedRowKeys) {
       this.tableExpands = [];
       if (expandedRowKeys && row.level && !row.loadingApi) {
-        // console.log(row, expandedRowKeys, "234343");
-        let level = row.level;
-        this.scopeEventApi(row.uri, "", row.detail.numRandom,true,level);
+        console.log(row, expandedRowKeys, "234343");
+        this.scopeEventApi(row.uri, "", row.detail.numRandom);
       }
     },
-    
+    everyTableEvent(row) {
+      console.log(row, "row------");
+    },
     percentageFun(val) {
       return percentage(val);
     },
@@ -461,7 +450,7 @@ export default {
     // 层级展开事件
     handleTree(scope, event) {
       if (event == "dialog") {
-        // console.log(scope, "判断一二级内容");
+        console.log(scope, "判断一二级内容");
         this.scopeEventApi(scope.uri, event);
       } else {
         this.isExpand = false;
@@ -469,8 +458,7 @@ export default {
         this.scopeEventApi(scope.uri, "", scope.detail.numRandom);
       }
     },
-    scopeEventApi(uri, event, numRandom,showAdd,level) {
-      // console.log(showAdd);
+    scopeEventApi(uri, event, numRandom) {
       this.commonParams.uriPath = uri;
       getVisitUriListOfUriPathApi(this.commonParams).then((res) => {
         if (res.code == 200) {
@@ -490,24 +478,15 @@ export default {
               item.numRandom = item.uri + this.generateRandomNumber();
               item.uri = item.uri + index + 1;
               item.leafUri = [];
-              
               item.detail = JSON.parse(JSON.stringify(item));
-              // 展示img
-              if (showAdd) {
-                item.firstFlag = "istrue";
-                item.secondFlag = true;
-                item.level = level;
-              }else{
-                item.firstFlag = "istrue";
-              }
-              
+              item.firstFlag = "istrue";
 
             });
             this.treeList.forEach((item) => {
               this.insertChild(item, numRandom, res.data);
             });
             this.treeList = this.treeList;
-            // console.log(this.treeList, "this.treeList-----");
+            console.log(this.treeList, "this.treeList-----");
           }
         }
       });
