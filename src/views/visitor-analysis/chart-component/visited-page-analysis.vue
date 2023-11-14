@@ -607,12 +607,13 @@ export default {
       this.commonParams = params;
       val.map((item) => {
         if (item.detail) {
-          item.segment = item.detail.uri;
+          item.segment = item.uri;
           item.firstFlag = "istrue";
         }
       });
 
       this.treeList = val;
+      // console.log(this.treeList,"treeList");
       // 测试数据
       this.treeList.forEach((item) => {
         item.detail.numRandom = item.detail.uri + this.generateRandomNumber();

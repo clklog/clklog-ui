@@ -121,10 +121,10 @@ export default {
           value: "clklog",
           label: "clklog官网",
         },
-        // {
-        //   value: "在线拍",
-        //   label: "在线拍",
-        // },
+        {
+          value: "zcunsoft",
+          label: "至存官网",
+        },
       ],
       value: "",
       dateTime: "",

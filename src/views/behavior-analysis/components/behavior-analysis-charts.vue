@@ -104,7 +104,7 @@
             </el-table-column>
             <el-table-column
               prop="visitCount"
-              label="访客次数"
+              label="访问次数"
               sortable="custom"
             >
               <template slot-scope="scope">
