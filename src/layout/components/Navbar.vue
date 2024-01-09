@@ -60,11 +60,19 @@ export default {
   },
   data() {
     return {
-      // github
+      //clklog-demo
       options: [
         {
-          value: "clklogapp",
-          label: "clklog",
+          value: "hqq",
+          label: "货清清",
+        },
+        {
+          value: "clklog",
+          label: "clklog官网",
+        },
+        {
+          value: "zcunsoft",
+          label: "至存官网",
         },
       ],
       value: "",
