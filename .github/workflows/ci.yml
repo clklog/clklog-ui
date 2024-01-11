@@ -6,12 +6,14 @@ on:
     branches:
       - 'main'
       - 'demo'
+      - 'ci'
     tags:
       - 'v*'
   pull_request:
     branches:
       - 'main'
       - 'demo'
+      - 'ci'
   schedule:
     - cron: '0 0 * * *'
 
