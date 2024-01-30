@@ -3,8 +3,7 @@ import Router from "vue-router";
 Vue.use(Router);
 import Layout from "@/layout";
 import visitorAnalysis from "./modules/visitor-analysis";
-import behaviorAnalysis from "./modules/behavior-analysis";
-// import logDataAnalysis from './modules/logoData-analysis'
+import userBehavior from "./modules/user-behavior";
 export const constantRoutes = [
   {
     path: "/redirect",
@@ -50,24 +49,11 @@ export const constantRoutes = [
       },
     ],
   },
-  // {
-  //   path: "/realtime",
-  //   component: Layout,
-  //   redirect: "/access",
-  //   children: [
-  //     {
-  //       path: "access",
-  //       component: () => import("@/views/realtimeAccess/index.vue"),
-  //       name: "access",
-  //       meta: { title: "实时访问", icon: "visitorAnaly", affix: true },
-  //     },
-  //   ],
-  // },
 ];
 
 export const asyncRoutes = [
   visitorAnalysis,
-  behaviorAnalysis,
+  userBehavior,
   { path: "*", redirect: "/index", hidden: true },
 ];
 

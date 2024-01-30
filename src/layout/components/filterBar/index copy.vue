@@ -474,6 +474,42 @@ export default {
       this.currentTime = [dateTime, dateTime];
       this.initDate(this.currentTime); //默认日期
     },
+
+    // 单选切换时间
+    // handleChange(val) {
+    //   var date = new Date();
+    //   let dateTime =
+    //     date.getFullYear() +
+    //     "-" +
+    //     (date.getMonth() + 1 < 10
+    //       ? "0" + (date.getMonth() + 1)
+    //       : date.getMonth() + 1) +
+    //     "-" +
+    //     date.getDate();
+    //   let toData =
+    //     new Date(new Date().toLocaleDateString()).getTime() + 8 * 3600 * 1000;
+    //   if (val == "day") {
+    //     this.currentTime = [dateTime, dateTime];
+    //     this.dateTimeCount(1);
+    //   } else if (val == "previous") {
+    //     this.timeDifference = toData - 3600 * 24 * 1000;
+    //     this.timestampToTime(this.timeDifference);
+    //     this.currentTime = [this.checkDateTime, this.checkDateTime];
+    //     this.dateTimeCount(1);
+    //   } else if (val == "week") {
+    //     this.timeDifference = toData - 6 * 3600 * 24 * 1000;
+    //     this.timestampToTime(this.timeDifference);
+    //     this.currentTime = [this.checkDateTime, dateTime];
+    //     this.dateTimeCount(6);
+    //   } else {
+    //     this.timeDifference = toData - 29 * 3600 * 24 * 1000;
+    //     this.timestampToTime(this.timeDifference);
+    //     this.currentTime = [this.checkDateTime, dateTime];
+    //     this.dateTimeCount(29);
+    //   }
+    //   this.startTime = this.currentTime[0];
+    //   this.endTime = this.currentTime[1];
+    // },
     // 单选切换时间 timeType
     handleChange(val) {
       localStorage.setItem('timeFlag',this.timeFlag)

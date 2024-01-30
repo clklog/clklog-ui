@@ -15,33 +15,9 @@
           cursor: pointer;
         "
       >
-        <!-- <div
-          @click="handelTable(true)"
-          :style="showTreeFlag ? 'color:#2c7be5' : 'color:black'"
-        >
-          平行数据
-        </div>
-        <div
-          class="treeStyle"
-          @click="handelTable(false)"
-          :style="showTreeFlag ? 'color:black' : 'color:#2c7be5'"
-        >
-          树形数据
-        </div> -->
-        <!-- <div
-          @click="handelTable(true)"
-          :style="showTreeFlag ? 'color:#2c7be5' : 'color:black'"
-        >
-          平行数据
-        </div> -->
-        <!-- :src="
-              handleCompare(currentPrediction.pv, previous.pv)
-                ? require('@/assets/images/decline.png')
-                : require('@/assets/images/rise.png')
-            " -->
         <img
           @click="handelTable(true)"
-          style="width: 40px; margin-right: 15px"
+          style="width: 35px; margin-right: 15px"
           :src="
             showTreeFlag
               ? require('@/assets/images/flat_select.png')
@@ -50,7 +26,7 @@
         />
         <img
           @click="handelTable(false)"
-          style="width: 40px"
+          style="width: 35px"
           :src="
             showTreeFlag
               ? require('@/assets/images/tree.png')
@@ -92,65 +68,34 @@
     </div>
     <div>
       <!-- 树状图 -->
-      <!-- :cell-class-name="addFirstEvent" -->
       <div class="public-Table-minHeight" v-show="!showTreeFlag">
-        <!-- randomNumber -->
-        <!-- :row-key="detail.uri" -->
-        <!-- :row-key="row => { return row.id }" -->
-        <!-- :row-key="row => { return randomNumber(row) }" -->
-        <!--Math.random() -->
-        <!-- randomEvent(row) -->
-        <!-- :row-key="
-            (row) => {
-              return row.uri + Math.random()
-            }
-          " -->
-        <!-- default-expand-all -->
-        <!-- :default-expand-all="isExpand" -->
         <el-table
           :data="treeList"
           style="width: 100%"
           :row-key="getRowKeys"
+          :tree-props="{ children: 'leafUri', hasChildren: 'hasChildren' }"
           border
           lazy
-          :load="load"
-          :tree-props="{ children: 'leafUri', hasChildren: 'hasChildren' }"
+          ref="multipleTable"
+          :expand-row-keys="tableExpands"
+          @expand-change="expandChangeEvent"
         >
-          <!-- @row-click="handleRowClick" -->
-          <!-- prop="detail.segment" -->
           <el-table-column
             label="页面地址"
             width="400px"
             :show-overflow-tooltip="true"
           >
-            <template
-              slot-scope="scope"
-              style="position: relative; display: flex"
-            >
-              <!-- <div @click="handleTree(scope.row, '')">末尾api</div> -->
-              <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-              <!-- <span
+            <template slot-scope="scope" style="display: flex">
+              <div
                 v-if="
                   scope.row.leafUri &&
                   scope.row.leafUri.length == 0 &&
                   !scope.row.firstFlag
                 "
+                class="tableName"
+                :style="{ 'padding-left': `${scope.row.level * 19}px` }"
                 @click="handleTree(scope.row, '')"
-                style="display: flex; width: 88%; overflow: hidden"
-              > -->
-              <span
-                v-if="
-                  scope.row.leafUri &&
-                  scope.row.leafUri.length == 0 &&
-                  !scope.row.firstFlag 
-                "
-                @click="handleTree(scope.row, '')"
-                style="display: flex; width: 88%; overflow: hidden"
               >
-              <!-- find11 -->
-                <!-- <span style="margin-right: 10px; color: blue; cursor: pointer"
-                  >+</span
-                > -->
                 <img
                   src="@/assets/images/add.png"
                   style="
@@ -159,15 +104,21 @@
                     object-fit: cover;
                     margin-right: 10px;
                     margin-top: 2px;
+                   
+                    box-sizing: border-box;
                     cursor: pointer;
                   "
                 />
-                {{ scope.row.segment ? scope.row.segment : "/" }}
-              </span>
-              <span v-else>{{
-                scope.row.segment ? scope.row.segment : "/"
-              }}</span>
-              <!-- @click="handleTree(scope.row)" -->
+              </div>
+              <div v-if=" scope.row.secondFlag">
+                <div style=" margin-left:-12px;">{{ scope.row.title ? scope.row.title : "" }}</div>
+                <div style=" margin-left:-12px;" >{{ scope.row.segment ? scope.row.segment : "/" }}</div>
+              </div>
+              <div v-else>
+                <div style=" margin-left:5px;">{{ scope.row.title ? scope.row.title : "" }}</div>
+                <div>{{ scope.row.segment ? scope.row.segment : "/" }}</div>
+              </div>
+
               <img
                 v-if="scope.row.leafUri.length > 0 && !scope.row.firstFlag"
                 style="
@@ -175,28 +126,11 @@
                   right: 10px;
                   top: 8px;
                   cursor: pointer;
-                  width: 22px;
+                  width: 17px;
                 "
                 src="@/assets/images/showDialog.png"
                 @click="handleTree(scope.row, 'dialog')"
               />
-              <!-- style="
-                  position: absolute;
-                  right: 10px;
-                  top: 8px;
-                  cursor: pointer;
-                  width: 22px;
-                " -->
-              <!-- <img
-                v-if="
-                  scope.row.leafUri &&
-                  scope.row.leafUri.length == 0 &&
-                  !scope.row.firstFlag
-                "
-                style="cursor: pointer; width: 22px"
-                src="@/assets/images/showFlag.png"
-              /> -->
-              <!-- @click="handleTree(scope.row, '')" -->
             </template>
           </el-table-column>
           <el-table-column label="流量基础指标">
@@ -228,12 +162,20 @@
               v-if="avgVisitTime"
               prop="detail.avgVisitTime"
               label="平均访问时长"
-            />
+            >
+              <template slot-scope="scope">
+                {{ formatTimeEvent(scope.row.detail.avgVisitTime) }}
+              </template>
+            </el-table-column>
             <el-table-column
               v-if="exitRate"
               prop="detail.exitRate"
               label="退出率"
-            />
+            >
+              <template slot-scope="scope">
+                {{ percentageFun(scope.row.detail.exitRate) }}
+              </template>
+            </el-table-column>
           </el-table-column>
         </el-table>
       </div>
@@ -347,7 +289,6 @@ import { exportVisitUriDetailApi } from "@/api/trackingapi/download";
 import { getVisitUriListOfUriPathApi } from "@/api/trackingapi/visituri";
 import flowPoint from "@/components/flowPoint/index";
 import vistedDialog from "./visted-dialog.vue";
-
 import { percentage } from "@/utils/percent";
 import { formatTime } from "@/utils/format";
 export default {
@@ -471,7 +412,12 @@ export default {
       treeList: [],
       commonParams: {}, //接口参数
       random: 11,
-      uriListEnd:[]
+      uriListEnd: [],
+
+      listLoading: false,
+      tableExpands: [],
+      list: [],
+      maps: new Map(),
     };
   },
   mounted() {
@@ -479,115 +425,48 @@ export default {
       this.publicEventDown(val);
     });
   },
-  methods: {
-    load(tree, treeNode, resolve) {
-      console.log(tree, "treee=======");
-      setTimeout(() => {
-        console.log(this.treeList, "this.treeList");
-        console.log("执行了");
-        resolve(
-          [
-            {
-              avgVisitTime: 285.4,
-              detail: {
-                avgVisitTime: 285.4,
-                downPvCount: 8,
-                entryCount: 0,
-                exitCount: 0,
-                exitRate: 0,
-                ipCount: 6,
-                leafUri: [],
-                numRandom:
-                  "https://app.huoqingqing.com/?time=&&event=bdstore#/authentication9484576872149496",
-                pv: 9,
-                segment: "?time=&&event=bdstore#/authentication",
-                title: "实名认证",
-                uri: "https://app.huoqingqing.com/?time=&&event=bdstore#/authentication01",
-                uriPath: null,
-                uv: 6,
-              },
-              downPvCount: 8,
-              entryCount: 0,
-              exitCount: 0,
-              exitRate: 0,
-              firstFlag: "istrue",
-              ipCount: 6,
-              leafUri: [],
-              numRandom:
-                "https://app.huoqingqing.com/?time=&&event=bdstore#/authentication9484576872149496",
-              pv: 9,
-              segment: "?time=&&event=bdstore#/authentication",
-              title: "实名认证",
-              uri: "https://app.huoqingqing.com/?time=&&event=bdstore#/authentication01",
-              uriPath: null,
-              uv: 6,
-            },
-            {
-              avgVisitTime: 3.75,
-              detail: {
-                avgVisitTime: 3.75,
-                downPvCount: 4,
-                entryCount: 0,
-                exitCount: 0,
-                exitRate: 0,
-                ipCount: 5,
-                leafUri: [],
-                numRandom:
-                  "https://app.huoqingqing.com/#/authentication7879993150313040",
-                pv: 6,
-                segment: "/authentication",
-                title: "实名认证",
-                uri: "https://app.huoqingqing.com/#/authentication11",
-                uriPath: null,
-                uv: 4,
-              },
-              downPvCount: 4,
-              entryCount: 0,
-              exitCount: 0,
-              exitRate: 0,
-              firstFlag: "istrue",
-              ipCount: 5,
-              leafUri: [],
-              numRandom:
-                "https://app.huoqingqing.com/#/authentication7879993150313040",
-              pv: 6,
-              segment: "/authentication",
-              title: "实名认证",
-              uri: "https://app.huoqingqing.com/#/authentication11",
-              uriPath: null,
-              uv: 4,
-            },
-          ]
-          // 接口测试
-          // getVisitUriListOfUriPathApi
-        );
-      }, 3000);
+  computed: {
+    multipleToPadding(multiple) {
+      // return `${multiple * 10}px`;
     },
-
+  },
+  methods: {
+    // 二级标题调用接口添加动态数据
+    expandChangeEvent(row, expandedRowKeys) {
+      this.tableExpands = [];
+      if (expandedRowKeys && row.level && !row.loadingApi) {
+        // console.log(row, expandedRowKeys, "234343");
+        let level = row.level;
+        this.scopeEventApi(row.uri, "", row.detail.numRandom,true,level);
+      }
+    },
+    
+    percentageFun(val) {
+      return percentage(val);
+    },
+    formatTimeEvent(val) {
+      return formatTime(Math.floor(val));
+    },
     getRowKeys(row) {
       let num = Math.random().toString();
-      // return row.detail.uri;
       return row.detail.numRandom;
     },
     // 层级展开事件
-    // find11
     handleTree(scope, event) {
       if (event == "dialog") {
-        // this.isExpand = false;
+        // console.log(scope, "判断一二级内容");
         this.scopeEventApi(scope.uri, event);
       } else {
         this.isExpand = false;
-        // this.scopeEventApi(scope.uri,'dialog')
         // 动态添加节点
-        this.scopeEventApi(scope.uri, "");
-        console.log(scope, "scope-----");
+        this.scopeEventApi(scope.uri, "", scope.detail.numRandom);
       }
     },
-    scopeEventApi(uri, event) {
+    scopeEventApi(uri, event, numRandom,showAdd,level) {
+      // console.log(showAdd);
       this.commonParams.uriPath = uri;
       getVisitUriListOfUriPathApi(this.commonParams).then((res) => {
         if (res.code == 200) {
-          // console.log(res.data,"scope-----");
           if (event == "dialog") {
             this.$refs.vistedDialog.vistedApiEvent(res.data);
           } else {
@@ -604,67 +483,24 @@ export default {
               item.numRandom = item.uri + this.generateRandomNumber();
               item.uri = item.uri + index + 1;
               item.leafUri = [];
+              
               item.detail = JSON.parse(JSON.stringify(item));
-              // item.detail.numRandom =this.generateRandomNumber()+ index + 1 ;
-              // if (res.data.length > 0) {
-              //   item.firstFlag = "istrue";
-              // }else{
-              //   item.firstFlag = null;
-              // }
-              item.firstFlag = "istrue";
-             
-            });
+              // 展示img
+              if (showAdd) {
+                item.firstFlag = "istrue";
+                item.secondFlag = true;
+                item.level = level;
+              }else{
+                item.firstFlag = "istrue";
+              }
+              
 
-            console.log(res.data, "res.data");
-            let newChild =
-              // uri: "https://app.huoqingqing.com/#/detai新建01",
-              // path: "#/detail",
-              // segment: "detail新建",
-              [
-                {
-                  uri: "https://app.huoqingqing.com/#/detail/新建01",
-                  path: "#/detail/",
-                  segment: "/新的一级展开", //name
-                  // leafUri: [],
-                  detail: {
-                    host: "https://app.huoqingqing.com/",
-                    uri: "https://app.huoqingqing.com/#/detail/新建01",
-                    pv: "新的下一级",
-                    uv: 2697,
-                    ipCount: 5340,
-                    exitCount: 60,
-                    exitRate: 0.0119,
-                    entryCount: 16,
-                    avgVisitTime: 43.2004,
-                    downPvCount: 4413,
-                    path: "#/detail/",
-                  },
-                },
-                {
-                  uri: "https://app.huoqingqing.com/#/detail/新建02",
-                  path: "#/detail/",
-                  segment: "/新的一级展开2", //name
-                  leafUri: [],
-                  detail: {
-                    host: "https://app.huoqingqing.com/",
-                    uri: "https://app.huoqingqing.com/#/detail/新建02",
-                    pv: "新的下一级2",
-                    uv: 2697,
-                    ipCount: 5340,
-                    exitCount: 60,
-                    exitRate: 0.0119,
-                    entryCount: 16,
-                    avgVisitTime: 43.2004,
-                    downPvCount: 4413,
-                    path: "#/detail/",
-                  },
-                },
-              ];
+            });
             this.treeList.forEach((item) => {
-              // this.insertChild(item, uri, newChild);
-              this.insertChild(item, uri, res.data);
+              this.insertChild(item, numRandom, res.data);
             });
             this.treeList = this.treeList;
+            // console.log(this.treeList, "this.treeList-----");
           }
         }
       });
@@ -672,13 +508,18 @@ export default {
     // 动态增加节点
     insertChild(list, id, newChild) {
       list.leafUri.forEach((item) => {
-        let flag = item.uri == id; //过滤非匹配id
+        // let flag = item.uri == id; //过滤非匹配idz
+        let flag = item.detail.numRandom == id; //过滤非匹配idz
         if (flag) {
-          // console.log(item,"找出相同的id");
-          item.leafUri = JSON.parse(JSON.stringify(newChild));
-          if ( this.uriListEnd.length == 0) {
+          // item.leafUri = JSON.parse(JSON.stringify(newChild));
+          item.loadingApi = true;
+          let newArray = JSON.parse(JSON.stringify(newChild))
+          item.leafUri = [...new Set([...item.leafUri, ...newArray])]
+          this.tableExpands = [item.detail.numRandom];
+          if (this.uriListEnd.length == 0) {
             item.firstFlag = "istrue";
           }
+          return;
         } else {
           if (item.leafUri.length > 0) {
             this.insertChild(item, id, newChild);
@@ -688,6 +529,7 @@ export default {
 
       return;
     },
+
     // 切换table
     handelTable(val) {
       this.showTreeFlag = val;
@@ -758,85 +600,33 @@ export default {
       this.commonParams = params;
       val.map((item) => {
         if (item.detail) {
-          // item.detail.segment = item.detail.uri;
-          item.segment = item.detail.uri;
+          item.segment = item.uri;
           item.firstFlag = "istrue";
         }
       });
+
       this.treeList = val;
+      // console.log(this.treeList,"treeList");
       // 测试数据
       this.treeList.forEach((item) => {
-        // this.insertChild(item, uri, newChild);
         item.detail.numRandom = item.detail.uri + this.generateRandomNumber();
-        // this.insertRandom(item);
         this.insertRandom(item.leafUri);
       });
-      console.log(this.treeList, "增加随机数");
+      // console.log(this.treeList, "增加随机数");
     },
     // 动态添加节点
-    // insertRandom(list, id, newChild) {
-    insertRandom(list) {
-      // if (list.leafUri && list.leafUri.length > 0) {
+    insertRandom(list, level = 1) {
       list.forEach((item) => {
-        // let flag = item.uri == id; //过滤非匹配id
-        // if (item.detail) {
-        //   // console.log(item,"找出相同的id");
-        //   // item.leafUri = JSON.parse(JSON.stringify(newChild));
-        //   item.detail.numRandom = this.generateRandomNumber()
-        // } else {
-        //   if (item.leafUri.length > 0) {
-        //     this.insertRandom(item, id, newChild);
-        //   }
-        // }
+        item.level = level;
         if (item.detail) {
-          // console.log(item,"找出相同的id");
-          // item.leafUri = JSON.parse(JSON.stringify(newChild));
           item.detail.numRandom = item.detail.uri + this.generateRandomNumber();
           if (item.leafUri && item.leafUri.length > 0) {
-            this.insertRandom(item.leafUri);
+            this.insertRandom(item.leafUri, level + 1);
           }
         }
-        // else {
-        //   if (item.leafUri.length > 0) {
-        //     this.insertRandom(item, id, newChild);
-        //   }
-        // }
       });
-      // }
-
       return;
     },
-    // insertRandom(list) {
-    //   // if (list.leafUri && list.leafUri.length > 0) {
-    //     list.leafUri.forEach((item) => {
-    //       // let flag = item.uri == id; //过滤非匹配id
-    //       // if (item.detail) {
-    //       //   // console.log(item,"找出相同的id");
-    //       //   // item.leafUri = JSON.parse(JSON.stringify(newChild));
-    //       //   item.detail.numRandom = this.generateRandomNumber()
-    //       // } else {
-    //       //   if (item.leafUri.length > 0) {
-    //       //     this.insertRandom(item, id, newChild);
-    //       //   }
-    //       // }
-    //       if (item.detail) {
-    //         // console.log(item,"找出相同的id");
-    //         // item.leafUri = JSON.parse(JSON.stringify(newChild));
-    //         item.detail.numRandom = item.detail.uri + this.generateRandomNumber();
-    //         if (item.leafUri && item.leafUri.length > 0) {
-    //           this.insertRandom(item.leafUri);
-    //         }
-    //       }
-    //       // else {
-    //       //   if (item.leafUri.length > 0) {
-    //       //     this.insertRandom(item, id, newChild);
-    //       //   }
-    //       // }
-    //     });
-    //   // }
-
-    //   return;
-    // },
     //设置随机数
     generateRandomNumber() {
       let randomNumber = "";
@@ -945,8 +735,9 @@ export default {
   // }
   .el-table__expand-icon--expanded {
     transform: rotate(0deg);
-}
+  }
   .el-icon-arrow-right:before {
+    position: relative !important;
     background: url("../../../assets/images/add.png") no-repeat 0 3px;
     content: "";
     display: block;
@@ -957,6 +748,7 @@ export default {
   }
   //有子节点 且已展开
   .el-table__expand-icon--expanded {
+    position: relative !important;
     .el-icon-arrow-right:before {
       background: url("../../../assets/images/reduce.png") no-repeat 0 3px;
       content: "";
@@ -968,16 +760,15 @@ export default {
     }
   }
   // 没有字节
-.el-table__placeholder::before {
-    background: '';
-    content: '';
+  .el-table__placeholder::before {
+    background: "";
+    content: "";
     display: block;
     width: 15px;
     height: 15px;
     font-size: 15px;
     background-size: 15px;
-}
-
+  }
 
   @import "~@/styles/components/el-checkbox.scss";
   @import "~@/styles/components/el-pagination.scss";
@@ -995,10 +786,11 @@ export default {
     table-layout: fixed !important;
   }
 }
+.tableName {
+  position: absolute;
+}
 .treeStyle {
   margin-left: 15px;
-}
-.defalutStyle {
 }
 .chartsIcon {
   box-sizing: border-box;
@@ -1019,7 +811,6 @@ export default {
     }
     .flow-item {
       display: flex;
-      // align-items: center;
       margin-top: 12px;
       margin-left: 10px;
       .flow-title {

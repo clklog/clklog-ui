@@ -1,5 +1,4 @@
 import Layout from '@/layout'
-import yhfx from '@/assets/images/yhfx.png'
 const nestedRouter = {
   path: '/userBehavior',
   component: Layout,
@@ -12,10 +11,10 @@ const nestedRouter = {
   },
   children: [
     {
-      path: 'index',
-      name: 'index',
+      path: 'portrait',
       component: () => import('@/views/user-behavior/index'),
-      meta: { title: '用户分析' }
+      name: 'portrait',
+      meta: { title: '用户画像' }
     }
   ]
 }
