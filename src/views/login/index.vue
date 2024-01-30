@@ -70,9 +70,6 @@
           manual
         >
           <el-form-item prop="password" style="margin-bottom: 25px">
-            <!-- <span class="svg-container">
-              <svg-icon icon-class="password" />
-            </span> -->
             <el-input
               :key="passwordType"
               ref="password"
@@ -86,9 +83,8 @@
               @blur="capsTooltip = false"
               @keyup.enter.native="handleLogin"
             />
-            <!-- <span class="show-pwd" @click="showPwd"> -->
             <span
-            style="cursor: pointer;"
+              style="cursor: pointer"
               :class="
                 passwordType === 'password' ? 'el-icon-lock' : 'el-icon-unlock'
               "
@@ -117,34 +113,7 @@
           >
         </div>
       </el-form>
-      <div class="loginWarry">
-        <!-- <div class="colFont">—— 其他登录方式 ——</div>
-        <div
-          style="
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-          "
-          @click="checkLoginEvent"
-        >
-          <img
-            src="@/assets/images/wx.png"
-            style="width: 23px; margin-right: 14px"
-          />
-          <div class="colFont" style="margin: 36px 0">微信</div>
-        </div> -->
-        <!-- <div style="display: flex; justify-content: center">
-          <div
-            class="registration"
-            @click="checkLoginEvent"
-            style="margin-right: 12px"
-          >
-            注册
-          </div>
-          <div class="registration" @click="checkLoginEvent">登记</div>
-        </div> -->
-      </div>
+      <div class="loginWarry"></div>
     </div>
 
     <el-dialog :visible.sync="dialogVisible" width="400px" center>
@@ -192,18 +161,16 @@ export default {
       }
     };
     const validatePassword = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error("请输入密码"));
-      } else if (value != this.validatePassword) {
-        callback(new Error("账号密码错误"));
+      if (value.length < 6) {
+        callback(new Error("密码不能少于6位"));
       } else {
         callback();
       }
     };
     return {
       loginForm: {
-        username: "",
-        password: "",
+        username: "admin",
+        password: "123456",
       },
       dialogVisible: false,
       loginRules: {
