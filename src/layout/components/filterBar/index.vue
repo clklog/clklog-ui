@@ -311,14 +311,12 @@ export default {
   },
   watch: {
     commonParams(val) {
-      // return this.setTopFilterParams(val);
       this.setTopFilterParams(val);
       this.commonData = val;
     },
   },
   methods: {
     btnShowEvent(val) {
-      // console.log(val,"点击事件");
       this.popflag = true;
     },
     canclePopEvent() {
@@ -329,7 +327,7 @@ export default {
       let path = this.$route.path;
       this.commonData.projectName = this.$store.getters.projectName;
       switch (path) {
-        case "/visitorAnalysis/search": {
+        case "/access/search": {
           let cols = [
             "index",
             "searchword",
@@ -352,7 +350,7 @@ export default {
           });
           break;
         }
-        case "/visitorAnalysis/userLoyalty": {
+        case "/userBehavior/userLoyalty": {
           exportVisitorApi(this.commonData).then((res) => {
             let name = this.sliceTypeFile(res);
             blobDownloads(res.data, name);

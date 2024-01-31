@@ -2,8 +2,8 @@
   <div class="navbar">
     <div class="burying_point">
       <div style="display: flex; align-items: center">
-        <div class="logoFlag">
-          <img class="imgLogo" src="@/assets/images/logo.png" alt="" />
+        <div class="logoFlag" @click="$router.push('/')">
+          <img class="imgLogo" src="@/assets/images/logo.png"  />
         </div>
         <el-select
           v-model="value"
@@ -169,6 +169,7 @@ export default {
       line-height: 17px;
       color: #4d4d4d;
       padding-top: 2px;
+      cursor: pointer;
       .imgLogo {
         height: 44px;
       }

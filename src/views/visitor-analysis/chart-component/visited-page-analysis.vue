@@ -44,8 +44,8 @@
           class="checkBoxStyle"
           @change="handelChannelList"
         >
-          <el-checkbox label="pv">浏览量(PV)</el-checkbox>
-          <el-checkbox label="uv">访客数(UV)</el-checkbox>
+          <el-checkbox label="pv">浏览量</el-checkbox>
+          <el-checkbox label="uv">访客数</el-checkbox>
           <el-checkbox label="ipCount" style="margin-right: 0"
             >IP数</el-checkbox
           >
@@ -289,8 +289,8 @@
             </template>
           </el-table-column>
           <el-table-column label="流量基础指标">
-            <el-table-column v-if="pv" prop="detail.pv" label="浏览量(PV)" />
-            <el-table-column v-if="uv" prop="detail.uv" label="访客数(UV)" />
+            <el-table-column v-if="pv" prop="detail.pv" label="浏览量" />
+            <el-table-column v-if="uv" prop="detail.uv" label="访客数" />
             <el-table-column
               v-if="ipCount"
               prop="detail.ipCount"
@@ -370,13 +370,13 @@
               <el-table-column
                 v-if="pv"
                 prop="pv"
-                label="浏览量(PV)"
+                label="浏览量"
                 sortable="custom"
               />
               <el-table-column
                 v-if="uv"
                 prop="uv"
-                label="访客数(UV)"
+                label="访客数"
                 sortable="custom"
               />
               <el-table-column

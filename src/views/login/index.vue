@@ -39,9 +39,6 @@
           账号
         </div>
         <el-form-item prop="username" style="margin-bottom: 25px">
-          <!-- <span class="svg-container">
-            <svg-icon icon-class="user" />
-          </span> -->
           <el-input
             ref="username"
             v-model="loginForm.username"
@@ -70,9 +67,6 @@
           manual
         >
           <el-form-item prop="password" style="margin-bottom: 25px">
-            <!-- <span class="svg-container">
-              <svg-icon icon-class="password" />
-            </span> -->
             <el-input
               :key="passwordType"
               ref="password"
@@ -86,7 +80,7 @@
               @blur="capsTooltip = false"
               @keyup.enter.native="handleLogin"
             />
-            <!-- <span class="show-pwd" @click="showPwd"> -->
+           
             <span
             style="cursor: pointer;"
               :class="
@@ -118,32 +112,6 @@
         </div>
       </el-form>
       <div class="loginWarry">
-        <!-- <div class="colFont">—— 其他登录方式 ——</div>
-        <div
-          style="
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-          "
-          @click="checkLoginEvent"
-        >
-          <img
-            src="@/assets/images/wx.png"
-            style="width: 23px; margin-right: 14px"
-          />
-          <div class="colFont" style="margin: 36px 0">微信</div>
-        </div> -->
-        <!-- <div style="display: flex; justify-content: center">
-          <div
-            class="registration"
-            @click="checkLoginEvent"
-            style="margin-right: 12px"
-          >
-            注册
-          </div>
-          <div class="registration" @click="checkLoginEvent">登记</div>
-        </div> -->
       </div>
     </div>
 
@@ -328,11 +296,6 @@ $cursor: #7b7a7b;
       color: $light_gray;
       height: 46px;
       caret-color: $cursor;
-
-      // &:-webkit-autofill {
-      //   box-shadow: 0 0 0px 1000px $bg inset !important;
-      //   -webkit-text-fill-color: $cursor !important;
-      // }
     }
   }
 

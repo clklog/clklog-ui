@@ -3,7 +3,10 @@ import Router from "vue-router";
 Vue.use(Router);
 import Layout from "@/layout";
 import visitorAnalysis from "./modules/visitor-analysis";
+import accessAnalysis from "./modules/access-analysis";
 import userBehavior from "./modules/user-behavior";
+
+
 export const constantRoutes = [
   {
     path: "/redirect",
@@ -49,10 +52,24 @@ export const constantRoutes = [
       },
     ],
   },
+  {
+    path: "/trendAnalysis",
+    component: Layout,
+    redirect: "/trend",
+    children: [
+      {
+        path: "trend",
+        component: () => import("@/views/visitor-analysis/trend-analysis"),
+        name: "trend",
+        meta: { title: "趋势分析", icon: "trend", affix: true },
+      },
+    ],
+  },
 ];
 
 export const asyncRoutes = [
   visitorAnalysis,
+  accessAnalysis,
   userBehavior,
   { path: "*", redirect: "/index", hidden: true },
 ];
