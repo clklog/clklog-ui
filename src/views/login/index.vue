@@ -98,15 +98,9 @@
           <el-button
             :loading="loading"
             type="primary"
-            style="width: calc(50% - 10px); height: 46px; margin-bottom: 30px"
+            style="width: 100%; height: 46px; margin-bottom: 30px"
             @click.native.prevent="handleLogin"
             >登录</el-button
-          >
-          <el-button
-            type="primary"
-            style="width: calc(50% - 10px); height: 46px; margin-bottom: 30px"
-            @click="checkLoginEvent"
-            >获取体验账号</el-button
           >
         </div>
       </el-form>
@@ -200,7 +194,7 @@ export default {
     },
   },
   created() {
-    let userInfo = JSON.parse(Cookies.get("userInfo"));
+    let userInfo = Cookies.get("userInfo") ?  JSON.parse(Cookies.get("userInfo")): '';
     if (userInfo) {
       this.loginForm.username = userInfo.username;
       this.loginForm.password = userInfo.password;
