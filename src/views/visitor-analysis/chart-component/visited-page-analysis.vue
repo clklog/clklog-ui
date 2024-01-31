@@ -205,7 +205,7 @@
               </template>
             </el-table-column>
           </el-table-column>
-        </el-table>
+        </el-table> -->
       </div>
       <!-- 默认图表 -->
       <div v-show="showTreeFlag">
@@ -405,7 +405,7 @@ export default {
         params.uriPath = scope.uri;
         this.$refs.vistedDialog.vistedApiEvent(params);
       } else {
-        this.dialogParams.uri = scope.uri; 
+        this.dialogParams.uri = scope.uri; //赋值uri
         this.isExpand = false;
         // 动态添加节点
         this.scopeEventApi(scope.uri, "", scope.detail.numRandom);
@@ -429,8 +429,6 @@ export default {
                 id: "more",
               });
             }
-
-           
             this.uriListEnd = res.data.rows;
             // 动态添加节点
             res.data.rows.forEach((item, index) => {
