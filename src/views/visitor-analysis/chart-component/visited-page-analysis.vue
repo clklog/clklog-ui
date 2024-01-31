@@ -527,28 +527,18 @@ export default {
     // 层级展开事件
     handleTree(scope, event) {
       if (event == "dialog") {
-        this.scopeEventApi(scope.uri, event);
-      } else {
-        this.isExpand = false;
-        // 动态添加节点
-        this.scopeEventApi(scope.uri, "", scope.detail.numRandom);
-      }
-
-      if (event == "dialog") {
         // 弹框分页事件
         let params = copyObj(this.commonParams);
         params.uriPath = scope.uri;
         this.$refs.vistedDialog.vistedApiEvent(params);
       } else {
-        this.dialogParams.uri = scope.uri; //赋值uri
+        this.dialogParams.uri = scope.uri; 
         this.isExpand = false;
         // 动态添加节点
         this.scopeEventApi(scope.uri, "", scope.detail.numRandom);
       }
     },
     scopeEventApi(uri, event, numRandom, showAdd, level) {
-      // this.commonParams.uriPath = uri;
-      // getVisitUriListOfUriPathApi(this.commonParams).then((res) => {
       let params = copyObj(this.commonParams);
       params.uriPath = uri;
       params.pageSize = 10;
