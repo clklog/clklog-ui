@@ -1,5 +1,5 @@
 const state = {
-  projectName: 'clklogapp'
+  projectName: 'hqq'
 }
 
 const mutations = {

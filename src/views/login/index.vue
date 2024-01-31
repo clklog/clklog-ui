@@ -39,9 +39,6 @@
           账号
         </div>
         <el-form-item prop="username" style="margin-bottom: 25px">
-          <!-- <span class="svg-container">
-            <svg-icon icon-class="user" />
-          </span> -->
           <el-input
             ref="username"
             v-model="loginForm.username"

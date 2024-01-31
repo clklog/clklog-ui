@@ -18,7 +18,7 @@
           >
             <el-table-column
               :show-overflow-tooltip="true"
-              style="cursor: pointer !important;"
+              style="cursor: pointer !important"
               prop="distinctId"
               label="访客ID"
               width="450"
@@ -58,6 +58,20 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column prop="pv" label="浏览量" sortable="custom">
+              <template slot-scope="scope">
+                <div
+                  @click="handleCellClick(scope.row.distinctId)"
+                  style="
+                    cursor: pointer;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  "
+                >
+                  {{ scope.row.pv }}
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column
               prop="visitCount"
               label="访问次数"
@@ -76,20 +90,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="pv" label="浏览量" sortable="custom">
-              <template slot-scope="scope">
-                <div
-                  @click="handleCellClick(scope.row.distinctId)"
-                  style="
-                    cursor: pointer;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                  "
-                >
-                  {{ scope.row.pv }}
-                </div>
-              </template>
-            </el-table-column>
+
             <el-table-column
               prop="avgPv"
               label="平均访问页数"
