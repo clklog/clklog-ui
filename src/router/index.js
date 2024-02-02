@@ -61,7 +61,7 @@ export const constantRoutes = [
         path: "trend",
         component: () => import("@/views/visitor-analysis/trend-analysis"),
         name: "trend",
-        meta: { title: "趋势分析", icon: "trend", affix: true },
+        meta: { title: "趋势分析", icon: "trend", affix: true, },
       },
     ],
   },
@@ -80,7 +80,7 @@ export const asyncRoutes = [
       {
         path: "https://pro.clklog.com",
         name: "clklog",
-        meta: { title: "商业版功能", icon: "visitorAnaly",affix: true},
+        meta: { title: "商业版功能",icon: "morefunc",affix: true},
       },
     ],
   },
