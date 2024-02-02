@@ -65,12 +65,25 @@ export const constantRoutes = [
       },
     ],
   },
+ 
 ];
 
 export const asyncRoutes = [
   visitorAnalysis,
   accessAnalysis,
   userBehavior,
+  {
+    path: "/pro",
+    component: Layout,
+    redirect: "/clklog",
+    children: [
+      {
+        path: "https://pro.clklog.com",
+        name: "clklog",
+        meta: { title: "商业版功能", icon: "visitorAnaly",affix: true},
+      },
+    ],
+  },
   { path: "*", redirect: "/index", hidden: true },
 ];
 

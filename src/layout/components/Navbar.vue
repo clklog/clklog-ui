@@ -2,8 +2,22 @@
   <div class="navbar">
     <div class="burying_point">
       <div style="display: flex; align-items: center">
-        <div class="logoFlag" @click="$router.push('/')">
-          <img class="imgLogo" src="@/assets/images/logo.png"  />
+        <div class="logoFlag">
+          <img
+            class="imgLogo"
+            src="@/assets/images/logo.png"
+            @click="$router.push('/')"
+          />
+          <div
+            style="
+              margin-left: 20px;
+              font-size: 12px;
+              color: rgba(76, 81, 86, 0.657);
+              margin-top: 6px;
+            "
+          >
+            社区版
+          </div>
         </div>
         <el-select
           v-model="value"
@@ -81,15 +95,16 @@ export default {
     };
   },
   created() {
-    this.value = this.options[0].value;
-    this.handleChangeProject(this.options[0].value);
-    this.initDate();
     const _this = this;
     document.addEventListener("visibilitychange", function () {
       if (!document.hidden) {
         _this.initDate();
       }
     });
+    this.value = this.options[0].value;
+    this.handleChangeProject(this.options[0].value);
+    this.initDate();
+    
   },
   computed: {
     ...mapGetters(["sidebar", "avatar", "device", "projectName"]),
@@ -163,14 +178,16 @@ export default {
       }
     }
     .logoFlag {
+      display: flex;
+      align-items: center;
       margin-right: 70px;
       font-size: 15px;
       font-weight: bold;
       line-height: 17px;
       color: #4d4d4d;
       padding-top: 2px;
-      cursor: pointer;
       .imgLogo {
+        cursor: pointer;
         height: 44px;
       }
     }

@@ -1,9 +1,9 @@
 :export {
   menuText: black;
   menuActiveText: #6dc3dd;
-  subMenuActiveText: black;
+  subMenuActiveText: #fff;
   menuBg: #fff;
-  menuHover: linear-gradient(to right, #E1E7FB, #ffffff);
+  menuHover: #fff;
   subMenuBg: #fff;
   subMenuHover: linear-gradient(to right, #E1E7FB, #ffffff);
   sideBarWidth: 210px;
@@ -211,11 +211,11 @@
 
 #app .sidebar-container .submenu-title-noDropdown:hover,
 #app .sidebar-container .el-submenu__title:hover {
-  background-color: linear-gradient(to right, #E1E7FB, #ffffff) !important;
+  background-color: #fff !important;
 }
 
 #app .sidebar-container .is-active > .el-submenu__title {
-  color: black !important;
+  color: #fff !important;
 }
 
 #app .sidebar-container .nest-menu .el-submenu > .el-submenu__title, #app .sidebar-container .el-submenu .el-menu-item {
@@ -315,7 +315,7 @@
 
 .el-menu--vertical .nest-menu .el-submenu > .el-submenu__title:hover,
 .el-menu--vertical .el-menu-item:hover {
-  background-color: linear-gradient(to right, #E1E7FB, #ffffff) !important;
+  background-color: #fff !important;
 }
 
 .el-menu--vertical > .el-menu--popup {
@@ -339,9 +339,9 @@
 :export {
   menuText: black;
   menuActiveText: #6dc3dd;
-  subMenuActiveText: black;
+  subMenuActiveText: #fff;
   menuBg: #fff;
-  menuHover: linear-gradient(to right, #E1E7FB, #ffffff);
+  menuHover: #fff;
   subMenuBg: #fff;
   subMenuHover: linear-gradient(to right, #E1E7FB, #ffffff);
   sideBarWidth: 210px;
@@ -644,6 +644,69 @@ html {
 
 #app {
   height: 100%;
+}
+
+.customTable .tdStyle {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.customTable .tdStyle .setPadding {
+  margin-left: 14px;
+}
+
+.customTable table {
+  border-radius: 6px;
+  border-color: rgba(247, 247, 247, 0.39);
+}
+
+.customTable table th {
+  font-weight: 500;
+  color: #4d4d4d;
+}
+
+.customTable td:nth-child(1) {
+  background-color: #f7fafe;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 25px;
+  color: #4d4d4d;
+}
+
+.customTable table tr {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 25px;
+  color: #4d4d4d;
+}
+
+.customTable table th {
+  height: 40px;
+  text-align: center;
+}
+
+.customTable table td {
+  color: #4d4d4d;
+  height: 40px;
+  text-align: center;
+}
+
+.customTable table tr:first-child th:first-child {
+  border-top-left-radius: 6px;
+}
+
+.customTable table tr:first-child th:last-child {
+  border-top-right-radius: 6px;
+}
+
+.customTable table tr:last-child td:first-child {
+  border-bottom-left-radius: 6px;
+}
+
+.customTable table tr:last-child td:last-child {
+  border-bottom-right-radius: 6px;
 }
 
 *,

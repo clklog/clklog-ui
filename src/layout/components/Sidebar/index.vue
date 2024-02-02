@@ -32,6 +32,7 @@
           :item="route"
           :base-path="route.path"
         />
+        
       </el-menu>
     </el-scrollbar>
   </div>
@@ -85,9 +86,10 @@ export default {
 #app .sidebar-container .el-submenu__title:hover {
   background: linear-gradient(to right, #d5e5fa, #fff) !important;
 }
-#app .sidebar-container .submenu-title-noDropdown:hover {
+/* #app .sidebar-container .submenu-title-noDropdown:hover {
   background: linear-gradient(to right, #d5e5fa, #fff) !important;
-}
+} */
+
 </style>
 <style lang="scss" scoped>
 ::v-deep {
