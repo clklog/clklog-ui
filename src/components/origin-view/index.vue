@@ -306,7 +306,7 @@
           <p>{{ (originData && originData.ipCount) || "--" }}</p>
         </div>
         <div class="bid-list-item w158">
-          <p>{{ averageRulesEvent(originData.avgPv) || "--" }}</p>
+          <p>{{ averageRulesEvent(originData && originData.avgPv) || "--" }}</p>
         </div>
         <div class="bid-list-item w158">
           <p>{{ formatTimeFun(originData && originData.avgVisitTime) || "--" }}</p>
