@@ -201,7 +201,7 @@ export default {
   components: { originView, flowPoint },
   data() {
     return {
-      filterChannelList: [{}],
+      filterChannelList: [],
       currentPage: 1,
       channelTableData: [],
       channelList: ["pv", "visitCount"],
@@ -236,6 +236,7 @@ export default {
   },
   methods: {
     sortChange(e) {
+      console.log(243, "43243");
       if (e.order && e.order == "ascending") {
         // 降序
         this.current.sortName = e.prop;
@@ -303,9 +304,7 @@ export default {
         // (item) => item.channel !== "网站"
         (item) => item.channel == "全部"
       );
-      if (filteredArr && filteredArr.length > 0) {
-        this.filterChannelList = filteredArr;
-      }
+      this.filterChannelList = filteredArr;
     },
     formatTimeEvent(val) {
       return formatTime(Math.floor(val));
