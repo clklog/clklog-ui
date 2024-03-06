@@ -80,14 +80,9 @@
               @blur="capsTooltip = false"
               @keyup.enter.native="handleLogin"
             />
-<<<<<<< HEAD
            
             <span
             style="cursor: pointer;"
-=======
-            <span
-              style="cursor: pointer"
->>>>>>> ee29c5551cfc6f036d976fb3868875b81fd346ab
               :class="
                 passwordType === 'password' ? 'el-icon-lock' : 'el-icon-unlock'
               "

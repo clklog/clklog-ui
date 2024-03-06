@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- title="资源路径Top10" -->
     <el-dialog
       title="访问页面分析"
       :visible.sync="dialogTableVisible"

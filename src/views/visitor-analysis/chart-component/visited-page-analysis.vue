@@ -265,49 +265,13 @@
                   "
                 />
               </div>
-
-              <div
-                v-if="scope.row.secondFlag"
-                :style="scope.row.title == '更多' ? 'display:flex; ' : ''"
-              >
-                <div style="margin-left: -12px; display: flex">
-                  <div
-                    v-if="scope.row.title == '更多'"
-                    @click="handleTree(dialogParams, 'dialog')"
-                    class="setMoreCon"
-                  >
-                  
-                    更多受访页面...
-                  </div>
-                  <div v-else>
-                    {{ scope.row.title ? scope.row.title : "" }}
-                  </div>
-                </div>
-                <div
-                  style="margin-left: -12px"
-                  v-if="scope.row.title != '更多'"
-                >
-                  {{ scope.row.segment ? scope.row.segment : "/" }}
-                </div>
+              <div v-if=" scope.row.secondFlag">
+                <div style=" margin-left:-12px;">{{ scope.row.title ? scope.row.title : "" }}</div>
+                <div style=" margin-left:-12px;" >{{ scope.row.segment ? scope.row.segment : "/" }}</div>
               </div>
-
               <div v-else>
-                <div style="margin-left: 5px; display: flex">
-                  
-                  <div
-                    v-if="scope.row.title == '更多'"
-                    @click="handleTree(dialogParams, 'dialog')"
-                    class="setMoreCon"
-                  >
-                    更多受访页面...
-                  </div>
-                  <div v-else>
-                    {{ scope.row.title ? scope.row.title : "" }}
-                  </div>
-                </div>
-                <div v-if="scope.row.title != '更多'">
-                  {{ scope.row.segment ? scope.row.segment : "/" }}
-                </div>
+                <div style=" margin-left:5px;">{{ scope.row.title ? scope.row.title : "" }}</div>
+                <div>{{ scope.row.segment ? scope.row.segment : "/" }}</div>
               </div>
 
               <img
@@ -324,7 +288,6 @@
               />
             </template>
           </el-table-column>
-
           <el-table-column label="流量基础指标">
             <el-table-column v-if="pv" prop="detail.pv" label="浏览量" />
             <el-table-column v-if="uv" prop="detail.uv" label="访客数" />
@@ -355,8 +318,8 @@
               prop="detail.avgVisitTime"
               label="平均访问时长"
             >
-              <template slot-scope="{ row }" v-if="row.detail.title != '更多'">
-                {{ row.detail.avgVisitTime | formatTime }}
+              <template slot-scope="scope">
+                {{ formatTimeEvent(scope.row.detail.avgVisitTime) }}
               </template>
             </el-table-column>
             <el-table-column
@@ -364,8 +327,8 @@
               prop="detail.exitRate"
               label="退出率"
             >
-              <template slot-scope="{ row }" v-if="row.detail.title != '更多'">
-                {{ row.detail.exitRate | percenTable }}
+              <template slot-scope="scope">
+                {{ percentageFun(scope.row.detail.exitRate) }}
               </template>
             </el-table-column>
           </el-table-column>
@@ -726,12 +689,13 @@ export default {
       });
 
       this.treeList = val;
-     
+      // console.log(this.treeList,"treeList");
+      // 测试数据
       this.treeList.forEach((item) => {
         item.detail.numRandom = item.detail.uri + this.generateRandomNumber();
         this.insertRandom(item.leafUri);
       });
-      
+      // console.log(this.treeList, "增加随机数");
     },
     // 动态添加节点
     insertRandom(list, level = 1) {
@@ -836,7 +800,7 @@ export default {
   },
   beforeDestroy() {
     // 绑在$bus上的 都要主动销毁，因为App.vue销毁之后，$bus还在，在上面注册的事件都还在占空间，所以销毁时得一起$off掉
-    this.$bus.$off(["publicEventDown"]);
+    this.$bus.$off(["publicEventDown"]); // 同时关闭多个用数组形式放进去
   },
 };
 </script>
