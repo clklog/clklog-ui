@@ -73,6 +73,14 @@ service.interceptors.response.use(
 
     // if the custom code is not 200, it is judged as an error.
     if (res.code !== 200) {
+      if (response.config.url.includes('info/subscribe')) {
+        Message({
+          message: '订阅失败',
+          type: "error",
+          duration: 5 * 1000,
+        });
+        return
+      }
       Message({
         message: res.message || "Error",
         type: "error",

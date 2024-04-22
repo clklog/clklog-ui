@@ -22,6 +22,7 @@ export default {
       profileApi().then((res) => {
         if (res.code == 200) {
           // res.data.subscribed = false;
+          // res.data.clientId = null;
           setTimeout(() => {
             this.$nextTick(() => {
               this.$bus.$emit("$letter", res.data);
