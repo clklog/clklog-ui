@@ -80,9 +80,9 @@
               @blur="capsTooltip = false"
               @keyup.enter.native="handleLogin"
             />
-           
+
             <span
-            style="cursor: pointer;"
+              style="cursor: pointer"
               :class="
                 passwordType === 'password' ? 'el-icon-lock' : 'el-icon-unlock'
               "
@@ -111,8 +111,7 @@
           >
         </div>
       </el-form>
-      <div class="loginWarry">
-      </div>
+      <div class="loginWarry"></div>
     </div>
 
     <el-dialog :visible.sync="dialogVisible" width="400px" center>
@@ -146,6 +145,7 @@
 <script>
 import { validUsername } from "@/utils/validate";
 import SocialSign from "./components/SocialSignin";
+import { profileApi, subscribeApi } from "@/api/trackingapi/subscribe.js";
 import Cookies from "js-cookie";
 
 export default {
@@ -189,6 +189,8 @@ export default {
       redirect: undefined,
       otherQuery: {},
       validatePassword: this.$store.getters.password,
+      clientId: "",
+      subscribed: "",
     };
   },
   watch: {
@@ -204,6 +206,11 @@ export default {
     },
   },
   created() {
+    // this.$bus.$off('$subscription')
+    this.$bus.$on("$loginOpen", (res) => {
+      console.log(res, "loginOpen");
+      this.initClklog(res);
+    });
     let userInfo = JSON.parse(Cookies.get("userInfo"));
     if (userInfo) {
       this.loginForm.username = userInfo.username;
@@ -216,9 +223,16 @@ export default {
     } else if (this.loginForm.password === "") {
       this.$refs.password.focus();
     }
+    // this.$bus.$on("$subscription", (res) => {
+    //   console.log(res,"订阅方式触发的");
+    //   this.initClklog(res);
+    // });
   },
-  destroyed() {},
   methods: {
+    openShow(val) {
+      console.log("执行了---");
+      this.initClklog("sub");
+    },
     checkLoginEvent() {
       this.dialogVisible = true;
     },
@@ -250,12 +264,30 @@ export default {
               });
               this.loading = false;
             })
+            .then(() => {
+              this.initClklog();
+            })
             .catch(() => {
               this.loading = false;
             });
         } else {
           console.log("error submit!!");
           return false;
+        }
+      });
+    },
+    initClklog(flag) {
+      profileApi().then((res) => {
+        if (res.code == 200) {
+          this.clientId = res.data;
+          // res.data.subscribed = false;
+          if (!res.data.subscribed) {
+            setTimeout(() => {
+              this.$nextTick(() => {
+                this.$bus.$emit("$letter", res.data);
+              });
+            }, 500);
+          }
         }
       });
     },

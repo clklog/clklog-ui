@@ -39,8 +39,15 @@ module.exports = {
       errors: true,
     },
     proxy: {
+      "/DEV-APISUB": {
+        target: "https://pro.clklog.com/api/public/",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/DEV-APISUB": "",
+        },
+      },
       "/DEV-API": {
-        target: process.env.VUE_APP_BASE_API_PROXY, // api接口基础路径
+        target: "https://demo.clklog.com/api", // api接口基础路径
         changeOrigin: true, // 是否支持跨域
         pathRewrite: {
           "^/DEV-API": "", // 重写路径：去掉路径中开头的 '/api'

@@ -19,6 +19,7 @@
             社区版
           </div>
         </div>
+       
         <el-select
           v-model="value"
           placeholder="请选择"
@@ -49,6 +50,9 @@
             <i class="el-icon-caret-bottom" />
           </div>
           <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item @click.native="subscription()">
+              <span style="display: block">订阅</span>
+            </el-dropdown-item>
             <el-dropdown-item @click.native="logout">
               <span style="display: block">退出</span>
             </el-dropdown-item>
@@ -104,7 +108,6 @@ export default {
     this.value = this.options[0].value;
     this.handleChangeProject(this.options[0].value);
     this.initDate();
-    
   },
   computed: {
     ...mapGetters(["sidebar", "avatar", "device", "projectName"]),
@@ -131,6 +134,14 @@ export default {
     async logout() {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+    },
+    subscription() {
+      console.log("触发了订阅");
+
+      this.$nextTick(() => {
+        this.$bus.$emit("$subscription", "sub");
+      });
+    
     },
     clickImg() {},
     handleChangeProject(val) {

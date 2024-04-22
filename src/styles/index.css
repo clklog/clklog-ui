@@ -1,9 +1,9 @@
 :export {
   menuText: black;
   menuActiveText: #6dc3dd;
-  subMenuActiveText: #fff;
+  subMenuActiveText: black;
   menuBg: #fff;
-  menuHover: #fff;
+  menuHover: linear-gradient(to right, #E1E7FB, #ffffff);
   subMenuBg: #fff;
   subMenuHover: linear-gradient(to right, #E1E7FB, #ffffff);
   sideBarWidth: 210px;
@@ -211,11 +211,11 @@
 
 #app .sidebar-container .submenu-title-noDropdown:hover,
 #app .sidebar-container .el-submenu__title:hover {
-  background-color: #fff !important;
+  background-color: linear-gradient(to right, #E1E7FB, #ffffff) !important;
 }
 
 #app .sidebar-container .is-active > .el-submenu__title {
-  color: #fff !important;
+  color: black !important;
 }
 
 #app .sidebar-container .nest-menu .el-submenu > .el-submenu__title, #app .sidebar-container .el-submenu .el-menu-item {
@@ -315,7 +315,7 @@
 
 .el-menu--vertical .nest-menu .el-submenu > .el-submenu__title:hover,
 .el-menu--vertical .el-menu-item:hover {
-  background-color: #fff !important;
+  background-color: linear-gradient(to right, #E1E7FB, #ffffff) !important;
 }
 
 .el-menu--vertical > .el-menu--popup {
@@ -339,9 +339,9 @@
 :export {
   menuText: black;
   menuActiveText: #6dc3dd;
-  subMenuActiveText: #fff;
+  subMenuActiveText: black;
   menuBg: #fff;
-  menuHover: #fff;
+  menuHover: linear-gradient(to right, #E1E7FB, #ffffff);
   subMenuBg: #fff;
   subMenuHover: linear-gradient(to right, #E1E7FB, #ffffff);
   sideBarWidth: 210px;
@@ -644,6 +644,30 @@ html {
 
 #app {
   height: 100%;
+}
+
+.zc_explain_tip {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 25px;
+  color: #4d4d4d;
+  letter-spacing: 1px;
+}
+
+.zc_btn {
+  height: 32px;
+  line-height: 7px;
+  color: #fff !important;
+  font-size: 13px;
+  background-color: #2c7be5 !important;
+}
+
+.zc_btn_default {
+  height: 30px;
+  line-height: 7px;
+  font-size: 13px;
+  color: #2c7be5;
+  border: 1px solid #2c7be5;
 }
 
 .customTable .tdStyle {
