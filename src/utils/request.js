@@ -20,11 +20,14 @@ service.interceptors.request.use(
       if (!config.headers["Content-Type"]) {
         config.headers["Content-Type"] = "application/json;";
       }
+      console.log(window.globalConfig.BASE_API,"window.globalConfig.BASE_API");
       if (process.env.NODE_ENV == "development") {
+
         if (
           config.url == "/info/skip-subscription" ||
           config.url == "/info/subscribe"
         ) {
+          
           config.url = "/DEV-APISUB" + config.url;
         } else {
           config.url = "/DEV-API" + config.url;
@@ -35,7 +38,7 @@ service.interceptors.request.use(
           config.url == "/info/skip-subscription" ||
           config.url == "/info/subscribe"
         ) {
-          config.url = "https://pro.clklog.com/api/public/" + config.url;
+          config.url = "https://support.clklog.com/public" + config.url;
         } else {
           config.url = window.globalConfig.BASE_API + config.url;
         }

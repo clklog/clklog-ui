@@ -40,7 +40,7 @@ module.exports = {
     },
     proxy: {
       "/DEV-APISUB": {
-        target: "https://pro.clklog.com/api/public/",
+        target: "https://support.clklog.com/public",
         changeOrigin: true,
         pathRewrite: {
           "^/DEV-APISUB": "",

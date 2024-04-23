@@ -219,7 +219,6 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.$bus.$on("$letter", (res) => {
-        console.log(res, "弹出---");
         this.clearData();
         this.ruleForm.clientId = res.clientId;
         this.openFLag = res;
