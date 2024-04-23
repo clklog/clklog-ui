@@ -21,7 +21,6 @@ export default {
     initClklog(flag) {
       profileApi().then((res) => {
         if (res.code == 200) {
-          // res.data.subscribed = false;
           setTimeout(() => {
             this.$nextTick(() => {
               this.$bus.$emit("$letter", res.data);

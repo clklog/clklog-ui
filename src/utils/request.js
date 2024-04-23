@@ -11,16 +11,15 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // do something before request is sent
-    if (store.getters.token) {
-      config.headers["X-Token"] = getToken();
-    }
+    // if (store.getters.token) {
+    //   config.headers["X-Token"] = getToken();
+    // }
     const isMock = config.url.includes("/vue-element-admin/user");
     if ((config.method === "post" || config.method === "put") && !isMock) {
       if (!config.headers["Content-Type"]) {
         config.headers["Content-Type"] = "application/json;";
       }
-      // console.log(window,"window.globalConfig.BASE_API--");
-
+     
       if (process.env.NODE_ENV == "development") {
         if (
           config.url == "/info/skip-subscription" ||
@@ -36,7 +35,7 @@ service.interceptors.request.use(
           config.url == "/info/skip-subscription" ||
           config.url == "/info/subscribe"
         ) {
-          config.url = "https://pro.clklog.com/api/public/" + config.url;
+          config.url = "https://support.clklog.com/public" + config.url;
         } else {
           config.url = window.globalConfig.BASE_API + config.url;
         }

@@ -219,7 +219,6 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.$bus.$on("$letter", (res) => {
-        console.log(res, "弹出---");
         this.clearData();
         this.ruleForm.clientId = res.clientId;
         this.openFLag = res;
@@ -288,9 +287,7 @@ export default {
           subscribeApi(this.ruleForm).then((res) => {
             if (res.code == 200) {
               this.$message.success("提交成功！");
-              // if (!this.openFLag.subscribed) {
                 this.acitiveEvent(this.ruleForm);
-              // }
               this.DialogVisible = false;
             }
           });
