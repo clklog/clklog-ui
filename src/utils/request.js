@@ -12,9 +12,9 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // do something before request is sent
-    if (store.getters.token) {
-      config.headers["X-Token"] = getToken();
-    }
+    // if (store.getters.token) {
+    //   config.headers["X-Token"] = getToken();
+    // }
     const isMock = config.url.includes("/vue-element-admin/user");
     if ((config.method === "post" || config.method === "put") && !isMock) {
       if (!config.headers["Content-Type"]) {
