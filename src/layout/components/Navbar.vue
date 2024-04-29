@@ -78,21 +78,7 @@ export default {
   },
   data() {
     return {
-      //clklog-demo
-      options: [
-        {
-          value: "hqq",
-          label: "货清清",
-        },
-        {
-          value: "clklog",
-          label: "clklog官网",
-        },
-        {
-          value: "zcunsoft",
-          label: "至存官网",
-        },
-      ],
+      options: window.globalConfig.projectList,
       value: "",
       dateTime: "",
       dateWeek: "",
