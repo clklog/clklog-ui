@@ -20,7 +20,6 @@ service.interceptors.request.use(
       if (!config.headers["Content-Type"]) {
         config.headers["Content-Type"] = "application/json;";
       }
-      console.log(window.globalConfig.BASE_API,"window.globalConfig.BASE_API");
       if (process.env.NODE_ENV == "development") {
 
         if (
