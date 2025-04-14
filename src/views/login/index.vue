@@ -1,117 +1,251 @@
 <template>
-  <div class="login-container">
-    <div style="width: 60vw">
-      <img
-        src="@/assets/images/loginBg.png"
-        style="width: 60vw; height: 100vh; object-fit: contain"
-      />
-    </div>
-    <div
-      style="
-        width: 40vw;
-        background-color: #f7faff;
-        padding: 171px 0;
-        box-sizing: border-box;
-      "
-    >
-      <el-form
-        ref="loginForm"
-        :model="loginForm"
-        :rules="loginRules"
-        class="login-form"
-        autocomplete="on"
-        label-position="left"
+  <div class="container">
+    <!-- pc端 -->
+    <div v-if="device == 'desktop'" class="container-item">
+      <div style="width: 60vw">
+        <img
+          src="@/assets/images/loginBg.png"
+          style="width: 60vw; height: 100vh; object-fit: contain"
+        />
+      </div>
+      <div
+        style="
+          width: 40vw;
+          background-color: #f7faff;
+          padding: 171px 0;
+          box-sizing: border-box;
+        "
       >
-        <div class="title-container">
-          <h3 class="title">
-            <img class="logo_head" src="@/assets/images/logo.png" />
-          </h3>
-        </div>
-        <div
-          style="
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 21px;
-            color: #4d4d4d;
-            margin-bottom: 8px;
-          "
+        <el-form
+          ref="loginForm"
+          :model="loginForm"
+          :rules="loginRules"
+          class="login-form"
+          autocomplete="on"
+          label-position="left"
         >
-          账号
-        </div>
-        <el-form-item prop="username" style="margin-bottom: 25px">
-          <el-input
-            ref="username"
-            v-model="loginForm.username"
-            placeholder="请输入账号"
-            name="username"
-            type="text"
-            tabindex="1"
-            autocomplete="on"
-          />
-        </el-form-item>
-        <div
-          style="
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 21px;
-            color: #4d4d4d;
-            margin-bottom: 8px;
-          "
-        >
-          密码
-        </div>
-        <el-tooltip
-          v-model="capsTooltip"
-          content="Caps lock is On"
-          placement="right"
-          manual
-        >
-          <el-form-item prop="password" style="margin-bottom: 25px">
+          <div class="title-container">
+            <h3 class="title">
+              <img class="logo_head" src="@/assets/images/logo.png" />
+            </h3>
+          </div>
+          <div
+            style="
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 21px;
+              color: #4d4d4d;
+              margin-bottom: 8px;
+            "
+          >
+            账号
+          </div>
+          <el-form-item prop="username" style="margin-bottom: 25px">
             <el-input
-              :key="passwordType"
-              ref="password"
-              v-model="loginForm.password"
-              :type="passwordType"
-              placeholder="请输入密码"
-              name="password"
-              tabindex="2"
+              ref="username"
+              v-model="loginForm.username"
+              placeholder="请输入账号"
+              name="username"
+              type="text"
+              tabindex="1"
               autocomplete="on"
-              @keyup.native="checkCapslock"
-              @blur="capsTooltip = false"
-              @keyup.enter.native="handleLogin"
             />
-
-            <span
-              style="cursor: pointer"
-              :class="
-                passwordType === 'password' ? 'el-icon-lock' : 'el-icon-unlock'
-              "
-              @click="showPwd"
-            >
-              <svg-icon
-                :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
-              />
-            </span>
           </el-form-item>
-        </el-tooltip>
+          <div
+            style="
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 21px;
+              color: #4d4d4d;
+              margin-bottom: 8px;
+            "
+          >
+            密码
+          </div>
+          <el-tooltip
+            v-model="capsTooltip"
+            content="Caps lock is On"
+            placement="right"
+            manual
+          >
+            <el-form-item prop="password" style="margin-bottom: 25px">
+              <el-input
+                :key="passwordType"
+                ref="password"
+                v-model="loginForm.password"
+                :type="passwordType"
+                placeholder="请输入密码"
+                name="password"
+                tabindex="2"
+                autocomplete="on"
+                @keyup.native="checkCapslock"
+                @blur="capsTooltip = false"
+                @keyup.enter.native="handleLogin"
+              />
 
-        <div style="display: flex; justify-content: space-between">
-          <el-button
-            :loading="loading"
-            type="primary"
-            style="width: calc(50% - 10px); height: 46px; margin-bottom: 30px"
-            @click.native.prevent="handleLogin"
-            >登录</el-button
+              <span
+                style="cursor: pointer"
+                :class="
+                  passwordType === 'password'
+                    ? 'el-icon-lock'
+                    : 'el-icon-unlock'
+                "
+                @click="showPwd"
+              >
+                <svg-icon
+                  :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+                />
+              </span>
+            </el-form-item>
+          </el-tooltip>
+
+          <div style="display: flex; justify-content: space-between">
+            <el-button
+              :loading="loading"
+              type="primary"
+              style="width: calc(50% - 10px); height: 46px; margin-bottom: 30px"
+              @click.native.prevent="handleLogin"
+              >登录</el-button
+            >
+            <el-button
+              style="
+                width: calc(50% - 10px);
+                height: 46px;
+                margin-bottom: 30px;
+                background-color: #fd9843;
+                color: #fff;
+                font-size: 16px;
+              "
+              @click="checkLoginEvent"
+              >获取体验账号</el-button
+            >
+          </div>
+        </el-form>
+        <div class="loginWarry"></div>
+      </div>
+    </div>
+    <!-- 移动端 -->
+    <div class="container-item" v-else style="width: 100vw; height: 100vh">
+      <div
+        style="
+          background-color: #f7faff;
+          box-sizing: border-box;
+          width: 100%;
+          height: 100%;
+        "
+      >
+        <el-form
+          ref="loginForm"
+          :model="loginForm"
+          :rules="loginRules"
+          class="login-form"
+          style="
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0;
+          "
+          autocomplete="on"
+          label-position="left"
+        >
+          <div class="title-container">
+            <h3 class="title">
+              <img class="logo_head" src="@/assets/images/logo.png" />
+            </h3>
+          </div>
+          <div
+            style="
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 21px;
+              color: #4d4d4d;
+              margin-bottom: 8px;
+            "
           >
-          <el-button
-            type="primary"
-            style="width: calc(50% - 10px); height: 46px; margin-bottom: 30px"
-            @click="checkLoginEvent"
-            >获取体验账号</el-button
+            账号
+          </div>
+          <el-form-item prop="username" style="margin-bottom: 25px">
+            <el-input
+              ref="username"
+              v-model="loginForm.username"
+              placeholder="请输入账号"
+              name="username"
+              type="text"
+              tabindex="1"
+              autocomplete="on"
+            />
+          </el-form-item>
+          <div
+            style="
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 21px;
+              color: #4d4d4d;
+              margin-bottom: 8px;
+            "
           >
-        </div>
-      </el-form>
-      <div class="loginWarry"></div>
+            密码
+          </div>
+          <el-tooltip
+            v-model="capsTooltip"
+            content="Caps lock is On"
+            placement="right"
+            manual
+          >
+            <el-form-item prop="password" style="margin-bottom: 25px">
+              <el-input
+                :key="passwordType"
+                ref="password"
+                v-model="loginForm.password"
+                :type="passwordType"
+                placeholder="请输入密码"
+                name="password"
+                tabindex="2"
+                autocomplete="on"
+                @keyup.native="checkCapslock"
+                @blur="capsTooltip = false"
+                @keyup.enter.native="handleLogin"
+              />
+              <span
+                style="cursor: pointer"
+                :class="
+                  passwordType === 'password'
+                    ? 'el-icon-lock'
+                    : 'el-icon-unlock'
+                "
+                @click="showPwd"
+              >
+                <svg-icon
+                  :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+                />
+              </span>
+            </el-form-item>
+          </el-tooltip>
+
+          <div style="display: flex; justify-content: space-between">
+            <el-button
+              :loading="loading"
+              type="primary"
+              style="width: calc(50% - 10px); height: 46px; margin-bottom: 30px"
+              @click.native.prevent="handleLogin"
+              >登录</el-button
+            >
+            <el-button
+              style="
+                width: calc(50% - 10px);
+                height: 46px;
+                margin-bottom: 30px;
+                background-color: #fd9843;
+                color: #fff;
+                font-size: 16px;
+              "
+              @click="checkLoginEvent"
+              >获取体验账号</el-button
+            >
+          </div>
+        </el-form>
+      </div>
     </div>
 
     <el-dialog :visible.sync="dialogVisible" width="400px" center>
@@ -143,14 +277,15 @@
 </template>
 
 <script>
-import { validUsername } from "@/utils/validate";
 import SocialSign from "./components/SocialSignin";
 import { profileApi, subscribeApi } from "@/api/trackingapi/subscribe.js";
 import Cookies from "js-cookie";
-
+import { mapState } from "vuex";
+import ResizeMixin from "@/layout/mixin/ResizeHandler";
 export default {
   name: "Login",
   components: { SocialSign },
+  mixins: [ResizeMixin],
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!value) {
@@ -205,8 +340,12 @@ export default {
       immediate: true,
     },
   },
+  computed: {
+    ...mapState({
+      device: (state) => state.app.device,
+    }),
+  },
   created() {
-    // this.$bus.$off('$subscription')
     this.$bus.$on("$loginOpen", (res) => {
       console.log(res, "loginOpen");
       this.initClklog(res);
@@ -223,17 +362,14 @@ export default {
     } else if (this.loginForm.password === "") {
       this.$refs.password.focus();
     }
-    // this.$bus.$on("$subscription", (res) => {
-    //   console.log(res,"订阅方式触发的");
-    //   this.initClklog(res);
-    // });
   },
   methods: {
-    openShow(val) {
-      console.log("执行了---");
+    openShow() {
       this.initClklog("sub");
     },
     checkLoginEvent() {
+      console.log("执行了操作");
+
       this.dialogVisible = true;
     },
     checkCapslock(e) {
@@ -308,11 +444,11 @@ $bg: #fff;
 $light_gray: #7b7a7b;
 $cursor: #7b7a7b;
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
+  .container-item .el-input input {
     color: #7b7a7b;
   }
 }
-.login-container {
+.container-item {
   display: flex;
   .el-input {
     display: inline-block;
@@ -350,7 +486,7 @@ $light_gray: #eee;
 .el-dialog__headerbtn {
   top: 14px !important;
 }
-.login-container {
+.container-item {
   min-height: 100%;
   width: 100%;
   background-color: $bg;

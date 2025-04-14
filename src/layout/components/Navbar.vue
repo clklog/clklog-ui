@@ -19,7 +19,7 @@
             社区版
           </div>
         </div>
-       
+
         <el-select
           v-model="value"
           placeholder="请选择"
@@ -37,18 +37,19 @@
 
       <div class="right-menu">
         <div class="dataTime">{{ dateTime }}&nbsp;&nbsp;{{ dateWeek }}</div>
-        <img
-          src="@/assets/images/avator.png"
-          class="user-avatar"
-          @click="clickImg"
-        />
         <el-dropdown
           class="avatar-container right-menu-item hover-effect"
           trigger="click"
         >
           <div class="avatar-wrapper">
+            <img
+              src="@/assets/images/avator.png"
+              class="user-avatar"
+              @click="clickImg"
+            />
             <i class="el-icon-caret-bottom" />
           </div>
+
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="subscription()">
               <span style="display: block">订阅</span>
@@ -127,7 +128,6 @@ export default {
       this.$nextTick(() => {
         this.$bus.$emit("$subscription", "sub");
       });
-    
     },
     clickImg() {},
     handleChangeProject(val) {
@@ -244,7 +244,7 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         left: 2px;
-        top: -9px;
+        top: 0px;
         position: relative;
 
         .el-icon-caret-bottom {
