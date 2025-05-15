@@ -11,10 +11,9 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   (config) => {
-    // do something before request is sent
-    // if (store.getters.token) {
-    //   config.headers["X-Token"] = getToken();
-    // }
+    if (store.getters.token) {
+      config.headers["Authorization"] = "Bearer " + getToken(); // 让每个请求携带自定义token 请根据实际情况自行修改
+    }
     const isMock = config.url.includes("/vue-element-admin/user");
     if ((config.method === "post" || config.method === "put") && !isMock) {
       if (!config.headers["Content-Type"]) {

@@ -7,6 +7,20 @@ function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
+let MANAGE, DEVAPI;
+// 配置代理地本地代理地址
+function setProxy(env) {
+  if (env === "prod") {
+    MANAGE = "https://demo.clklog.com/api/manage";
+    DEVAPI = "https://demo.clklog.com/api";
+  } else {
+    MANAGE = "http://10.10.220.188/com-manage";
+    DEVAPI = "http://10.10.220.188/com-api";
+  }
+}
+//切换环境
+setProxy("dev");
+
 const name = defaultSettings.title || "ClkLog"; // page title
 
 // If your port is set to 80,
@@ -25,10 +39,11 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: "/",
-  outputDir: "dist",
-  assetsDir: "static",
-  // lintOnSave: process.env.NODE_ENV === 'development',
+  // publicPath: "/",
+  // outputDir: "dist",
+  // assetsDir: "static",
+  publicPath: "",
+  assetsDir: "./assets",
   lintOnSave: false,
   productionSourceMap: false,
   devServer: {
@@ -39,6 +54,20 @@ module.exports = {
       errors: true,
     },
     proxy: {
+      "/DEV-API-MANAGE": {
+        target: MANAGE,
+        changeOrigin: true,
+        pathRewrite: {
+          "^/DEV-API-MANAGE": "",
+        },
+      },
+      "/DEV-API": {
+        target: DEVAPI, // 配置基础api代理地址
+        changeOrigin: true, // 是否支持跨域
+        pathRewrite: {
+          "^/DEV-API": "", // 重写路径：去掉路径中开头的 '/api'
+        },
+      },    
       "/DEV-APISUB": {
         target: "https://support.clklog.com/public",
         changeOrigin: true,
@@ -46,15 +75,7 @@ module.exports = {
           "^/DEV-APISUB": "",
         },
       },
-      "/DEV-API": {
-        target: "https://demo.clklog.com/api", // api接口基础路径
-        changeOrigin: true, // 是否支持跨域
-        pathRewrite: {
-          "^/DEV-API": "", // 重写路径：去掉路径中开头的 '/api'
-        },
-      },
     },
-    // before: require("./mock/mock-server.js"),
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

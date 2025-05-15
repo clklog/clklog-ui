@@ -98,8 +98,46 @@
               </span>
             </el-form-item>
           </el-tooltip>
+          <div
+            v-if="!is_clklog_demo_experience_account"
+            style="display: flex; justify-content: space-between"
+          >
+            <el-button
+              :loading="loading"
+              type="primary"
+              style="width: 100%; height: 46px; margin-bottom: 30px"
+              @click.native.prevent="handleLogin"
+              >登录</el-button
+            >
+          </div>
+          <div v-else style="display: flex; justify-content: space-between">
+            <el-button
+              :loading="loading"
+              type="primary"
+              style="
+                width: calc(50% - 10px);
+                height: 46px;
+                margin-bottom: 30px;
+                font-size: 16px;
+              "
+              @click.native.prevent="handleLogin"
+              >登录</el-button
+            >
+            <el-button
+              style="
+                width: calc(50% - 10px);
+                height: 46px;
+                margin-bottom: 30px;
+                background-color: #fd9843;
+                color: #fff;
+                font-size: 16px;
+              "
+              @click="checkLoginEvent"
+              >获取体验账号</el-button
+            >
+          </div>
 
-          <div style="display: flex; justify-content: space-between">
+          <!-- <div style="display: flex; justify-content: space-between">
             <el-button
               :loading="loading"
               type="primary"
@@ -119,9 +157,8 @@
               @click="checkLoginEvent"
               >获取体验账号</el-button
             >
-          </div>
+          </div> -->
         </el-form>
-        <div class="loginWarry"></div>
       </div>
     </div>
     <!-- 移动端 -->
@@ -223,11 +260,28 @@
             </el-form-item>
           </el-tooltip>
 
-          <div style="display: flex; justify-content: space-between">
+          <div
+            v-if="!is_clklog_demo_experience_account"
+            style="display: flex; justify-content: space-between"
+          >
             <el-button
               :loading="loading"
               type="primary"
-              style="width: calc(50% - 10px); height: 46px; margin-bottom: 30px"
+              style="width: 100%; height: 46px; margin-bottom: 30px"
+              @click.native.prevent="handleLogin"
+              >登录</el-button
+            >
+          </div>
+          <div v-else style="display: flex; justify-content: space-between">
+            <el-button
+              :loading="loading"
+              type="primary"
+              style="
+                width: calc(50% - 10px);
+                height: 46px;
+                margin-bottom: 30px;
+                font-size: 16px;
+              "
               @click.native.prevent="handleLogin"
               >登录</el-button
             >
@@ -282,6 +336,9 @@ import { profileApi, subscribeApi } from "@/api/trackingapi/subscribe.js";
 import Cookies from "js-cookie";
 import { mapState } from "vuex";
 import ResizeMixin from "@/layout/mixin/ResizeHandler";
+import { login } from "@/api/user";
+import { getAppMyList } from "@/api/sysmanage/appmanage";
+import { setLocalStorage } from "@/utils/localStorage";
 export default {
   name: "Login",
   components: { SocialSign },
@@ -297,8 +354,6 @@ export default {
     const validatePassword = (rule, value, callback) => {
       if (!value) {
         callback(new Error("请输入密码"));
-      } else if (value != this.validatePassword) {
-        callback(new Error("账号密码错误"));
       } else {
         callback();
       }
@@ -326,6 +381,7 @@ export default {
       validatePassword: this.$store.getters.password,
       clientId: "",
       subscribed: "",
+      is_clklog_demo_experience_account: false,
     };
   },
   watch: {
@@ -354,6 +410,10 @@ export default {
     if (userInfo) {
       this.loginForm.username = userInfo.username;
       this.loginForm.password = userInfo.password;
+    }
+    if (window.globalConfig.is_clklog_demo_experience_account) {
+      this.is_clklog_demo_experience_account =
+        window.globalConfig.is_clklog_demo_experience_account;
     }
   },
   mounted() {
@@ -386,31 +446,58 @@ export default {
         this.$refs.password.focus();
       });
     },
-    handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true;
-          Cookies.set("userInfo", JSON.stringify(this.loginForm));
-          this.$store
-            .dispatch("user/login", this.loginForm)
-            .then(() => {
-              this.$router.push({
-                path: this.redirect || "/",
-                query: this.otherQuery,
-              });
-              this.loading = false;
-            })
-            .then(() => {
-              this.initClklog();
-            })
-            .catch(() => {
-              this.loading = false;
-            });
-        } else {
-          console.log("error submit!!");
+    async handleLogin() {
+      try {
+        const valid = await this.$refs.loginForm.validate();
+        if (!valid) {
+          console.log("表单验证失败");
           return false;
         }
-      });
+
+        this.loading = true;
+
+        // 调用登录接口
+        const response = await login({
+          username: this.loginForm.username.trim(),
+          password: this.loginForm.password,
+        });
+
+        if (response.code !== 200) {
+          throw new Error(response.message || "登录失败");
+        }
+
+        // 保存用户信息到Cookie
+        Cookies.set("userInfo", JSON.stringify(this.loginForm));
+
+        // 执行登录操作
+        await this.$store.dispatch("user/login", response);
+
+        // 根据设备类型跳转不同页面
+        if (this.device === "desktop") {
+          await this.$router.push({
+            path: this.redirect || "/",
+            query: this.otherQuery,
+          });
+        } else {
+          await this.$router.push("/record/summary");
+        }
+
+        // 获取应用列表
+        const appListResponse = await getAppMyList();
+        if (appListResponse.code === 200) {
+          let projectArray = appListResponse.data || [];
+          // 初始化clklog
+          await this.initClklog();
+          // 将项目列表存储到 Vuex store
+          this.$store.dispatch("tracking/setProjectArray", projectArray);
+          // 将项目列表存储到 localStorage
+          setLocalStorage("projectList", projectArray);
+        }
+      } catch (error) {
+        console.error("登录失败:", error);
+      } finally {
+        this.loading = false;
+      }
     },
     initClklog(flag) {
       profileApi().then((res) => {
@@ -448,8 +535,10 @@ $cursor: #7b7a7b;
     color: #7b7a7b;
   }
 }
+
 .container-item {
   display: flex;
+
   .el-input {
     display: inline-block;
     height: 46px;
@@ -480,29 +569,35 @@ $cursor: #7b7a7b;
 $bg: #fff;
 $dark_gray: #889aa4;
 $light_gray: #eee;
+
 .el-dialog__body {
   padding: 0 30px 30px;
 }
+
 .el-dialog__headerbtn {
   top: 14px !important;
 }
+
 .container-item {
   min-height: 100%;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+
   // 登录注册
   .loginWarry {
     width: 85%;
     padding: 35px 0;
     margin: 0 auto;
     text-align: center;
+
     .colFont {
       font-size: 12px;
       font-weight: 500;
       line-height: 20px;
       color: #4d4d4d;
     }
+
     .registration {
       font-size: 12px;
       font-weight: 400;
@@ -549,6 +644,7 @@ $light_gray: #eee;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
+
       .logo_head {
         height: 66px;
         width: 194px;
@@ -561,6 +657,7 @@ $light_gray: #eee;
     font-size: 16px;
     cursor: pointer;
   }
+
   .show-pwd {
     position: absolute;
     right: 10px;
