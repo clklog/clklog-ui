@@ -2,15 +2,13 @@
   <div class="SearchWord block-main public-hoverItem">
     <div
       class="block-head"
-      @click="$router.push('/visitorAnalysis/search')"
+      @click="$router.push('/access/search')"
     >
       <div class="block-title">Top10搜索词</div>
       <div class="block-head-icon">
         <img src="@/assets/images/icon.png" alt="" width="10px" />
       </div>
     </div>
-    <!-- :header-cell-style="{ textAlign: 'center' }" -->
-    <!-- :header-cell-style="headerStyle" -->
 
     <div class="block-index-form">
       <el-table
