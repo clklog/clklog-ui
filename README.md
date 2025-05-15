@@ -69,16 +69,14 @@ npm run dev
 ```
  # 方式一、先修改public/config.js 文件中配置，再发布
     BASE_API: "http://YOUR_DOMAIN/api" //clklog-api的接口的代理地址
-    BASE_API_MANAGE: "http://YOUR_DOMAIN/api/manage" //clklog-manage-api接口的代理地址
-    BASE_API_AUTHMANAGE:"http://YOUR_DOMAIN/api/authmanage", //clklog-authmanage-api接口基础路径
+    BASE_API_MANAGE: "http://YOUR_DOMAIN/manage" //clklog-manage-api接口的代理地址
     npm run build
 
  # 方式二、发布后修改代理配置
     npm run build 
     dist/config.js
     BASE_API: "http://YOUR_DOMAIN/api" //clklog-api的接口的代理地址
-    BASE_API_MANAGE: "http://YOUR_DOMAIN/api/manage" //clklog-manage-api接口的代理地址
-    BASE_API_AUTHMANAGE:"http://YOUR_DOMAIN/api/authmanage", //clklog-authmanage-api接口基础路径
+    BASE_API_MANAGE: "http://YOUR_DOMAIN/manage" //clklog-manage-api接口的代理地址
 
 ```
 
@@ -98,7 +96,7 @@ npm run lint -- --fix
 
 ## Online Demo
 
-[在线 Demo](https://pro.clklog.com/)
+[在线 Demo](https://demo.clklog.com/)
 
 ## Donate
 ```

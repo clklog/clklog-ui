@@ -10,16 +10,18 @@ function resolve(dir) {
 let MANAGE, DEVAPI;
 // 配置代理地本地代理地址
 function setProxy(env) {
-  if (env === "prod") {
-    MANAGE = "https://demo.clklog.com/manage";
-    DEVAPI = "https://demo.clklog.com/api";
-  } else {
-    MANAGE = "http://10.10.220.188/com-manage";
-    DEVAPI = "http://10.10.220.188/com-api";
+  // ******** 生产环境 ********
+  if (env === "prod") {  
+    MANAGE = "https:/http://YOUR_DOMAIN/manage"; //clklog-manage-api接口应用路径
+    DEVAPI = "http://YOUR_DOMAIN/api"; //clklog-api接口应用路径
+  } else {  
+    // ******* 测试环境 ********
+    MANAGE = "http://YOUR_DOMAIN/manage";
+    DEVAPI = "http://YOUR_DOMAIN/api";
   }
 }
 //切换环境
-setProxy("prod");
+setProxy("dev");
 
 const name = defaultSettings.title || "ClkLog"; // page title
 
@@ -39,11 +41,9 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  // publicPath: "/",
-  // outputDir: "dist",
-  // assetsDir: "static",
-  publicPath: "",
-  assetsDir: "./assets",
+  publicPath: "/",
+  outputDir: "dist",
+  assetsDir: "static",
   lintOnSave: false,
   productionSourceMap: false,
   devServer: {
