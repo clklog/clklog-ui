@@ -23,6 +23,7 @@ export default {
     this.$bus.$on("$demo_event", () => {
       this.handleDemoEvent();
     });
+    console.log("App mounted");
   },
   methods: {
     initClklog(flag) {
