@@ -80,7 +80,7 @@
   show_log: false,
   is_track_single_page: true,
   send_type:'beacon',
-  // server_url: 'https://receiver.tracking.zcunsoft.com/api/gp?project=clklogdemo&token=be91426751c048e6b33423dfacc1f56e', //请修改接收地址为clklog_receiver 的接收服务地址，必须传入project和token参数
+  server_url: 'https://receiver.tracking.zcunsoft.com/api/gp?project=clklogdemo&token=be91426751c048e6b33423dfacc1f56e', //请修改接收地址为clklog_receiver 的接收服务地址，必须传入project和token参数
   heatmap: {
     clickmap: 'default',
     scroll_notice_map: 'default',
