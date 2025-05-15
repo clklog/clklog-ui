@@ -31,17 +31,25 @@ service.interceptors.request.use(
   }
 );
 
+let isLoggingOut = false; // 添加标志位，防止死循环
+
 service.interceptors.response.use(
   (response) => {
     const res = response.data;
     if (res.code == 403) {
-      store.dispatch("user/logout");
-      Router.push({ path: "/login" });
-      return;
+      console.log("循环测试==》");
+      if (!isLoggingOut) { // 检查标志位
+        isLoggingOut = true; // 设置标志位为 true
+        store.dispatch("user/logout").then(() => {
+          Router.push({ path: "/login" });
+          isLoggingOut = false; // 重置标志位
+        });
+      }
+      return; // 直接返回，避免继续处理
     }
     if (res.code !== 200) {
       Message({
-        message: res.message || res.msg  || "Error",
+        message: res.message || res.msg || "Error",
         type: "error",
         duration: 5 * 1000,
       });
@@ -60,7 +68,7 @@ service.interceptors.response.use(
           });
         });
       }
-      return Promise.reject(new Error(res.message || res.msg ||  "Error"));
+      return Promise.reject(new Error(res.message || res.msg || "Error"));
     } else {
       return res;
     }

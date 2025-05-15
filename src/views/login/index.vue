@@ -406,14 +406,14 @@ export default {
       console.log(res, "loginOpen");
       this.initClklog(res);
     });
-    let userInfo = JSON.parse(Cookies.get("userInfo"));
-    if (userInfo) {
-      this.loginForm.username = userInfo.username;
-      this.loginForm.password = userInfo.password;
-    }
+
     if (window.globalConfig.is_clklog_demo_experience_account) {
       this.is_clklog_demo_experience_account =
         window.globalConfig.is_clklog_demo_experience_account;
+    }
+    if (Cookies.get("userInfo")) {
+      let userInfo = JSON.parse(Cookies.get("userInfo"));
+      this.loginForm.username = userInfo.username;
     }
   },
   mounted() {

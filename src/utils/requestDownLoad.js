@@ -2,8 +2,9 @@ import axios from "axios";
 import { MessageBox, Message } from "element-ui";
 import store from "@/store";
 import { getToken } from "@/utils/auth";
+import Router from '@/router';
 const service = axios.create({
-  baseURL: '',
+  baseURL: "",
   timeout: 5000, // request timeout
 });
 service.interceptors.request.use(
@@ -29,6 +30,7 @@ service.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+let isLoggingOut = false; // 添加标志位，防止死循环
 service.interceptors.response.use(
   (res) => {
     if (res.status != 200) {
@@ -37,6 +39,17 @@ service.interceptors.response.use(
         type: "error",
         duration: 5 * 1000,
       });
+      if (res.status == 403) {
+        if (!isLoggingOut) {
+          // 检查标志位
+          isLoggingOut = true; // 设置标志位为 true
+          store.dispatch("user/logout").then(() => {
+            Router.push({ path: "/login" });
+            isLoggingOut = false; // 重置标志位
+          });
+        }
+        return; // 直接返回，避免继续处理
+      }
       return Promise.reject(new Error(res.statusText || "Error"));
     } else {
       return res;
