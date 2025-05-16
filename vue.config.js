@@ -19,7 +19,7 @@ function setProxy(env) {
   }
 }
 //切换环境
-setProxy("prod");
+setProxy("dev");
 
 const name = defaultSettings.title || "ClkLog"; // page title
 
