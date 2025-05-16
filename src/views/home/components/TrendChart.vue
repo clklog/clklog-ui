@@ -1,6 +1,6 @@
 <template>
   <div class="TrendChart block-main public-hoverItem">
-    <div class="block-head"  @click="$router.push('/trendAnalysis/trend')">
+    <div class="block-head"  @click="navigateToTrend">
       <div class="block-title">趋势图</div>
       <el-select
         class="custom_select"
@@ -99,6 +99,11 @@ export default {
     },
   },
   methods: {
+    navigateToTrend() {
+      console.log("趋势");
+      
+      this.$router.push('/trendAnalysis/trend');
+    },
     getFlowTrend() {
       getFlowTrendApi(this.params).then((res) => {
         if (res.code == 200) {
