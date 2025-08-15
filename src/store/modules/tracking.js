@@ -9,10 +9,11 @@ const state = {
     },
   ],
   projectName:
-    getLocalStorage("projectList") &&
+    getLocalStorage("prejectCode") ||
+    (Array.isArray(getLocalStorage("projectList")) &&
       getLocalStorage("projectList").length > 0
       ? getLocalStorage("projectList")[0].projectName
-      : "clklogapp",
+      : "clklogapp"),
 };
 
 const mutations = {

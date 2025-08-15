@@ -11,7 +11,8 @@ let MANAGE, DEVAPI;
 // 配置代理地本地代理地址
 function setProxy(env) {
   if (env === "prod") {
-    MANAGE = "https://demo.clklog.com/manage";
+    // MANAGE = "https://demo.clklog.com/manage";
+    MANAGE = "https://pro.clklog.com/manage";
     DEVAPI = "https://demo.clklog.com/api";
   } else {
     MANAGE = "http://10.10.220.188/com-manage";
