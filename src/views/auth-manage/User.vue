@@ -90,10 +90,10 @@
                   @click="handleEdit(row)"
                   v-if="!['clklog', 'admin'].includes(row.userName)"
                 ></i>
-                <i
+                <!-- <i
                   class="el-icon-key modifypwd_btn"
                   @click="handleEditModifyPwd(row)"
-                ></i>
+                ></i> -->
                 <i
                   v-if="!['clklog', 'admin'].includes(row.userName)"
                   class="el-icon-delete delete_btn"
