@@ -73,6 +73,7 @@
           class="public-radius"
           :header-cell-style="{ background: '#f7fafe' }"
           :header-cell-class-name="headerCellClass"
+           :cell-style="tableHeaderColor"
           :data="treeList"
           style="width: 100%"
           :row-key="getRowKeys"
@@ -167,9 +168,10 @@
           </el-table-column>
 
           <el-table-column label="流量基础指标">
-            <el-table-column v-if="pv" prop="detail.pv" label="浏览量" />
-            <el-table-column v-if="uv" prop="detail.uv" label="访客数" />
+            <el-table-column align="center" v-if="pv" prop="detail.pv" label="浏览量" />
+            <el-table-column align="center" v-if="uv" prop="detail.uv" label="访客数" />
             <el-table-column
+              align="center"
               v-if="ipCount"
               prop="detail.ipCount"
               label="IP数"
@@ -177,21 +179,25 @@
           </el-table-column>
           <el-table-column prop="detail.date" label="流量质量指标">
             <el-table-column
+              align="center"
               v-if="entryCount"
               prop="detail.entryCount"
               label="入口页次数"
             />
             <el-table-column
+              align="center"
               v-if="downPvCount"
               prop="detail.downPvCount"
               label="贡献下游浏览量"
             />
             <el-table-column
+              align="center"
               v-if="exitCount"
               prop="detail.exitCount"
               label="退出页次数"
             />
             <el-table-column
+              align="center"
               v-if="avgVisitTime"
               prop="detail.avgVisitTime"
               label="页面平均浏览时长"
@@ -201,6 +207,7 @@
               </template>
             </el-table-column>
             <el-table-column
+              align="center"
               v-if="exitRate"
               prop="detail.exitRate"
               label="退出率"
@@ -220,7 +227,8 @@
             border
             class="public-radius"
             style="width: 100%"
-            :header-cell-style="{ textAlign: 'center', background: '#f7fafe ' }"
+            :header-cell-style="{  background: '#f7fafe ' }"
+            :header-cell-class-name="headerCellClass"
             :cell-style="tableHeaderColor"
             @sort-change="sortChange($event)"
           >
@@ -246,18 +254,21 @@
             </el-table-column>
             <el-table-column label="流量基础指标">
               <el-table-column
+                align="center"
                 v-if="pv"
                 prop="pv"
                 label="浏览量"
                 sortable="custom"
               />
               <el-table-column
+                align="center"
                 v-if="uv"
                 prop="uv"
                 label="访客数"
                 sortable="custom"
               />
               <el-table-column
+                align="center"
                 v-if="ipCount"
                 prop="ipCount"
                 label="IP数"
@@ -266,30 +277,35 @@
             </el-table-column>
             <el-table-column prop="date" label="流量质量指标">
               <el-table-column
+                align="center"
                 v-if="entryCount"
                 prop="entryCount"
                 label="入口页次数"
                 sortable="custom"
               />
               <el-table-column
+                align="center"
                 v-if="downPvCount"
                 prop="downPvCount"
                 label="贡献下游浏览量"
                 sortable="custom"
               />
               <el-table-column
+                align="center"
                 v-if="exitCount"
                 prop="exitCount"
                 label="退出页次数"
                 sortable="custom"
               />
               <el-table-column
+                align="center"
                 v-if="avgVisitTime"
                 prop="avgVisitTime"
                 label="页面平均浏览时长"
                 sortable="custom"
               />
               <el-table-column
+                align="center"
                 v-if="exitRate"
                 prop="exitRate"
                 label="退出率"
@@ -499,6 +515,7 @@ export default {
       }
       return "align-center";
     },
+    
     // 分页
     getIndex($index) {
       return (this.currentPage - 1) * this.pageSize + $index + 1;
@@ -695,6 +712,13 @@ export default {
     font-size: 16px;
     background-size: 13px;
   }
+  /* 表头按列名动态对齐 */
+  .el-table__header th.align-left .cell {
+    justify-content: flex-start;
+  }
+  .el-table__header th.align-center .cell {
+    justify-content: center;
+  }
   //有子节点 且已展开
   .el-table__expand-icon--expanded {
     position: relative !important;
@@ -723,6 +747,13 @@ export default {
   @import "~@/styles/components/el-pagination.scss";
   .el-table .cell {
     display: flex;
+  }
+  /* 内容区按列对齐（align="center" 时，flex 居中） */
+  .el-table__body td.is-center .cell {
+    justify-content: center;
+  }
+  .el-table__body td.is-left .cell {
+    justify-content: flex-start;
   }
   /* 表头按列名动态对齐 */
   .el-table__header th.align-left .cell {
