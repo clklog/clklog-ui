@@ -1,4 +1,4 @@
-import { getLocalStorage } from "@/utils/localStorage";
+import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 
 const state = {
   // store 状态存储器 页面刷新数据还在
@@ -19,9 +19,11 @@ const state = {
 const mutations = {
   SET_PROJECT: (state, projectName) => {
     state.projectName = projectName;
+    setLocalStorage("prejectCode", projectName);
   },
   SET_PROJECTARRAY: (state, value) => {
     state.projectArray = value;
+    setLocalStorage("projectList", value);
   },
 };
 

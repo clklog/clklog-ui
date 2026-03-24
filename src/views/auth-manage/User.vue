@@ -363,7 +363,6 @@ export default {
       })
         .then(() => {
           if (window.globalConfig.is_clklog_demo_environment) {
-            console.log("执行了演示环境");
             
             return this.$bus.$emit("$demo_event");
           }
