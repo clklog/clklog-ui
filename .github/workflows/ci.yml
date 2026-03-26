@@ -12,9 +12,7 @@ on:
     branches:
       - 'main'
       - 'demo'
-  schedule:
-    - cron: '0 0 * * *'
-
+ 
 jobs:
   build:
     runs-on: ubuntu-latest
