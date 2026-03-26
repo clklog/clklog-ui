@@ -70,4 +70,4 @@ jobs:
         run: |
           docker buildx imagetools create \
             --tag registry.cn-shanghai.aliyuncs.com/clklog/ui:demo \
-            zcunsoft/clklog-frontend:${{ steps.set-tag.outputs.tag }}
+            zcunsoft/clklog-frontend:${{github.ref_name }}
