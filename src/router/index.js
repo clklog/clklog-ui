@@ -64,7 +64,7 @@ export const constantRoutes = [
       },
     ],
   },
-
+  
 ];
 
 export const asyncRoutes = [
@@ -80,11 +80,24 @@ export const asyncRoutes = [
         path: "crash",
         component: () => import("@/views/collapse-analysis/index"),
         name: "crash",
-        meta: { title: "App崩溃分析", icon: "trend", affix: true, },
+        meta: { title: "App崩溃分析", icon: "trend", affix: true },
       },
     ],
   },
   systemManageRouter,
+  {
+    path: "/apiKey",
+    component: Layout,
+    redirect: "/manage",
+    children: [
+      {
+        path: "manage",
+        component: () => import("@/views/sys-manage/api-key.vue"),
+        name: "manage",
+        meta: { title: "密钥管理", icon: "setting", affix: true },
+      },
+    ],
+  },
   {
     path: "/pro",
     component: Layout,
