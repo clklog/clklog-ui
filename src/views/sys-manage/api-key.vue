@@ -271,9 +271,9 @@ export default {
       this.newApiSecret = ''
     },
     submitSaveForm() {
-      if (window.globalConfig.is_clklog_demo_environment) {
-        return this.openDialogEvent()
-      }
+      // if (window.globalConfig.is_clklog_demo_environment) {
+      //   return this.openDialogEvent()
+      // }
       this.$refs['form'].validate((valid) => {
         if (valid) {
           const params = {
@@ -318,9 +318,9 @@ export default {
       })
     },
     handleDelete(row) {
-      if (window.globalConfig.is_clklog_demo_environment) {
-        return this.openDialogEvent()
-      }
+      // if (window.globalConfig.is_clklog_demo_environment) {
+      //   return this.openDialogEvent()
+      // }
       const apiKeyId = row.id
       this.$confirm('是否确认删除该API密钥？', '提示', {
         confirmButtonText: '确定',
