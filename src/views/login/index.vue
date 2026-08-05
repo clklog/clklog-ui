@@ -372,6 +372,7 @@ export default {
       profileApi().then((res) => {
         if (res.code == 200) {
           this.clientId = res.data;
+          // 订阅
           // res.data.subscribed = false;
           if (!res.data.subscribed) {
             setTimeout(() => {
