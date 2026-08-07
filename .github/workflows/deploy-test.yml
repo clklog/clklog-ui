@@ -1,0 +1,26 @@
+name: Deploy Test Environment
+
+on:
+  workflow_run:
+    workflows:
+      - Node.js CI
+    types:
+      - completed
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-test:
+    runs-on:
+      - self-hosted
+
+    steps:
+      - name: Deploy
+        run: |
+          echo "Runner: $RUNNER_NAME"
+          hostname
+          uname -a
+          whoami
