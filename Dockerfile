@@ -1,4 +1,4 @@
-FROM nginx:1.20-alpine
+FROM nginx:1.23
 
 ARG HTML_DIR
 
