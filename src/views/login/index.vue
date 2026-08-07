@@ -6,87 +6,89 @@
         <img src="@/assets/images/loginBg.png"
           style="width: 60vw; height: 100%; object-fit: contain;flex-shrink: 0;overflow: hidden;" />
       </div>
-      <div style="
-          width: 40vw;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          background-color: #f7faff;
-          box-sizing: border-box;
-        ">
-        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
-          label-position="left">
-          <div class="title-container">
-            <h3 class="title">
-              <img class="logo_head" src="@/assets/images/logo.png" />
-            </h3>
-          </div>
-          <div style="
-              font-size: 14px;
-              font-weight: 400;
-              line-height: 21px;
-              color: #4d4d4d;
-              margin-bottom: 8px;
-            ">
-            账号
-          </div>
-          <el-form-item prop="username" style="margin-bottom: 25px">
-            <el-input ref="username" v-model="loginForm.username" placeholder="请输入账号" name="username" type="text"
-              tabindex="1" autocomplete="on" />
-          </el-form-item>
-          <div style="
-              font-size: 14px;
-              font-weight: 400;
-              line-height: 21px;
-              color: #4d4d4d;
-              margin-bottom: 8px;
-            ">
-            密码
-          </div>
-          <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-            <el-form-item prop="password" style="margin-bottom: 25px">
-              <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
-                placeholder="请输入密码" name="password" tabindex="2" autocomplete="on" @keyup.native="checkCapslock"
-                @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
-
-              <span style="cursor: pointer" :class="passwordType === 'password'
-                ? 'el-icon-lock'
-                : 'el-icon-unlock'
-                " @click="showPwd">
-                <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-              </span>
+      <div class="login-panel">
+        <el-form
+          ref="loginForm"
+          :model="loginForm"
+          :rules="loginRules"
+          class="login-form"
+          :class="{ 'has-star': is_clklog_demo_experience_account }"
+          autocomplete="on"
+          label-position="left"
+        >
+          <div class="login-form-body">
+            <div class="title-container">
+              <h3 class="title">
+                <img class="logo_head" src="@/assets/images/logo.png" />
+              </h3>
+            </div>
+            <div style="
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 21px;
+                color: #4d4d4d;
+                margin-bottom: 8px;
+              ">
+              账号
+            </div>
+            <el-form-item prop="username" style="margin-bottom: 25px">
+              <el-input ref="username" v-model="loginForm.username" placeholder="请输入账号" name="username" type="text"
+                tabindex="1" autocomplete="on" />
             </el-form-item>
-          </el-tooltip>
-          <div v-if="!is_clklog_demo_experience_account" style="display: flex; justify-content: space-between">
-            <el-button :loading="loading" type="primary" style="width: 100%; height: 46px; margin-bottom: 30px"
-              @click.native.prevent="handleLogin">登录</el-button>
-          </div>
-          <div v-else style="display: flex; justify-content: space-between">
-            <el-button :loading="loading" type="primary" style="
-                width: calc(50% - 10px);
-                height: 46px;
-                margin-bottom: 30px;
-                font-size: 16px;
-              " @click.native.prevent="handleLogin">登录</el-button>
-            <el-button style="
-                width: calc(50% - 10px);
-                height: 46px;
-                margin-bottom: 30px;
-                background-color: #fd9843;
-                color: #fff;
-                font-size: 16px;
-              " @click="checkLoginEvent">获取体验账号</el-button>
+            <div style="
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 21px;
+                color: #4d4d4d;
+                margin-bottom: 8px;
+              ">
+              密码
+            </div>
+            <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+              <el-form-item prop="password" style="margin-bottom: 25px">
+                <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
+                  placeholder="请输入密码" name="password" tabindex="2" autocomplete="on" @keyup.native="checkCapslock"
+                  @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
+
+                <span style="cursor: pointer" :class="passwordType === 'password'
+                  ? 'el-icon-lock'
+                  : 'el-icon-unlock'
+                  " @click="showPwd">
+                  <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+                </span>
+              </el-form-item>
+            </el-tooltip>
+            <div v-if="!is_clklog_demo_experience_account" style="display: flex; justify-content: space-between">
+              <el-button :loading="loading" type="primary" style="width: 100%; height: 46px"
+                @click.native.prevent="handleLogin">登录</el-button>
+            </div>
+            <div v-else style="display: flex; justify-content: space-between">
+              <el-button :loading="loading" type="primary" style="
+                  width: calc(50% - 10px);
+                  height: 46px;
+                  font-size: 16px;
+                " @click.native.prevent="handleLogin">登录</el-button>
+              <el-button style="
+                  width: calc(50% - 10px);
+                  height: 46px;
+                  background-color: #fd9843;
+                  color: #fff;
+                  font-size: 16px;
+                " @click="checkLoginEvent">获取体验账号</el-button>
+            </div>
           </div>
 
-          <div v-if="is_clklog_demo_experience_account" class="gitee-star-box">
-            <div class="gitee-star-title">支持 ClkLog 开源社区</div>
-            <p>如果 ClkLog 对您的项目有所帮助，欢迎在 Gitee 点亮 ⭐ Star 支持我们。</p>
-            <a
-              class="gitee-star-link"
-              href="https://gitee.com/clklog/clklog"
-              target="_blank"
-              rel="noopener noreferrer"
-            >👉 前往 Gitee Star ClkLog</a>
+          <div v-if="is_clklog_demo_experience_account" class="gitee-star-area">
+            <div class="gitee-star-box">
+              <div class="gitee-star-title">支持 ClkLog 开源社区</div>
+              <p>如果 ClkLog 对您的项目有所帮助，欢迎在 Gitee 点亮 ⭐ Star 支持我们。</p>
+              <a
+                class="gitee-star-link"
+                href="https://gitee.com/clklog/clklog"
+                target="_blank"
+                rel="noopener noreferrer"
+              >👉 前往 Gitee Star ClkLog</a>
+            </div>
           </div>
         </el-form>
       </div>
@@ -99,84 +101,89 @@
           width: 100%;
           height: 100%;
         ">
-        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" style="
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0;
-          " autocomplete="on" label-position="left">
-          <div class="title-container">
-            <h3 class="title">
-              <img class="logo_head" src="@/assets/images/logo.png" />
-            </h3>
-          </div>
-          <div style="
-              font-size: 14px;
-              font-weight: 400;
-              line-height: 21px;
-              color: #4d4d4d;
-              margin-bottom: 8px;
-            ">
-            账号
-          </div>
-          <el-form-item prop="username" style="margin-bottom: 25px">
-            <el-input ref="username" v-model="loginForm.username" placeholder="请输入账号" name="username" type="text"
-              tabindex="1" autocomplete="on" />
-          </el-form-item>
-          <div style="
-              font-size: 14px;
-              font-weight: 400;
-              line-height: 21px;
-              color: #4d4d4d;
-              margin-bottom: 8px;
-            ">
-            密码
-          </div>
-          <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-            <el-form-item prop="password" style="margin-bottom: 25px">
-              <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
-                placeholder="请输入密码" name="password" tabindex="2" autocomplete="on" @keyup.native="checkCapslock"
-                @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
-              <span style="cursor: pointer" :class="passwordType === 'password'
-                ? 'el-icon-lock'
-                : 'el-icon-unlock'
-                " @click="showPwd">
-                <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-              </span>
+        <el-form
+          ref="loginForm"
+          :model="loginForm"
+          :rules="loginRules"
+          class="login-form"
+          :class="{ 'has-star': is_clklog_demo_experience_account }"
+          style="height: 100vh; padding: 0;"
+          autocomplete="on"
+          label-position="left"
+        >
+          <div class="login-form-body">
+            <div class="title-container">
+              <h3 class="title">
+                <img class="logo_head" src="@/assets/images/logo.png" />
+              </h3>
+            </div>
+            <div style="
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 21px;
+                color: #4d4d4d;
+                margin-bottom: 8px;
+              ">
+              账号
+            </div>
+            <el-form-item prop="username" style="margin-bottom: 25px">
+              <el-input ref="username" v-model="loginForm.username" placeholder="请输入账号" name="username" type="text"
+                tabindex="1" autocomplete="on" />
             </el-form-item>
-          </el-tooltip>
+            <div style="
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 21px;
+                color: #4d4d4d;
+                margin-bottom: 8px;
+              ">
+              密码
+            </div>
+            <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+              <el-form-item prop="password" style="margin-bottom: 25px">
+                <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
+                  placeholder="请输入密码" name="password" tabindex="2" autocomplete="on" @keyup.native="checkCapslock"
+                  @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
+                <span style="cursor: pointer" :class="passwordType === 'password'
+                  ? 'el-icon-lock'
+                  : 'el-icon-unlock'
+                  " @click="showPwd">
+                  <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+                </span>
+              </el-form-item>
+            </el-tooltip>
 
-          <div v-if="!is_clklog_demo_experience_account" style="display: flex; justify-content: space-between">
-            <el-button :loading="loading" type="primary" style="width: 100%; height: 46px; margin-bottom: 30px"
-              @click.native.prevent="handleLogin">登录</el-button>
-          </div>
-          <div v-else style="display: flex; justify-content: space-between">
-            <el-button :loading="loading" type="primary" style="
-                width: calc(50% - 10px);
-                height: 46px;
-                margin-bottom: 30px;
-                font-size: 16px;
-              " @click.native.prevent="handleLogin">登录</el-button>
-            <el-button style="
-                width: calc(50% - 10px);
-                height: 46px;
-                margin-bottom: 30px;
-                background-color: #fd9843;
-                color: #fff;
-                font-size: 16px;
-              " @click="checkLoginEvent">获取体验账号</el-button>
+            <div v-if="!is_clklog_demo_experience_account" style="display: flex; justify-content: space-between">
+              <el-button :loading="loading" type="primary" style="width: 100%; height: 46px"
+                @click.native.prevent="handleLogin">登录</el-button>
+            </div>
+            <div v-else style="display: flex; justify-content: space-between">
+              <el-button :loading="loading" type="primary" style="
+                  width: calc(50% - 10px);
+                  height: 46px;
+                  font-size: 16px;
+                " @click.native.prevent="handleLogin">登录</el-button>
+              <el-button style="
+                  width: calc(50% - 10px);
+                  height: 46px;
+                  background-color: #fd9843;
+                  color: #fff;
+                  font-size: 16px;
+                " @click="checkLoginEvent">获取体验账号</el-button>
+            </div>
           </div>
 
-          <div v-if="is_clklog_demo_experience_account" class="gitee-star-box">
-            <div class="gitee-star-title">支持 ClkLog 开源社区</div>
-            <p>如果 ClkLog 对您的项目有所帮助，欢迎在 Gitee 点亮 ⭐ Star 支持我们。</p>
-            <a
-              class="gitee-star-link"
-              href="https://gitee.com/clklog/clklog"
-              target="_blank"
-              rel="noopener noreferrer"
-            >👉 前往 Gitee Star ClkLog</a>
+          <div v-if="is_clklog_demo_experience_account" class="gitee-star-area">
+            <div class="gitee-star-box">
+              <div class="gitee-star-title">支持 ClkLog 开源社区</div>
+              <p>如果 ClkLog 对您的项目有所帮助，欢迎在 Gitee 点亮 ⭐ Star 支持我们。</p>
+              <a
+                class="gitee-star-link"
+                href="https://gitee.com/clklog/clklog"
+                target="_blank"
+                rel="noopener noreferrer"
+              >👉 前往 Gitee Star ClkLog</a>
+            </div>
           </div>
         </el-form>
       </div>
@@ -483,13 +490,55 @@ $light_gray: #eee;
     }
   }
 
+  .login-panel {
+    width: 40vw;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    background-color: #f7faff;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
   .login-form {
     position: relative;
     width: 80%;
     max-width: 500px;
+    min-height: 100%;
+    height: auto;
     padding: 0;
     margin: 0 auto;
-    overflow: hidden;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+
+    &::before {
+      content: "";
+      flex: 1 1 0;
+      min-height: 24px;
+    }
+
+    &:not(.has-star)::after {
+      content: "";
+      flex: 1 1 0;
+      min-height: 24px;
+    }
+  }
+
+  .login-form-body {
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  .gitee-star-area {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 32px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
   }
 
   .tips {
@@ -552,10 +601,13 @@ $light_gray: #eee;
   }
 
   .gitee-star-box {
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
     background: #eef5ff;
     border-radius: 6px;
     padding: 14px 16px;
-    margin-top: -10px;
+    box-sizing: border-box;
 
     .gitee-star-title {
       font-size: 14px;
