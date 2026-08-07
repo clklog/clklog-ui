@@ -78,27 +78,16 @@
               " @click="checkLoginEvent">获取体验账号</el-button>
           </div>
 
-          <!-- <div style="display: flex; justify-content: space-between">
-            <el-button
-              :loading="loading"
-              type="primary"
-              style="width: calc(50% - 10px); height: 46px; margin-bottom: 30px"
-              @click.native.prevent="handleLogin"
-              >登录</el-button
-            >
-            <el-button
-              style="
-                width: calc(50% - 10px);
-                height: 46px;
-                margin-bottom: 30px;
-                background-color: #fd9843;
-                color: #fff;
-                font-size: 16px;
-              "
-              @click="checkLoginEvent"
-              >获取体验账号</el-button
-            >
-          </div> -->
+          <div v-if="is_clklog_demo_experience_account" class="gitee-star-box">
+            <div class="gitee-star-title">支持 ClkLog 开源社区</div>
+            <p>如果 ClkLog 对您的项目有所帮助，欢迎在 Gitee 点亮 ⭐ Star 支持我们。</p>
+            <a
+              class="gitee-star-link"
+              href="https://gitee.com/clklog/clklog"
+              target="_blank"
+              rel="noopener noreferrer"
+            >👉 前往 Gitee Star ClkLog</a>
+          </div>
         </el-form>
       </div>
     </div>
@@ -177,6 +166,17 @@
                 color: #fff;
                 font-size: 16px;
               " @click="checkLoginEvent">获取体验账号</el-button>
+          </div>
+
+          <div v-if="is_clklog_demo_experience_account" class="gitee-star-box">
+            <div class="gitee-star-title">支持 ClkLog 开源社区</div>
+            <p>如果 ClkLog 对您的项目有所帮助，欢迎在 Gitee 点亮 ⭐ Star 支持我们。</p>
+            <a
+              class="gitee-star-link"
+              href="https://gitee.com/clklog/clklog"
+              target="_blank"
+              rel="noopener noreferrer"
+            >👉 前往 Gitee Star ClkLog</a>
           </div>
         </el-form>
       </div>
@@ -549,6 +549,40 @@ $light_gray: #eee;
     position: absolute;
     right: 0;
     bottom: 6px;
+  }
+
+  .gitee-star-box {
+    background: #eef5ff;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: -10px;
+
+    .gitee-star-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2c7be5;
+      line-height: 22px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 0 0 10px;
+      font-size: 13px;
+      line-height: 20px;
+      color: #4d4d4d;
+    }
+
+    .gitee-star-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2c7be5;
+      text-decoration: none;
+      line-height: 20px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   @media only screen and (max-width: 470px) {
