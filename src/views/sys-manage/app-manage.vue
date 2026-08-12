@@ -305,7 +305,7 @@ import {
   getAppMyList,
 } from "@/api/sysmanage/appmanage";
 import dialogPage from "./component/dialog";
-import Cookies from "js-cookie";
+import { getRememberedUsername } from "@/utils/userInfo";
 import { setLocalStorage } from "@/utils/localStorage";
 export default {
   name: "globalSetting",
@@ -352,16 +352,13 @@ export default {
     updateProjectList() {
       getAppMyList().then((res) => {
         let projectArray;
-        let adminNameList = ["admin", "clklog"];
-        let userInfo = Cookies.get("userInfo")
-          ? JSON.parse(Cookies.get("userInfo"))
-          : "";
-        if (userInfo.username) {
-          if (adminNameList.includes(userInfo.username.trim())) {
-            projectArray = res.data;
-            this.$store.dispatch("tracking/setProjectArray", projectArray);
-            setLocalStorage("projectList", projectArray);
-          }
+        // 业务约定：admin / clklog 为管理账号
+        const adminNameList = ["admin", "clklog"];
+        const username = getRememberedUsername();
+        if (username && adminNameList.includes(username.trim())) {
+          projectArray = res.data;
+          this.$store.dispatch("tracking/setProjectArray", projectArray);
+          setLocalStorage("projectList", projectArray);
         }
       });
     },
