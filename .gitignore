@@ -23,4 +23,3 @@ selenium-debug.log
 .env.development
 .env.staging
 yarn.lock
-test-live
