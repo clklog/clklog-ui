@@ -268,15 +268,15 @@ export default {
       this.newApiSecret = ''
     },
     submitSaveForm() {
+      if (window.globalConfig.is_clklog_demo_environment) {
+        return this.openDialogEvent()
+      }
       this.$refs['form'].validate((valid) => {
         if (valid) {
           const params = {
             ...this.form
           }
           if (this.form.id) {
-            if (window.globalConfig.is_clklog_demo_environment) {
-              return this.openDialogEvent()
-            }
             editApiKey(params).then((response) => {
               this.$message({
                 message: '保存成功',
