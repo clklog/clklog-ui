@@ -130,7 +130,6 @@
       </div>
     </el-dialog>
 
-    <dialog-page ref="dialogPage" />
   </div>
 </template>
 
@@ -142,10 +141,8 @@ import {
   deleteApiKey,
   listApiKey
 } from '@/api/sysmanage/apikey'
-import dialogPage from './component/dialog'
 export default {
   name: 'ApiKey',
-  components: { dialogPage },
   data() {
     return {
       form: {
@@ -202,7 +199,7 @@ export default {
   },
   methods: {
     openDialogEvent() {
-      this.$refs.dialogPage.dialogEvent()
+      this.$bus.$emit('$demo_event')
     },
     headerCellStyle({ column, columnIndex }) {
       if (columnIndex === 1) {
@@ -271,15 +268,15 @@ export default {
       this.newApiSecret = ''
     },
     submitSaveForm() {
-      if (window.globalConfig.is_clklog_demo_environment) {
-        return this.openDialogEvent()
-      }
       this.$refs['form'].validate((valid) => {
         if (valid) {
           const params = {
             ...this.form
           }
           if (this.form.id) {
+            if (window.globalConfig.is_clklog_demo_environment) {
+              return this.openDialogEvent()
+            }
             editApiKey(params).then((response) => {
               this.$message({
                 message: '保存成功',
